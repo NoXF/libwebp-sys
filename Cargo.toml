@@ -10,5 +10,4 @@ readme = "README.md"
 build = "build.rs"
 
 [build-dependencies]
-bindgen = { git = "https://github.com/servo/rust-bindgen" }
 cmake = "0.1"
