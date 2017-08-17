@@ -16,7 +16,9 @@ fn main() {
         .generate()
         .expect("Unable to generate bindings");
 
+    println!("bindgs-generate-bindings");
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
+    println!("out_dir: {:?}", out_path);
     bindings
         .write_to_file(out_path.join("ffi.rs"))
         .expect("Couldn't write bindings!");

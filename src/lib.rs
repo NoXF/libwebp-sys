@@ -55,6 +55,6 @@ mod tests {
             file.write_all(out).unwrap();
         }
 
-        assert!(true);
+        assert!(false);
     }
 }
