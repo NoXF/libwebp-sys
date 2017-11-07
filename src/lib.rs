@@ -16,11 +16,11 @@ mod tests {
         let mut width = 0;
         let mut height = 0;
         let mut buf = Vec::new();
-        let len = File::open("./tests/1.webp").unwrap().read_to_end(&mut buf).unwrap();
+        let len = File::open("./tests/test1.webp").unwrap().read_to_end(&mut buf).unwrap();
 
         unsafe { WebPGetInfo(buf.as_ptr(), len, &mut width, &mut height); }
-        assert!(width == 1290);
-        assert!(height == 996);
+        assert!(width == 1000);
+        assert!(height == 1000);
     }
 
     #[test]
@@ -36,25 +36,22 @@ mod tests {
             file.write_all(out).unwrap();
         }
 
-        assert!(true);
+        assert!(4000000 == len);
     }
 
     #[test]
     fn test_webp_encode() {
-        println!("{:?}", env!("OUT_DIR"));
         let mut buf = Vec::new();
         let len = File::open("./tests/test1_1000x1000.bif").unwrap().read_to_end(&mut buf).unwrap();
 
         let mut out_buf = Box::into_raw(Box::new(0u8)) as *mut _;
         unsafe {
             let l = WebPEncodeRGBA(buf.as_ptr(), 1000, 1000, 1000 * 4, 90 as f32, &mut out_buf as *mut _);
-            println!("{:?}", l);
             let mut file = File::create("./tests/test1_q90.webp").unwrap();
             let out = slice::from_raw_parts(out_buf, l);
-            println!("{:?}", out.len());
             file.write_all(out).unwrap();
         }
 
-        assert!(true);
+        assert!(4000000 == len);
     }
 }

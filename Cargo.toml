@@ -1,13 +1,16 @@
 [package]
+
 name = "libwebp-sys"
 version = "0.1.0"
-authors = [ "Greg V <greg@unrelenting.technology>" ]
-keywords = [ "WebP", "Image", "Picture", "Photo", "Codec", "Decoder", "Encoder" ]
+authors = [ "XianYou <xianyou.cyq@alibaba-inc.com>" ]
+keywords = [ "WebP", "Image", "Codec", "Decoder", "Encoder" ]
 description = "Bindings to libwebp (bindgen, static linking)"
-license = "BSD"
+license = "MIT"
 readme = "README.md"
-
 build = "build.rs"
+homepage = "https://github.com/NoXF/libwebp-sys"
+repository = "https://github.com/NoXF/libwebp-sys"
 
 [build-dependencies]
+
 cmake = "0.1"
