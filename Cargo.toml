@@ -1,8 +1,8 @@
 [package]
 
 name = "libwebp-sys"
-version = "0.1.0"
-authors = [ "XianYou <xianyou.cyq@alibaba-inc.com>" ]
+version = "0.2.0"
+authors = [ "XianYou <xianyou.cyq@alibaba-inc.com>", "Kornel Lesiński <kornel@geekhood.net>" ]
 keywords = [ "WebP", "Image", "Codec", "Decoder", "Encoder" ]
 description = "Bindings to libwebp (bindgen, static linking)"
 license = "MIT"
