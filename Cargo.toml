@@ -12,5 +12,8 @@ homepage = "https://github.com/NoXF/libwebp-sys"
 repository = "https://github.com/NoXF/libwebp-sys"
 
 [build-dependencies]
+cc = "1.0.25"
 
-cmake = "0.1"
+[features]
+default = ["parallel"]
+parallel = ["cc/parallel"]
