@@ -55,4 +55,27 @@ mod tests {
 
         assert!(4000000 == len);
     }
+
+    #[test]
+    fn test_webp_decode() {
+        let mut buf = Vec::new();
+        let len = File::open("./tests/test1.webp").unwrap().read_to_end(&mut buf).unwrap();
+        let mut width = 0;
+        let mut height = 0;
+
+        unsafe {
+            WebPGetInfo(buf.as_ptr(), len, &mut width, &mut height);
+            assert!(width == 1000);
+            assert!(height == 1000);
+
+            let decode_buf = WebPDecodeRGBA(buf.as_ptr(), len, &mut width, &mut height);
+
+            let mut out_buf = Box::into_raw(Box::new(0u8)) as *mut _;
+            let l = WebPEncodeRGBA(decode_buf, width, height, width * 4, 90 as f32, &mut out_buf as *mut _);
+
+            let mut file = File::create("./tests/test1_q90.webp").unwrap();
+            let out = slice::from_raw_parts(out_buf, l);
+            file.write_all(out).unwrap();
+        }
+    }
 }

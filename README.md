@@ -23,7 +23,9 @@ extern crate libwebp_sys;
 ```
 
 ## Example
-Encode:
+
+### Encode:
+
 ```
 pub fn encode_webp(input_image: &[u8], width: u32, height: u32, quality: i32) -> Result<Vec<u8>> {
     unsafe {
@@ -32,5 +34,20 @@ pub fn encode_webp(input_image: &[u8], width: u32, height: u32, quality: i32) ->
 	    let len = WebPEncodeRGBA(input_image.as_ptr(), width as i32, height as i32, stride, quality as f32, &mut out_buf as *mut _);
 	    Ok(Vec::from_raw_parts(out_buf, len as usize, len as usize))
     }
+}
+```
+
+### Decode:
+```
+pub fn decode_webp(buf: &[u8]) -> Result<Vec<u8>> {
+	let mut width = 0;
+	let mut height = 0;
+	let len = buf.len();
+	unsafe {
+		WebPGetInfo(buf.as_ptr(), len, &mut width, &mut height);
+		let out_buf = WebPDecodeRGBA(buf.as_ptr(), len, &mut width, &mut height);
+	}
+	let len = width * height * 4;
+	Ok(Vec::from_raw_parts(out_buf, len, len))
 }
 ```
