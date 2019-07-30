@@ -78,4 +78,17 @@ mod tests {
             file.write_all(out).unwrap();
         }
     }
+
+    #[test]
+    fn test_is_webp() {
+        let mut buf = Vec::new();
+        let len = File::open("./tests/test1.webp").unwrap().read_to_end(&mut buf).unwrap();
+
+        if ['R' as u8, 'I' as u8, 'F' as u8, 'F' as u8] == buf[0..4]
+			&& ['W' as u8, 'E' as u8, 'B' as u8, 'P' as u8] == buf[8..12] {
+            assert!(true)
+        } else {
+            assert!(false)
+        }
+    }
 }
