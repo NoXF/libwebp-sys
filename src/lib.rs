@@ -1,4 +1,5 @@
 #![allow(non_snake_case)]
+// bindgen --default-enum-style=rust --distrust-clang-mangling --whitelist-function='[wW][eE][bB].*' --whitelist-var='[wW][eE][bB].*' --whitelist-type='[wW][eE][bB].*' --rust-target=1.26 wrap.h -- -I./vendor > src/ffi.rs
 
 #[allow(non_camel_case_types)]
 mod ffi;
