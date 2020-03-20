@@ -12,6 +12,17 @@ fn main() {
     cc.define("_THREAD_SAFE", Some("1"));
     cc.flag("-fvisibility=hidden"); // FIXME: msvc?
 
+    let target = env::var("CARGO_CFG_TARGET_ARCH").expect("CARGO_CFG_TARGET_ARCH");
+    match target.as_str() {
+        "x86_64" | "i686" => {
+            cc.define("WEBP_HAVE_SSE2", Some("1"));
+        }
+        "aarch64" => {
+            cc.define("WEBP_HAVE_NEON", Some("1"));
+        }
+        _ => {}
+    };
+
     let files = [
     // dec
         "src/dec/alpha_dec.c",
@@ -75,11 +86,11 @@ fn main() {
 
     // dsp_enc
         "src/dsp/cost.c",
+        "src/dsp/cost_neon.c",
         "src/dsp/cost_mips32.c",
         "src/dsp/cost_mips_dsp_r2.c",
         "src/dsp/cost_sse2.c",
         "src/dsp/enc.c",
-        "src/dsp/enc_avx2.c",
         "src/dsp/enc_mips32.c",
         "src/dsp/enc_mips_dsp_r2.c",
         "src/dsp/enc_msa.c",
