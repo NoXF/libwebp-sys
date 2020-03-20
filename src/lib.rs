@@ -146,4 +146,31 @@ mod tests {
             assert!(false)
         }
     }
+
+    #[test]
+    fn config_debug() {
+        let _ = format!("{:?}", WebPDecoderConfig::new().unwrap());
+    }
+
+    #[test]
+    fn poke() {
+        unsafe {
+            assert_eq!(65792, WebPGetEncoderVersion());
+
+            let mut data = ::std::ptr::null_mut();
+            let rgb = [1u8, 2, 3];
+            let size = WebPEncodeRGB(rgb.as_ptr(), 1, 1, 1, 50., &mut data);
+            assert!(size > 0);
+            assert!(!data.is_null());
+            let mut w = 0;
+            let mut h = 0;
+            let decoded = WebPDecodeRGBA(data, size, &mut w, &mut h);
+            assert_eq!(1, w);
+            assert_eq!(1, h);
+            assert!(!decoded.is_null());
+            WebPFree(data as *mut _);
+            WebPFree(decoded as *mut _);
+        }
+
+    }
 }
