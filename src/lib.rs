@@ -1,9 +1,64 @@
+#![allow(non_snake_case)]
 
 #[allow(non_camel_case_types)]
-#[allow(non_snake_case)]
 mod ffi;
 pub use ffi::*;
 
+pub fn WebPMuxNew() -> *mut WebPMux {
+    unsafe { WebPNewInternal(WEBP_MUX_ABI_VERSION) }
+}
+
+pub unsafe fn WebPInitDecoderConfig(config: *mut WebPDecoderConfig) -> bool {
+    WebPInitDecoderConfigInternal(config, WEBP_DECODER_ABI_VERSION) != 0
+}
+
+impl WebPDecoderConfig {
+    pub fn new() -> Result<Self, ()> {
+        unsafe {
+            let mut out = std::mem::MaybeUninit::uninit();
+            if WebPInitDecoderConfig(out.as_mut_ptr()) {
+                Ok(out.assume_init())
+            } else {
+                Err(())
+            }
+        }
+    }
+}
+
+pub unsafe fn WebPGetFeatures(
+    arg1: *const u8,
+    arg2: usize,
+    arg3: *mut WebPBitstreamFeatures,
+) -> VP8StatusCode {
+    WebPGetFeaturesInternal(arg1, arg2, arg3, WEBP_DECODER_ABI_VERSION)
+}
+
+pub fn WebPDataInit(data: &mut WebPData) {
+    *data = WebPData {
+        bytes: std::ptr::null_mut(),
+        size: 0,
+    }
+}
+
+impl Default for WebPData {
+    fn default() -> Self {
+        Self {
+            bytes: std::ptr::null(),
+            size: 0,
+        }
+    }
+}
+
+pub unsafe fn WebPDataClear(data: &mut WebPData) {
+    WebPFree(data.bytes as *mut _);
+    WebPDataInit(data);
+}
+
+impl std::fmt::Debug for WebPDecBuffer__bindgen_ty_1 {
+    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+        f.write_str("WebDecBuffer")
+    }
+}
 
 #[cfg(test)]
 mod tests {
