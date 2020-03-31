@@ -14,12 +14,7 @@ Add the following to the Cargo.toml in your project:
 
 ```
 [dependencies]
-libwebp-sys = "0.1"
-```
-
-and import useing extern crate:
-```
-extern crate libwebp_sys;
+libwebp-sys = "0.3"
 ```
 
 ## Example
