@@ -137,8 +137,7 @@ mod tests {
 
     #[test]
     fn test_is_webp() {
-        let mut buf = Vec::new();
-        let len = File::open("./tests/test1.webp").unwrap().read_to_end(&mut buf).unwrap();
+        let buf = std::fs::read("./tests/test1.webp").unwrap();
 
         if ['R' as u8, 'I' as u8, 'F' as u8, 'F' as u8] == buf[0..4]
 			&& ['W' as u8, 'E' as u8, 'B' as u8, 'P' as u8] == buf[8..12] {
@@ -156,7 +155,7 @@ mod tests {
     #[test]
     fn poke() {
         unsafe {
-            assert_eq!(65792, WebPGetEncoderVersion());
+            assert_eq!(66048, WebPGetEncoderVersion());
 
             let mut data = ::std::ptr::null_mut();
             let rgb = [1u8, 2, 3];
