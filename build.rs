@@ -63,7 +63,7 @@ fn main() {
     // dsp_dec
         "src/dsp/alpha_processing.c",
         "src/dsp/alpha_processing_mips_dsp_r2.c",
-        "src/dsp/alpha_processing_neon.c", // FIXME: .c.neon
+        "src/dsp/alpha_processing_neon.c",
         "src/dsp/alpha_processing_sse2.c",
         "src/dsp/alpha_processing_sse41.c",
         "src/dsp/cpu.c",
@@ -72,35 +72,35 @@ fn main() {
         "src/dsp/dec_mips32.c",
         "src/dsp/dec_mips_dsp_r2.c",
         "src/dsp/dec_msa.c",
-        "src/dsp/dec_neon.c", // FIXME: .c.neon
+        "src/dsp/dec_neon.c",
         "src/dsp/dec_sse2.c",
         "src/dsp/dec_sse41.c",
         "src/dsp/filters.c",
         "src/dsp/filters_mips_dsp_r2.c",
         "src/dsp/filters_msa.c",
-        "src/dsp/filters_neon.c", // FIXME: .c.neon
+        "src/dsp/filters_neon.c",
         "src/dsp/filters_sse2.c",
         "src/dsp/lossless.c",
         "src/dsp/lossless_mips_dsp_r2.c",
         "src/dsp/lossless_msa.c",
-        "src/dsp/lossless_neon.c", // FIXME: .c.neon
+        "src/dsp/lossless_neon.c",
         "src/dsp/lossless_sse2.c",
         "src/dsp/rescaler.c",
         "src/dsp/rescaler_mips32.c",
         "src/dsp/rescaler_mips_dsp_r2.c",
         "src/dsp/rescaler_msa.c",
-        "src/dsp/rescaler_neon.c", // FIXME: .c.neon
+        "src/dsp/rescaler_neon.c",
         "src/dsp/rescaler_sse2.c",
         "src/dsp/upsampling.c",
         "src/dsp/upsampling_mips_dsp_r2.c",
         "src/dsp/upsampling_msa.c",
-        "src/dsp/upsampling_neon.c", // FIXME: .c.neon
+        "src/dsp/upsampling_neon.c",
         "src/dsp/upsampling_sse2.c",
         "src/dsp/upsampling_sse41.c",
         "src/dsp/yuv.c",
         "src/dsp/yuv_mips32.c",
         "src/dsp/yuv_mips_dsp_r2.c",
-        "src/dsp/yuv_neon.c", // FIXME: .c.neon
+        "src/dsp/yuv_neon.c",
         "src/dsp/yuv_sse2.c",
         "src/dsp/yuv_sse41.c",
 
@@ -114,14 +114,14 @@ fn main() {
         "src/dsp/enc_mips32.c",
         "src/dsp/enc_mips_dsp_r2.c",
         "src/dsp/enc_msa.c",
-        "src/dsp/enc_neon.c", // FIXME: .c.neon
+        "src/dsp/enc_neon.c",
         "src/dsp/enc_sse2.c",
         "src/dsp/enc_sse41.c",
         "src/dsp/lossless_enc.c",
         "src/dsp/lossless_enc_mips32.c",
         "src/dsp/lossless_enc_mips_dsp_r2.c",
         "src/dsp/lossless_enc_msa.c",
-        "src/dsp/lossless_enc_neon.c", // FIXME: .c.neon
+        "src/dsp/lossless_enc_neon.c",
         "src/dsp/lossless_enc_sse2.c",
         "src/dsp/lossless_enc_sse41.c",
         "src/dsp/ssim.c",
