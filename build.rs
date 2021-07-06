@@ -6,6 +6,10 @@ fn main() {
     let manifest_dir = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR"));
     let vendor = manifest_dir.join("vendor");
 
+    if !vendor.join("src").exists() {
+        panic!("{} dir is missing files. Try running: `git submodule update --init --recursive`", vendor.display());
+    }
+
     let mut cc = cc::Build::new();
     cc.include(&vendor);
     cc.define("NDEBUG", Some("1"));
