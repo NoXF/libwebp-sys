@@ -28,9 +28,11 @@ fn main() {
             cc.define("WEBP_HAVE_SSE2", Some("1"));
             if cfg!(feature = "sse41") {
                 cc.define("WEBP_HAVE_SSE41", Some("1"));
+                cc.flag_if_supported("-msse4.1");
             }
             if cfg!(feature = "avx2") {
                 cc.define("WEBP_HAVE_AVX2", Some("1"));
+                cc.flag_if_supported("-mavx2");
             }
         }
         "aarch64" => {
