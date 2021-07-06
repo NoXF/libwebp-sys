@@ -14,7 +14,9 @@ fn main() {
     cc.include(&vendor);
     cc.define("NDEBUG", Some("1"));
     cc.define("_THREAD_SAFE", Some("1"));
-    cc.flag("-fvisibility=hidden"); // FIXME: msvc?
+    if !cc.get_compiler().is_like_msvc() {
+        cc.flag("-fvisibility=hidden");
+    }
 
     let target = env::var("CARGO_CFG_TARGET_ARCH").expect("CARGO_CFG_TARGET_ARCH");
     match target.as_str() {
