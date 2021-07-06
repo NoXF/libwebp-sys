@@ -15,5 +15,8 @@ repository = "https://github.com/NoXF/libwebp-sys"
 cc = "1.0.25"
 
 [features]
-default = ["parallel"]
+default = ["parallel", "neon"]
 parallel = ["cc/parallel"]
+neon = [] # ARM NEON SIMD (will crash on ARM CPUs without it)
+sse41 = [] # x64 SSE 4.1 (will crash on x86 CPUs without it)
+avx2 = [] # x64 AVX2 (will crash on x86 CPUs without it)

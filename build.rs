@@ -26,9 +26,17 @@ fn main() {
     match target.as_str() {
         "x86_64" | "i686" => {
             cc.define("WEBP_HAVE_SSE2", Some("1"));
+            if cfg!(feature = "sse41") {
+                cc.define("WEBP_HAVE_SSE41", Some("1"));
+            }
+            if cfg!(feature = "avx2") {
+                cc.define("WEBP_HAVE_AVX2", Some("1"));
+            }
         }
         "aarch64" => {
-            cc.define("WEBP_HAVE_NEON", Some("1"));
+            if cfg!(feature = "neon") {
+                cc.define("WEBP_HAVE_NEON", Some("1"));
+            }
         }
         _ => {}
     };
