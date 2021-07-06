@@ -18,6 +18,10 @@ fn main() {
         cc.flag("-fvisibility=hidden");
     }
 
+    if let Ok(target_cpu) = env::var("TARGET_CPU") {
+        cc.flag_if_supported(&format!("-march={}", target_cpu));
+    }
+
     let target = env::var("CARGO_CFG_TARGET_ARCH").expect("CARGO_CFG_TARGET_ARCH");
     match target.as_str() {
         "x86_64" | "i686" => {
