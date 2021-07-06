@@ -85,9 +85,9 @@ mod tests {
         let mut buf = Vec::new();
         let len = File::open("./tests/test1_1000x1000.bif").unwrap().read_to_end(&mut buf).unwrap();
 
-        let mut out_buf = Box::into_raw(Box::new(0u8)) as *mut _;
+        let mut out_buf = std::ptr::null_mut();
         unsafe {
-            let l = WebPEncodeLosslessRGBA(buf.as_ptr(), 1000, 1000, 1000 * 4, &mut out_buf as *mut _);
+            let l = WebPEncodeLosslessRGBA(buf.as_ptr(), 1000, 1000, 1000 * 4, &mut out_buf);
             let mut file = File::create("./tests/test1.webp").unwrap();
             let out = slice::from_raw_parts(out_buf, l);
             file.write_all(out).unwrap();
@@ -101,9 +101,9 @@ mod tests {
         let mut buf = Vec::new();
         let len = File::open("./tests/test1_1000x1000.bif").unwrap().read_to_end(&mut buf).unwrap();
 
-        let mut out_buf = Box::into_raw(Box::new(0u8)) as *mut _;
+        let mut out_buf = std::ptr::null_mut();
         unsafe {
-            let l = WebPEncodeRGBA(buf.as_ptr(), 1000, 1000, 1000 * 4, 90 as f32, &mut out_buf as *mut _);
+            let l = WebPEncodeRGBA(buf.as_ptr(), 1000, 1000, 1000 * 4, 90 as f32, &mut out_buf);
             let mut file = File::create("./tests/test1_q90.webp").unwrap();
             let out = slice::from_raw_parts(out_buf, l);
             file.write_all(out).unwrap();
@@ -126,8 +126,8 @@ mod tests {
 
             let decode_buf = WebPDecodeRGBA(buf.as_ptr(), len, &mut width, &mut height);
 
-            let mut out_buf = Box::into_raw(Box::new(0u8)) as *mut _;
-            let l = WebPEncodeRGBA(decode_buf, width, height, width * 4, 90 as f32, &mut out_buf as *mut _);
+            let mut out_buf = std::ptr::null_mut();
+            let l = WebPEncodeRGBA(decode_buf, width, height, width * 4, 90 as f32, &mut out_buf);
 
             let mut file = File::create("./tests/test1_q90.webp").unwrap();
             let out = slice::from_raw_parts(out_buf, l);
