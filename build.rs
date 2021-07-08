@@ -6,19 +6,39 @@ fn main() {
     let manifest_dir = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR"));
     let vendor = manifest_dir.join("vendor");
 
+    if !vendor.join("src").exists() {
+        panic!("{} dir is missing files. Try running: `git submodule update --init --recursive`", vendor.display());
+    }
+
     let mut cc = cc::Build::new();
     cc.include(&vendor);
     cc.define("NDEBUG", Some("1"));
     cc.define("_THREAD_SAFE", Some("1"));
-    cc.flag("-fvisibility=hidden"); // FIXME: msvc?
+    if !cc.get_compiler().is_like_msvc() {
+        cc.flag("-fvisibility=hidden");
+    }
+
+    if let Ok(target_cpu) = env::var("TARGET_CPU") {
+        cc.flag_if_supported(&format!("-march={}", target_cpu));
+    }
 
     let target = env::var("CARGO_CFG_TARGET_ARCH").expect("CARGO_CFG_TARGET_ARCH");
     match target.as_str() {
         "x86_64" | "i686" => {
             cc.define("WEBP_HAVE_SSE2", Some("1"));
+            if cfg!(feature = "sse41") {
+                cc.define("WEBP_HAVE_SSE41", Some("1"));
+                cc.flag_if_supported("-msse4.1");
+            }
+            if cfg!(feature = "avx2") {
+                cc.define("WEBP_HAVE_AVX2", Some("1"));
+                cc.flag_if_supported("-mavx2");
+            }
         }
         "aarch64" => {
-            cc.define("WEBP_HAVE_NEON", Some("1"));
+            if cfg!(feature = "neon") {
+                cc.define("WEBP_HAVE_NEON", Some("1"));
+            }
         }
         _ => {}
     };
@@ -43,7 +63,7 @@ fn main() {
     // dsp_dec
         "src/dsp/alpha_processing.c",
         "src/dsp/alpha_processing_mips_dsp_r2.c",
-        "src/dsp/alpha_processing_neon.c", // FIXME: .c.neon
+        "src/dsp/alpha_processing_neon.c",
         "src/dsp/alpha_processing_sse2.c",
         "src/dsp/alpha_processing_sse41.c",
         "src/dsp/cpu.c",
@@ -52,35 +72,35 @@ fn main() {
         "src/dsp/dec_mips32.c",
         "src/dsp/dec_mips_dsp_r2.c",
         "src/dsp/dec_msa.c",
-        "src/dsp/dec_neon.c", // FIXME: .c.neon
+        "src/dsp/dec_neon.c",
         "src/dsp/dec_sse2.c",
         "src/dsp/dec_sse41.c",
         "src/dsp/filters.c",
         "src/dsp/filters_mips_dsp_r2.c",
         "src/dsp/filters_msa.c",
-        "src/dsp/filters_neon.c", // FIXME: .c.neon
+        "src/dsp/filters_neon.c",
         "src/dsp/filters_sse2.c",
         "src/dsp/lossless.c",
         "src/dsp/lossless_mips_dsp_r2.c",
         "src/dsp/lossless_msa.c",
-        "src/dsp/lossless_neon.c", // FIXME: .c.neon
+        "src/dsp/lossless_neon.c",
         "src/dsp/lossless_sse2.c",
         "src/dsp/rescaler.c",
         "src/dsp/rescaler_mips32.c",
         "src/dsp/rescaler_mips_dsp_r2.c",
         "src/dsp/rescaler_msa.c",
-        "src/dsp/rescaler_neon.c", // FIXME: .c.neon
+        "src/dsp/rescaler_neon.c",
         "src/dsp/rescaler_sse2.c",
         "src/dsp/upsampling.c",
         "src/dsp/upsampling_mips_dsp_r2.c",
         "src/dsp/upsampling_msa.c",
-        "src/dsp/upsampling_neon.c", // FIXME: .c.neon
+        "src/dsp/upsampling_neon.c",
         "src/dsp/upsampling_sse2.c",
         "src/dsp/upsampling_sse41.c",
         "src/dsp/yuv.c",
         "src/dsp/yuv_mips32.c",
         "src/dsp/yuv_mips_dsp_r2.c",
-        "src/dsp/yuv_neon.c", // FIXME: .c.neon
+        "src/dsp/yuv_neon.c",
         "src/dsp/yuv_sse2.c",
         "src/dsp/yuv_sse41.c",
 
@@ -94,14 +114,14 @@ fn main() {
         "src/dsp/enc_mips32.c",
         "src/dsp/enc_mips_dsp_r2.c",
         "src/dsp/enc_msa.c",
-        "src/dsp/enc_neon.c", // FIXME: .c.neon
+        "src/dsp/enc_neon.c",
         "src/dsp/enc_sse2.c",
         "src/dsp/enc_sse41.c",
         "src/dsp/lossless_enc.c",
         "src/dsp/lossless_enc_mips32.c",
         "src/dsp/lossless_enc_mips_dsp_r2.c",
         "src/dsp/lossless_enc_msa.c",
-        "src/dsp/lossless_enc_neon.c", // FIXME: .c.neon
+        "src/dsp/lossless_enc_neon.c",
         "src/dsp/lossless_enc_sse2.c",
         "src/dsp/lossless_enc_sse41.c",
         "src/dsp/ssim.c",

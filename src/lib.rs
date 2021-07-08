@@ -84,32 +84,33 @@ mod tests {
     fn test_webp_encode_lossless() {
         let mut buf = Vec::new();
         let len = File::open("./tests/test1_1000x1000.bif").unwrap().read_to_end(&mut buf).unwrap();
+        assert_eq!(4000000, len);
 
-        let mut out_buf = Box::into_raw(Box::new(0u8)) as *mut _;
+        let mut out_buf = std::ptr::null_mut();
         unsafe {
-            let l = WebPEncodeLosslessRGBA(buf.as_ptr(), 1000, 1000, 1000 * 4, &mut out_buf as *mut _);
-            let mut file = File::create("./tests/test1.webp").unwrap();
+            let l = WebPEncodeLosslessRGBA(buf.as_ptr(), 1000, 1000, 1000 * 4, &mut out_buf);
             let out = slice::from_raw_parts(out_buf, l);
-            file.write_all(out).unwrap();
+
+            assert_eq!(b"RIFF", &out[0..4]);
+            assert_eq!(b"WEBP", &out[8..12]);
         }
 
-        assert!(4000000 == len);
     }
 
     #[test]
     fn test_webp_encode() {
         let mut buf = Vec::new();
         let len = File::open("./tests/test1_1000x1000.bif").unwrap().read_to_end(&mut buf).unwrap();
+        assert_eq!(4000000, len);
 
-        let mut out_buf = Box::into_raw(Box::new(0u8)) as *mut _;
+        let mut out_buf = std::ptr::null_mut();
         unsafe {
-            let l = WebPEncodeRGBA(buf.as_ptr(), 1000, 1000, 1000 * 4, 90 as f32, &mut out_buf as *mut _);
-            let mut file = File::create("./tests/test1_q90.webp").unwrap();
+            let l = WebPEncodeRGBA(buf.as_ptr(), 1000, 1000, 1000 * 4, 90 as f32, &mut out_buf);
             let out = slice::from_raw_parts(out_buf, l);
-            file.write_all(out).unwrap();
-        }
 
-        assert!(4000000 == len);
+            assert_eq!(b"RIFF", &out[0..4]);
+            assert_eq!(b"WEBP", &out[8..12]);
+        }
     }
 
     #[test]
@@ -126,24 +127,12 @@ mod tests {
 
             let decode_buf = WebPDecodeRGBA(buf.as_ptr(), len, &mut width, &mut height);
 
-            let mut out_buf = Box::into_raw(Box::new(0u8)) as *mut _;
-            let l = WebPEncodeRGBA(decode_buf, width, height, width * 4, 90 as f32, &mut out_buf as *mut _);
-
-            let mut file = File::create("./tests/test1_q90.webp").unwrap();
+            let mut out_buf = std::ptr::null_mut();
+            let l = WebPEncodeRGBA(decode_buf, width, height, width * 4, 90 as f32, &mut out_buf);
             let out = slice::from_raw_parts(out_buf, l);
-            file.write_all(out).unwrap();
-        }
-    }
 
-    #[test]
-    fn test_is_webp() {
-        let buf = std::fs::read("./tests/test1.webp").unwrap();
-
-        if ['R' as u8, 'I' as u8, 'F' as u8, 'F' as u8] == buf[0..4]
-			&& ['W' as u8, 'E' as u8, 'B' as u8, 'P' as u8] == buf[8..12] {
-            assert!(true)
-        } else {
-            assert!(false)
+            assert_eq!(b"RIFF", &out[0..4]);
+            assert_eq!(b"WEBP", &out[8..12]);
         }
     }
 
