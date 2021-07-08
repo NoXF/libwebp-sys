@@ -12,14 +12,14 @@ Add the following to the `Cargo.toml` in your project:
 
 ```toml
 [dependencies]
-libwebp-sys = "0.3"
+libwebp-sys = "0.4"
 ```
 
 or to require newer CPUs with SIMD support:
 
 ```toml
 [dependencies]
-libwebp-sys = { version = "0.3", features = ["avx2", "sse41", "neon"] }
+libwebp-sys = { version = "0.4", features = ["avx2", "sse41", "neon"] }
 ```
 
 ## Examples
