@@ -85,6 +85,7 @@ fn main() {
         "src/dsp/lossless_msa.c",
         "src/dsp/lossless_neon.c",
         "src/dsp/lossless_sse2.c",
+        "src/dsp/lossless_sse41.c",
         "src/dsp/rescaler.c",
         "src/dsp/rescaler_mips32.c",
         "src/dsp/rescaler_mips_dsp_r2.c",
