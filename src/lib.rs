@@ -5,6 +5,10 @@
 mod ffi;
 pub use ffi::*;
 
+const WEBP_MUX_ABI_VERSION: std::os::raw::c_int = ffi::WEBP_MUX_ABI_VERSION as std::os::raw::c_int;
+const WEBP_DECODER_ABI_VERSION: std::os::raw::c_int =
+    ffi::WEBP_DECODER_ABI_VERSION as std::os::raw::c_int;
+
 pub fn WebPMuxNew() -> *mut WebPMux {
     unsafe { WebPNewInternal(WEBP_MUX_ABI_VERSION) }
 }
@@ -27,7 +31,12 @@ impl WebPDecoderConfig {
 }
 
 pub unsafe fn WebPInitConfig(config: *mut WebPConfig) -> bool {
-    WebPConfigInitInternal(config, WebPPreset::WEBP_PRESET_DEFAULT, 75.0, WEBP_DECODER_ABI_VERSION) != 0
+    WebPConfigInitInternal(
+        config,
+        WebPPreset::WEBP_PRESET_DEFAULT,
+        75.0,
+        WEBP_DECODER_ABI_VERSION,
+    ) != 0
 }
 
 impl WebPConfig {
@@ -45,7 +54,9 @@ impl WebPConfig {
     pub fn new_with_preset(preset: WebPPreset, quality: f32) -> Result<Self, ()> {
         unsafe {
             let mut out = std::mem::MaybeUninit::uninit();
-            if WebPConfigInitInternal(out.as_mut_ptr(), preset, quality, WEBP_DECODER_ABI_VERSION) != 0 {
+            if WebPConfigInitInternal(out.as_mut_ptr(), preset, quality, WEBP_DECODER_ABI_VERSION)
+                != 0
+            {
                 Ok(out.assume_init())
             } else {
                 Err(())
@@ -109,8 +120,8 @@ impl std::fmt::Debug for WebPDecBuffer__bindgen_ty_1 {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use std::io::prelude::*;
     use std::fs::File;
+    use std::io::prelude::*;
     use std::slice;
 
     #[test]
@@ -118,9 +129,14 @@ mod tests {
         let mut width = 0;
         let mut height = 0;
         let mut buf = Vec::new();
-        let len = File::open("./tests/test1.webp").unwrap().read_to_end(&mut buf).unwrap();
+        let len = File::open("./tests/test1.webp")
+            .unwrap()
+            .read_to_end(&mut buf)
+            .unwrap();
 
-        unsafe { WebPGetInfo(buf.as_ptr(), len, &mut width, &mut height); }
+        unsafe {
+            WebPGetInfo(buf.as_ptr(), len, &mut width, &mut height);
+        }
         assert!(width == 1000);
         assert!(height == 1000);
     }
@@ -128,7 +144,10 @@ mod tests {
     #[test]
     fn test_webp_encode_lossless() {
         let mut buf = Vec::new();
-        let len = File::open("./tests/test1_1000x1000.bif").unwrap().read_to_end(&mut buf).unwrap();
+        let len = File::open("./tests/test1_1000x1000.bif")
+            .unwrap()
+            .read_to_end(&mut buf)
+            .unwrap();
         assert_eq!(4000000, len);
 
         let mut out_buf = std::ptr::null_mut();
@@ -139,13 +158,15 @@ mod tests {
             assert_eq!(b"RIFF", &out[0..4]);
             assert_eq!(b"WEBP", &out[8..12]);
         }
-
     }
 
     #[test]
     fn test_webp_encode() {
         let mut buf = Vec::new();
-        let len = File::open("./tests/test1_1000x1000.bif").unwrap().read_to_end(&mut buf).unwrap();
+        let len = File::open("./tests/test1_1000x1000.bif")
+            .unwrap()
+            .read_to_end(&mut buf)
+            .unwrap();
         assert_eq!(4000000, len);
 
         let mut out_buf = std::ptr::null_mut();
@@ -163,7 +184,10 @@ mod tests {
         use std::ffi::c_void;
 
         let mut buf = Vec::new();
-        let len = File::open("./tests/test1_1000x1000.bif").unwrap().read_to_end(&mut buf).unwrap();
+        let len = File::open("./tests/test1_1000x1000.bif")
+            .unwrap()
+            .read_to_end(&mut buf)
+            .unwrap();
         assert_eq!(4000000, len);
 
         unsafe {
@@ -182,7 +206,7 @@ mod tests {
                 data_size: usize,
                 picture: *const WebPPicture,
             ) -> ::std::os::raw::c_int {
-                let mut out: &mut Vec<u8> = std::mem::transmute((*picture).custom_ptr);
+                let out: &mut Vec<u8> = std::mem::transmute((*picture).custom_ptr);
                 out.extend_from_slice(std::slice::from_raw_parts(data, data_size));
                 0
             }
@@ -200,7 +224,10 @@ mod tests {
     #[test]
     fn test_webp_decode() {
         let mut buf = Vec::new();
-        let len = File::open("./tests/test1.webp").unwrap().read_to_end(&mut buf).unwrap();
+        let len = File::open("./tests/test1.webp")
+            .unwrap()
+            .read_to_end(&mut buf)
+            .unwrap();
         let mut width = 0;
         let mut height = 0;
 
@@ -212,7 +239,14 @@ mod tests {
             let decode_buf = WebPDecodeRGBA(buf.as_ptr(), len, &mut width, &mut height);
 
             let mut out_buf = std::ptr::null_mut();
-            let l = WebPEncodeRGBA(decode_buf, width, height, width * 4, 90 as f32, &mut out_buf);
+            let l = WebPEncodeRGBA(
+                decode_buf,
+                width,
+                height,
+                width * 4,
+                90 as f32,
+                &mut out_buf,
+            );
             let out = slice::from_raw_parts(out_buf, l);
 
             assert_eq!(b"RIFF", &out[0..4]);
@@ -228,7 +262,7 @@ mod tests {
     #[test]
     fn poke() {
         unsafe {
-            assert_eq!(66048, WebPGetEncoderVersion());
+            assert_eq!(66050, WebPGetEncoderVersion());
 
             let mut data = ::std::ptr::null_mut();
             let rgb = [1u8, 2, 3];
@@ -244,6 +278,5 @@ mod tests {
             WebPFree(data as *mut _);
             WebPFree(decoded as *mut _);
         }
-
     }
 }

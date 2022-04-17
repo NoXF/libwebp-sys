@@ -1,9 +1,12 @@
 [package]
 
 name = "libwebp-sys"
-version = "0.5.0"
-authors = [ "XianYou <xianyou.cyq@alibaba-inc.com>", "Kornel Lesiński <kornel@geekhood.net>" ]
-keywords = [ "WebP", "Image", "Codec", "Decoder", "Encoder" ]
+version = "0.6.0"
+authors = [
+  "XianYou <xianyou.cyq@alibaba-inc.com>",
+  "Kornel Lesiński <kornel@geekhood.net>",
+]
+keywords = ["WebP", "Image", "Codec", "Decoder", "Encoder"]
 description = "Bindings to libwebp (bindgen, static linking)"
 license = "MIT"
 readme = "README.md"
@@ -17,6 +20,6 @@ cc = "1.0.25"
 [features]
 default = ["parallel", "neon"]
 parallel = ["cc/parallel"]
-neon = [] # ARM NEON SIMD (will crash on ARM CPUs without it)
-sse41 = [] # x64 SSE 4.1 (will crash on x86 CPUs without it)
-avx2 = [] # x64 AVX2 (will crash on x86 CPUs without it)
+neon = []                      # ARM NEON SIMD (will crash on ARM CPUs without it)
+sse41 = []                     # x64 SSE 4.1 (will crash on x86 CPUs without it)
+avx2 = []                      # x64 AVX2 (will crash on x86 CPUs without it)
