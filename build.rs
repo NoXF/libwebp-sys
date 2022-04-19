@@ -3,11 +3,15 @@ use std::env;
 use std::path::PathBuf;
 
 fn main() {
-    let manifest_dir = PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR"));
+    let manifest_dir =
+        PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR"));
     let vendor = manifest_dir.join("vendor");
 
     if !vendor.join("src").exists() {
-        panic!("{} dir is missing files. Try running: `git submodule update --init --recursive`", vendor.display());
+        panic!(
+            "{} dir is missing files. Try running: `git submodule update --init --recursive`",
+            vendor.display()
+        );
     }
 
     let mut cc = cc::Build::new();
@@ -44,7 +48,7 @@ fn main() {
     };
 
     let files = [
-    // dec
+        // dec
         "src/dec/alpha_dec.c",
         "src/dec/buffer_dec.c",
         "src/dec/frame_dec.c",
@@ -55,12 +59,10 @@ fn main() {
         "src/dec/vp8_dec.c",
         "src/dec/vp8l_dec.c",
         "src/dec/webp_dec.c",
-
-    // demux
+        // demux
         "src/demux/anim_decode.c",
         "src/demux/demux.c",
-
-    // dsp_dec
+        // dsp_dec
         "src/dsp/alpha_processing.c",
         "src/dsp/alpha_processing_mips_dsp_r2.c",
         "src/dsp/alpha_processing_neon.c",
@@ -104,8 +106,7 @@ fn main() {
         "src/dsp/yuv_neon.c",
         "src/dsp/yuv_sse2.c",
         "src/dsp/yuv_sse41.c",
-
-    // dsp_enc
+        // dsp_enc
         "src/dsp/cost.c",
         "src/dsp/cost_neon.c",
         "src/dsp/cost_mips32.c",
@@ -127,8 +128,7 @@ fn main() {
         "src/dsp/lossless_enc_sse41.c",
         "src/dsp/ssim.c",
         "src/dsp/ssim_sse2.c",
-
-    // enc
+        // enc
         "src/enc/alpha_enc.c",
         "src/enc/analysis_enc.c",
         "src/enc/backward_references_cost_enc.c",
@@ -152,14 +152,12 @@ fn main() {
         "src/enc/tree_enc.c",
         "src/enc/vp8l_enc.c",
         "src/enc/webp_enc.c",
-
-    // mux
+        // mux
         "src/mux/anim_encode.c",
         "src/mux/muxedit.c",
         "src/mux/muxinternal.c",
         "src/mux/muxread.c",
-
-    // utils_dec
+        // utils_dec
         "src/utils/bit_reader_utils.c",
         "src/utils/color_cache_utils.c",
         "src/utils/filters_utils.c",
@@ -169,8 +167,7 @@ fn main() {
         "src/utils/rescaler_utils.c",
         "src/utils/thread_utils.c",
         "src/utils/utils.c",
-
-    // utils_enc
+        // utils_enc
         "src/utils/bit_writer_utils.c",
         "src/utils/huffman_encode_utils.c",
         "src/utils/quant_levels_utils.c",
