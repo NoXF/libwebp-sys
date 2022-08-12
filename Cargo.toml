@@ -1,7 +1,6 @@
 [package]
-
 name = "libwebp-sys"
-version = "0.5.0"
+version = "0.5.1"
 authors = [ "XianYou <xianyou.cyq@alibaba-inc.com>", "Kornel Lesiński <kornel@geekhood.net>" ]
 keywords = [ "WebP", "Image", "Codec", "Decoder", "Encoder" ]
 description = "Bindings to libwebp (bindgen, static linking)"
@@ -10,6 +9,7 @@ readme = "README.md"
 build = "build.rs"
 homepage = "https://github.com/NoXF/libwebp-sys"
 repository = "https://github.com/NoXF/libwebp-sys"
+edition = "2018"
 
 [build-dependencies]
 cc = "1.0.25"

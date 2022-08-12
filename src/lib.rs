@@ -1,5 +1,5 @@
 #![allow(non_snake_case)]
-// bindgen --default-enum-style=rust --distrust-clang-mangling --whitelist-function='[wW][eE][bB].*' --whitelist-var='[wW][eE][bB].*' --whitelist-type='[wW][eE][bB].*' --rust-target=1.26 wrap.h -- -I./vendor > src/ffi.rs
+// bindgen --no-layout-tests --size_t-is-usize --default-enum-style=rust --distrust-clang-mangling --whitelist-function='[wW][eE][bB].*' --whitelist-var='[wW][eE][bB].*' --whitelist-type='[wW][eE][bB].*' --rust-target=1.26 wrap.h -- -I./vendor > src/ffi.rs
 
 #[allow(non_camel_case_types)]
 mod ffi;
@@ -101,7 +101,7 @@ pub unsafe fn WebPDataClear(data: &mut WebPData) {
 }
 
 impl std::fmt::Debug for WebPDecBuffer__bindgen_ty_1 {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         f.write_str("WebDecBuffer")
     }
 }
@@ -182,7 +182,7 @@ mod tests {
                 data_size: usize,
                 picture: *const WebPPicture,
             ) -> ::std::os::raw::c_int {
-                let mut out: &mut Vec<u8> = std::mem::transmute((*picture).custom_ptr);
+                let out: &mut Vec<u8> = std::mem::transmute((*picture).custom_ptr);
                 out.extend_from_slice(std::slice::from_raw_parts(data, data_size));
                 0
             }
@@ -228,7 +228,7 @@ mod tests {
     #[test]
     fn poke() {
         unsafe {
-            assert_eq!(66048, WebPGetEncoderVersion());
+            assert_eq!(66050, WebPGetEncoderVersion());
 
             let mut data = ::std::ptr::null_mut();
             let rgb = [1u8, 2, 3];

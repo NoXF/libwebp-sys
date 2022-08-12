@@ -128,7 +128,8 @@ pub struct WebPConfig {
     pub exact: ::std::os::raw::c_int,
     pub use_delta_palette: ::std::os::raw::c_int,
     pub use_sharp_yuv: ::std::os::raw::c_int,
-    pub pad: [u32; 2usize],
+    pub qmin: ::std::os::raw::c_int,
+    pub qmax: ::std::os::raw::c_int,
 }
 #[repr(u32)]
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Hash)]
