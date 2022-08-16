@@ -1,0 +1,122 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+env:
+  RUST_BACKTRACE: full
+
+jobs:
+  rustfmt:
+    name: rustfmt / linux / stable
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: default
+          override: true
+          components: rustfmt
+
+      - name: cargo fmt -- --check
+        run: |
+          cargo fmt --all -- --check
+  clippy:
+    name: clippy / linux / stable
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install rust
+        run: |
+          rustup update --no-self-update stable
+          rustup component add clippy
+      - name: cargo clippy --all --examples
+        run: cargo clippy --all --examples
+
+  test:
+    name: test / ${{ matrix.name }}
+    runs-on: ${{ matrix.os || 'ubuntu-latest' }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: linux / stable
+            rust: stable
+            target: x86_64-unknown-linux-gnu
+          - name: linux / stable / sse41
+            features: '--features sse41'
+            target: x86_64-unknown-linux-gnu
+          - name: linux / beta
+            rust: beta
+            target: x86_64-unknown-linux-gnu
+          - name: linux / nightly
+            rust: nightly
+            target: x86_64-unknown-linux-gnu
+          - name: macOS / stable
+            os: macOS-latest
+            target: x86_64-apple-darwin
+          - name: macOS / stable / sse41
+            os: macOS-latest
+            features: '--features sse41'
+            target: x86_64-apple-darwin
+          - name: windows / stable
+            os: windows-2019
+            target: x86_64-pc-windows-msvc
+          - name: windows / stable sse41
+            os: windows-2019
+            features: '--features sse41'
+            target: x86_64-pc-windows-msvc
+          - name: wasm / stable
+            os: macOS-latest
+            target: 'wasm32-unknown-unknown'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          submodules: true
+
+      - name: Install emcc
+        if: matrix.target == 'wasm32-unknown-unknown'
+        run: brew install emscripten
+
+      - name: Install rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: ${{ matrix.rust || 'stable' }}
+          profile: default
+          default: true
+          override: true
+          target: ${{ matrix.target }}
+
+      - name: Test (Windows)
+        if: matrix.os == 'windows-2019'
+        shell: cmd
+        run: |
+          call "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
+          cargo test ${{ matrix.features }} --target ${{ matrix.target }}
+      - name: Test (Linux, macOS)
+        if: ${{ matrix.os != 'windows-2019' && matrix.target != 'wasm32-unknown-unknown' }}
+        run: |
+          cargo test ${{ matrix.features }} --target ${{ matrix.target }}
+      - name: Check wasm
+        if: matrix.target == 'wasm32-unknown-unknown'
+        run: |
+          cargo check ${{ matrix.features }} --target ${{ matrix.target }}
+        env:
+          CC: 'emcc'
+          CXX: 'emcc'

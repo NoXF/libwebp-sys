@@ -1,5 +1,5 @@
 #![allow(non_snake_case)]
-// bindgen --default-enum-style=rust --distrust-clang-mangling --whitelist-function='[wW][eE][bB].*' --whitelist-var='[wW][eE][bB].*' --whitelist-type='[wW][eE][bB].*' --rust-target=1.26 wrap.h -- -I./vendor > src/ffi.rs
+// bindgen --default-enum-style=rust --distrust-clang-mangling --whitelist-function='[wW][eE][bB].*' --whitelist-var='[wW][eE][bB].*' --whitelist-type='[wW][eE][bB].*' --size_t-is-usize wrap.h -- -I./vendor > src/ffi.rs
 
 #[allow(non_camel_case_types)]
 mod ffi;
@@ -171,7 +171,7 @@ mod tests {
 
         let mut out_buf = std::ptr::null_mut();
         unsafe {
-            let l = WebPEncodeRGBA(buf.as_ptr(), 1000, 1000, 1000 * 4, 90 as f32, &mut out_buf);
+            let l = WebPEncodeRGBA(buf.as_ptr(), 1000, 1000, 1000 * 4, 90_f32, &mut out_buf);
             let out = slice::from_raw_parts(out_buf, l);
 
             assert_eq!(b"RIFF", &out[0..4]);
@@ -206,7 +206,7 @@ mod tests {
                 data_size: usize,
                 picture: *const WebPPicture,
             ) -> ::std::os::raw::c_int {
-                let out: &mut Vec<u8> = std::mem::transmute((*picture).custom_ptr);
+                let out: &mut Vec<u8> = &mut *((*picture).custom_ptr as *mut std::vec::Vec<u8>);
                 out.extend_from_slice(std::slice::from_raw_parts(data, data_size));
                 0
             }
@@ -239,14 +239,7 @@ mod tests {
             let decode_buf = WebPDecodeRGBA(buf.as_ptr(), len, &mut width, &mut height);
 
             let mut out_buf = std::ptr::null_mut();
-            let l = WebPEncodeRGBA(
-                decode_buf,
-                width,
-                height,
-                width * 4,
-                90 as f32,
-                &mut out_buf,
-            );
+            let l = WebPEncodeRGBA(decode_buf, width, height, width * 4, 90_f32, &mut out_buf);
             let out = slice::from_raw_parts(out_buf, l);
 
             assert_eq!(b"RIFF", &out[0..4]);
@@ -262,11 +255,14 @@ mod tests {
     #[test]
     fn poke() {
         unsafe {
-            assert_eq!(66050, WebPGetEncoderVersion());
+            assert_eq!(66052, WebPGetEncoderVersion());
 
             let mut data = ::std::ptr::null_mut();
             let rgb = [1u8, 2, 3];
-            let size = WebPEncodeRGB(rgb.as_ptr(), 1, 1, 1, 50., &mut data);
+            // `stride` corresponds to the number of bytes needed to jump from one row to the next.
+            // For RGB, this is 3 * width.
+            // For RGBA, this is 4 * width.
+            let size = WebPEncodeRGB(rgb.as_ptr(), 1, 1, 3, 50., &mut data);
             assert!(size > 0);
             assert!(!data.is_null());
             let mut w = 0;
