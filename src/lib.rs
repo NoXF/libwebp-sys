@@ -13,6 +13,10 @@ pub fn WebPMuxNew() -> *mut WebPMux {
     unsafe { WebPNewInternal(WEBP_MUX_ABI_VERSION) }
 }
 
+pub fn WebPGetMuxABIVersion() -> std::os::raw::c_int {
+    WEBP_MUX_ABI_VERSION
+}
+
 pub unsafe fn WebPInitDecoderConfig(config: *mut WebPDecoderConfig) -> bool {
     WebPInitDecoderConfigInternal(config, WEBP_DECODER_ABI_VERSION) != 0
 }
