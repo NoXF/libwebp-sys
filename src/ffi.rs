@@ -4,6 +4,7 @@ pub const WEBP_ENCODER_ABI_VERSION: u32 = 527;
 pub const WEBP_MAX_DIMENSION: u32 = 16383;
 pub const WEBP_DECODER_ABI_VERSION: u32 = 521;
 pub const WEBP_MUX_ABI_VERSION: u32 = 264;
+pub const WEBP_DEMUX_ABI_VERSION: u32 = 263;
 extern "C" {
     pub fn WebPMalloc(size: usize) -> *mut ::std::os::raw::c_void;
 }
@@ -3732,4 +3733,692 @@ extern "C" {
 }
 extern "C" {
     pub fn WebPAnimEncoderDelete(enc: *mut WebPAnimEncoder);
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct WebPDemuxer {
+    _unused: [u8; 0],
+}
+extern "C" {
+    pub fn WebPGetDemuxVersion() -> ::std::os::raw::c_int;
+}
+#[repr(i32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum WebPDemuxState {
+    WEBP_DEMUX_PARSE_ERROR = -1,
+    WEBP_DEMUX_PARSING_HEADER = 0,
+    WEBP_DEMUX_PARSED_HEADER = 1,
+    WEBP_DEMUX_DONE = 2,
+}
+extern "C" {
+    pub fn WebPDemuxInternal(
+        arg1: *const WebPData,
+        arg2: ::std::os::raw::c_int,
+        arg3: *mut WebPDemuxState,
+        arg4: ::std::os::raw::c_int,
+    ) -> *mut WebPDemuxer;
+}
+extern "C" {
+    pub fn WebPDemuxDelete(dmux: *mut WebPDemuxer);
+}
+#[repr(u32)]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum WebPFormatFeature {
+    WEBP_FF_FORMAT_FLAGS = 0,
+    WEBP_FF_CANVAS_WIDTH = 1,
+    WEBP_FF_CANVAS_HEIGHT = 2,
+    WEBP_FF_LOOP_COUNT = 3,
+    WEBP_FF_BACKGROUND_COLOR = 4,
+    WEBP_FF_FRAME_COUNT = 5,
+}
+extern "C" {
+    pub fn WebPDemuxGetI(dmux: *const WebPDemuxer, feature: WebPFormatFeature) -> u32;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct WebPIterator {
+    pub frame_num: ::std::os::raw::c_int,
+    pub num_frames: ::std::os::raw::c_int,
+    pub x_offset: ::std::os::raw::c_int,
+    pub y_offset: ::std::os::raw::c_int,
+    pub width: ::std::os::raw::c_int,
+    pub height: ::std::os::raw::c_int,
+    pub duration: ::std::os::raw::c_int,
+    pub dispose_method: WebPMuxAnimDispose,
+    pub complete: ::std::os::raw::c_int,
+    pub fragment: WebPData,
+    pub has_alpha: ::std::os::raw::c_int,
+    pub blend_method: WebPMuxAnimBlend,
+    pub pad: [u32; 2usize],
+    pub private_: *mut ::std::os::raw::c_void,
+}
+#[test]
+fn bindgen_test_layout_WebPIterator() {
+    assert_eq!(
+        ::std::mem::size_of::<WebPIterator>(),
+        80usize,
+        concat!("Size of: ", stringify!(WebPIterator))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<WebPIterator>(),
+        8usize,
+        concat!("Alignment of ", stringify!(WebPIterator))
+    );
+    fn test_field_frame_num() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).frame_num) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPIterator),
+                "::",
+                stringify!(frame_num)
+            )
+        );
+    }
+    test_field_frame_num();
+    fn test_field_num_frames() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).num_frames) as usize - ptr as usize
+            },
+            4usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPIterator),
+                "::",
+                stringify!(num_frames)
+            )
+        );
+    }
+    test_field_num_frames();
+    fn test_field_x_offset() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).x_offset) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPIterator),
+                "::",
+                stringify!(x_offset)
+            )
+        );
+    }
+    test_field_x_offset();
+    fn test_field_y_offset() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).y_offset) as usize - ptr as usize
+            },
+            12usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPIterator),
+                "::",
+                stringify!(y_offset)
+            )
+        );
+    }
+    test_field_y_offset();
+    fn test_field_width() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).width) as usize - ptr as usize
+            },
+            16usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPIterator),
+                "::",
+                stringify!(width)
+            )
+        );
+    }
+    test_field_width();
+    fn test_field_height() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).height) as usize - ptr as usize
+            },
+            20usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPIterator),
+                "::",
+                stringify!(height)
+            )
+        );
+    }
+    test_field_height();
+    fn test_field_duration() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).duration) as usize - ptr as usize
+            },
+            24usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPIterator),
+                "::",
+                stringify!(duration)
+            )
+        );
+    }
+    test_field_duration();
+    fn test_field_dispose_method() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).dispose_method) as usize - ptr as usize
+            },
+            28usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPIterator),
+                "::",
+                stringify!(dispose_method)
+            )
+        );
+    }
+    test_field_dispose_method();
+    fn test_field_complete() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).complete) as usize - ptr as usize
+            },
+            32usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPIterator),
+                "::",
+                stringify!(complete)
+            )
+        );
+    }
+    test_field_complete();
+    fn test_field_fragment() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).fragment) as usize - ptr as usize
+            },
+            40usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPIterator),
+                "::",
+                stringify!(fragment)
+            )
+        );
+    }
+    test_field_fragment();
+    fn test_field_has_alpha() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).has_alpha) as usize - ptr as usize
+            },
+            56usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPIterator),
+                "::",
+                stringify!(has_alpha)
+            )
+        );
+    }
+    test_field_has_alpha();
+    fn test_field_blend_method() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).blend_method) as usize - ptr as usize
+            },
+            60usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPIterator),
+                "::",
+                stringify!(blend_method)
+            )
+        );
+    }
+    test_field_blend_method();
+    fn test_field_pad() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).pad) as usize - ptr as usize
+            },
+            64usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPIterator),
+                "::",
+                stringify!(pad)
+            )
+        );
+    }
+    test_field_pad();
+    fn test_field_private_() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).private_) as usize - ptr as usize
+            },
+            72usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPIterator),
+                "::",
+                stringify!(private_)
+            )
+        );
+    }
+    test_field_private_();
+}
+extern "C" {
+    pub fn WebPDemuxGetFrame(
+        dmux: *const WebPDemuxer,
+        frame_number: ::std::os::raw::c_int,
+        iter: *mut WebPIterator,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn WebPDemuxNextFrame(iter: *mut WebPIterator) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn WebPDemuxPrevFrame(iter: *mut WebPIterator) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn WebPDemuxReleaseIterator(iter: *mut WebPIterator);
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct WebPChunkIterator {
+    pub chunk_num: ::std::os::raw::c_int,
+    pub num_chunks: ::std::os::raw::c_int,
+    pub chunk: WebPData,
+    pub pad: [u32; 6usize],
+    pub private_: *mut ::std::os::raw::c_void,
+}
+#[test]
+fn bindgen_test_layout_WebPChunkIterator() {
+    assert_eq!(
+        ::std::mem::size_of::<WebPChunkIterator>(),
+        56usize,
+        concat!("Size of: ", stringify!(WebPChunkIterator))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<WebPChunkIterator>(),
+        8usize,
+        concat!("Alignment of ", stringify!(WebPChunkIterator))
+    );
+    fn test_field_chunk_num() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPChunkIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).chunk_num) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPChunkIterator),
+                "::",
+                stringify!(chunk_num)
+            )
+        );
+    }
+    test_field_chunk_num();
+    fn test_field_num_chunks() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPChunkIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).num_chunks) as usize - ptr as usize
+            },
+            4usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPChunkIterator),
+                "::",
+                stringify!(num_chunks)
+            )
+        );
+    }
+    test_field_num_chunks();
+    fn test_field_chunk() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPChunkIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).chunk) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPChunkIterator),
+                "::",
+                stringify!(chunk)
+            )
+        );
+    }
+    test_field_chunk();
+    fn test_field_pad() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPChunkIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).pad) as usize - ptr as usize
+            },
+            24usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPChunkIterator),
+                "::",
+                stringify!(pad)
+            )
+        );
+    }
+    test_field_pad();
+    fn test_field_private_() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPChunkIterator>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).private_) as usize - ptr as usize
+            },
+            48usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPChunkIterator),
+                "::",
+                stringify!(private_)
+            )
+        );
+    }
+    test_field_private_();
+}
+extern "C" {
+    pub fn WebPDemuxGetChunk(
+        dmux: *const WebPDemuxer,
+        fourcc: *const ::std::os::raw::c_char,
+        chunk_number: ::std::os::raw::c_int,
+        iter: *mut WebPChunkIterator,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn WebPDemuxNextChunk(iter: *mut WebPChunkIterator) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn WebPDemuxPrevChunk(iter: *mut WebPChunkIterator) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn WebPDemuxReleaseChunkIterator(iter: *mut WebPChunkIterator);
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct WebPAnimDecoder {
+    _unused: [u8; 0],
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct WebPAnimDecoderOptions {
+    pub color_mode: WEBP_CSP_MODE,
+    pub use_threads: ::std::os::raw::c_int,
+    pub padding: [u32; 7usize],
+}
+#[test]
+fn bindgen_test_layout_WebPAnimDecoderOptions() {
+    assert_eq!(
+        ::std::mem::size_of::<WebPAnimDecoderOptions>(),
+        36usize,
+        concat!("Size of: ", stringify!(WebPAnimDecoderOptions))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<WebPAnimDecoderOptions>(),
+        4usize,
+        concat!("Alignment of ", stringify!(WebPAnimDecoderOptions))
+    );
+    fn test_field_color_mode() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPAnimDecoderOptions>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).color_mode) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPAnimDecoderOptions),
+                "::",
+                stringify!(color_mode)
+            )
+        );
+    }
+    test_field_color_mode();
+    fn test_field_use_threads() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPAnimDecoderOptions>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).use_threads) as usize - ptr as usize
+            },
+            4usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPAnimDecoderOptions),
+                "::",
+                stringify!(use_threads)
+            )
+        );
+    }
+    test_field_use_threads();
+    fn test_field_padding() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPAnimDecoderOptions>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).padding) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPAnimDecoderOptions),
+                "::",
+                stringify!(padding)
+            )
+        );
+    }
+    test_field_padding();
+}
+extern "C" {
+    pub fn WebPAnimDecoderOptionsInitInternal(
+        arg1: *mut WebPAnimDecoderOptions,
+        arg2: ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn WebPAnimDecoderNewInternal(
+        arg1: *const WebPData,
+        arg2: *const WebPAnimDecoderOptions,
+        arg3: ::std::os::raw::c_int,
+    ) -> *mut WebPAnimDecoder;
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct WebPAnimInfo {
+    pub canvas_width: u32,
+    pub canvas_height: u32,
+    pub loop_count: u32,
+    pub bgcolor: u32,
+    pub frame_count: u32,
+    pub pad: [u32; 4usize],
+}
+#[test]
+fn bindgen_test_layout_WebPAnimInfo() {
+    assert_eq!(
+        ::std::mem::size_of::<WebPAnimInfo>(),
+        36usize,
+        concat!("Size of: ", stringify!(WebPAnimInfo))
+    );
+    assert_eq!(
+        ::std::mem::align_of::<WebPAnimInfo>(),
+        4usize,
+        concat!("Alignment of ", stringify!(WebPAnimInfo))
+    );
+    fn test_field_canvas_width() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPAnimInfo>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).canvas_width) as usize - ptr as usize
+            },
+            0usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPAnimInfo),
+                "::",
+                stringify!(canvas_width)
+            )
+        );
+    }
+    test_field_canvas_width();
+    fn test_field_canvas_height() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPAnimInfo>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).canvas_height) as usize - ptr as usize
+            },
+            4usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPAnimInfo),
+                "::",
+                stringify!(canvas_height)
+            )
+        );
+    }
+    test_field_canvas_height();
+    fn test_field_loop_count() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPAnimInfo>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).loop_count) as usize - ptr as usize
+            },
+            8usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPAnimInfo),
+                "::",
+                stringify!(loop_count)
+            )
+        );
+    }
+    test_field_loop_count();
+    fn test_field_bgcolor() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPAnimInfo>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).bgcolor) as usize - ptr as usize
+            },
+            12usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPAnimInfo),
+                "::",
+                stringify!(bgcolor)
+            )
+        );
+    }
+    test_field_bgcolor();
+    fn test_field_frame_count() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPAnimInfo>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).frame_count) as usize - ptr as usize
+            },
+            16usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPAnimInfo),
+                "::",
+                stringify!(frame_count)
+            )
+        );
+    }
+    test_field_frame_count();
+    fn test_field_pad() {
+        assert_eq!(
+            unsafe {
+                let uninit = ::std::mem::MaybeUninit::<WebPAnimInfo>::uninit();
+                let ptr = uninit.as_ptr();
+                ::std::ptr::addr_of!((*ptr).pad) as usize - ptr as usize
+            },
+            20usize,
+            concat!(
+                "Offset of field: ",
+                stringify!(WebPAnimInfo),
+                "::",
+                stringify!(pad)
+            )
+        );
+    }
+    test_field_pad();
+}
+extern "C" {
+    pub fn WebPAnimDecoderGetInfo(
+        dec: *const WebPAnimDecoder,
+        info: *mut WebPAnimInfo,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn WebPAnimDecoderGetNext(
+        dec: *mut WebPAnimDecoder,
+        buf: *mut *mut u8,
+        timestamp: *mut ::std::os::raw::c_int,
+    ) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn WebPAnimDecoderHasMoreFrames(dec: *const WebPAnimDecoder) -> ::std::os::raw::c_int;
+}
+extern "C" {
+    pub fn WebPAnimDecoderReset(dec: *mut WebPAnimDecoder);
+}
+extern "C" {
+    pub fn WebPAnimDecoderGetDemuxer(dec: *const WebPAnimDecoder) -> *const WebPDemuxer;
+}
+extern "C" {
+    pub fn WebPAnimDecoderDelete(dec: *mut WebPAnimDecoder);
 }

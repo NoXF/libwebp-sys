@@ -2,3 +2,4 @@
 #include "vendor/src/webp/encode.h"
 #include "vendor/src/webp/decode.h"
 #include "vendor/src/webp/mux.h"
+#include "vendor/src/webp/demux.h"

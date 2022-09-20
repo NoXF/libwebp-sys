@@ -5,6 +5,7 @@
 mod ffi;
 pub use ffi::*;
 
+const WEBP_DEMUX_ABI_VERSION: std::os::raw::c_int = ffi::WEBP_DEMUX_ABI_VERSION as std::os::raw::c_int;
 const WEBP_MUX_ABI_VERSION: std::os::raw::c_int = ffi::WEBP_MUX_ABI_VERSION as std::os::raw::c_int;
 const WEBP_DECODER_ABI_VERSION: std::os::raw::c_int =
     ffi::WEBP_DECODER_ABI_VERSION as std::os::raw::c_int;
@@ -15,6 +16,10 @@ pub fn WebPMuxNew() -> *mut WebPMux {
 
 pub fn WebPGetMuxABIVersion() -> std::os::raw::c_int {
     WEBP_MUX_ABI_VERSION
+}
+
+pub fn WebPGetDemuxABIVersion() -> std::os::raw::c_int {
+    WEBP_DEMUX_ABI_VERSION
 }
 
 pub unsafe fn WebPInitDecoderConfig(config: *mut WebPDecoderConfig) -> bool {
