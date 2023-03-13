@@ -40,7 +40,7 @@ fn main() {
 }
 
 fn setup_build(build: &mut cc::Build, include_dir: &PathBuf) {
-    build.include(&include_dir);
+    build.include(include_dir);
     build.define("NDEBUG", Some("1"));
     build.define("_THREAD_SAFE", Some("1"));
     if !build.get_compiler().is_like_msvc() {
