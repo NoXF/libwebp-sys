@@ -22,6 +22,12 @@ or to require newer CPUs with SIMD support:
 libwebp-sys = { version = "0.8", features = ["avx2", "sse41", "neon"] }
 ```
 
+or to require `no_std` support:
+
+```toml
+libwebp-sys = { version = "0.8", default-features = false, features = ["parallel", "neon"] }
+```
+
 ## Examples
 
 ### Encode

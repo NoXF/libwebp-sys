@@ -1,25 +1,28 @@
-#![allow(non_snake_case)]
-// bindgen --default-enum-style=rust --distrust-clang-mangling --whitelist-function='[wW][eE][bB].*' --whitelist-var='[wW][eE][bB].*' --whitelist-type='[wW][eE][bB].*' --size_t-is-usize wrap.h -- -I./vendor > src/ffi.rs
+#![cfg_attr(not(feature = "std"), no_std)]
+#![allow(non_snake_case, clippy::missing_safety_doc, clippy::result_unit_err)]
+// bindgen --default-enum-style=rust --distrust-clang-mangling --use-core --impl-debug --allowlist-function='[wW][eE][bB].*' --allowlist-var='[wW][eE][bB].*' --allowlist-type='[wW][eE][bB].*' wrap.h -- -I./vendor > src/ffi.rs
+
+#[cfg(feature = "std")]
+use std as core;
 
 #[allow(non_camel_case_types)]
 mod ffi;
 pub use ffi::*;
 
-const WEBP_DEMUX_ABI_VERSION: std::os::raw::c_int =
-    ffi::WEBP_DEMUX_ABI_VERSION as std::os::raw::c_int;
-const WEBP_MUX_ABI_VERSION: std::os::raw::c_int = ffi::WEBP_MUX_ABI_VERSION as std::os::raw::c_int;
-const WEBP_DECODER_ABI_VERSION: std::os::raw::c_int =
-    ffi::WEBP_DECODER_ABI_VERSION as std::os::raw::c_int;
+const WEBP_DEMUX_ABI_VERSION: core::ffi::c_int = ffi::WEBP_DEMUX_ABI_VERSION as core::ffi::c_int;
+const WEBP_MUX_ABI_VERSION: core::ffi::c_int = ffi::WEBP_MUX_ABI_VERSION as core::ffi::c_int;
+const WEBP_DECODER_ABI_VERSION: core::ffi::c_int =
+    ffi::WEBP_DECODER_ABI_VERSION as core::ffi::c_int;
 
 pub fn WebPMuxNew() -> *mut WebPMux {
     unsafe { WebPNewInternal(WEBP_MUX_ABI_VERSION) }
 }
 
-pub fn WebPGetMuxABIVersion() -> std::os::raw::c_int {
+pub fn WebPGetMuxABIVersion() -> core::ffi::c_int {
     WEBP_MUX_ABI_VERSION
 }
 
-pub fn WebPGetDemuxABIVersion() -> std::os::raw::c_int {
+pub fn WebPGetDemuxABIVersion() -> core::ffi::c_int {
     WEBP_DEMUX_ABI_VERSION
 }
 
@@ -30,7 +33,7 @@ pub unsafe fn WebPInitDecoderConfig(config: *mut WebPDecoderConfig) -> bool {
 impl WebPDecoderConfig {
     pub fn new() -> Result<Self, ()> {
         unsafe {
-            let mut out = std::mem::MaybeUninit::uninit();
+            let mut out = core::mem::MaybeUninit::uninit();
             if WebPInitDecoderConfig(out.as_mut_ptr()) {
                 Ok(out.assume_init())
             } else {
@@ -52,7 +55,7 @@ pub unsafe fn WebPInitConfig(config: *mut WebPConfig) -> bool {
 impl WebPConfig {
     pub fn new() -> Result<Self, ()> {
         unsafe {
-            let mut out = std::mem::MaybeUninit::uninit();
+            let mut out = core::mem::MaybeUninit::uninit();
             if WebPInitConfig(out.as_mut_ptr()) {
                 Ok(out.assume_init())
             } else {
@@ -63,7 +66,7 @@ impl WebPConfig {
 
     pub fn new_with_preset(preset: WebPPreset, quality: f32) -> Result<Self, ()> {
         unsafe {
-            let mut out = std::mem::MaybeUninit::uninit();
+            let mut out = core::mem::MaybeUninit::uninit();
             if WebPConfigInitInternal(out.as_mut_ptr(), preset, quality, WEBP_DECODER_ABI_VERSION)
                 != 0
             {
@@ -82,7 +85,7 @@ pub unsafe fn WebPPictureInit(config: *mut WebPPicture) -> bool {
 impl WebPPicture {
     pub fn new() -> Result<Self, ()> {
         unsafe {
-            let mut out = std::mem::MaybeUninit::uninit();
+            let mut out = core::mem::MaybeUninit::uninit();
             if WebPPictureInit(out.as_mut_ptr()) {
                 Ok(out.assume_init())
             } else {
@@ -102,7 +105,7 @@ pub unsafe fn WebPGetFeatures(
 
 pub fn WebPDataInit(data: &mut WebPData) {
     *data = WebPData {
-        bytes: std::ptr::null_mut(),
+        bytes: core::ptr::null_mut(),
         size: 0,
     }
 }
@@ -110,7 +113,7 @@ pub fn WebPDataInit(data: &mut WebPData) {
 impl Default for WebPData {
     fn default() -> Self {
         Self {
-            bytes: std::ptr::null(),
+            bytes: core::ptr::null(),
             size: 0,
         }
     }
@@ -121,13 +124,7 @@ pub unsafe fn WebPDataClear(data: &mut WebPData) {
     WebPDataInit(data);
 }
 
-impl std::fmt::Debug for WebPDecBuffer__bindgen_ty_1 {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        f.write_str("WebDecBuffer")
-    }
-}
-
-#[cfg(test)]
+#[cfg(all(test, feature = "std"))]
 mod tests {
     use super::*;
     use std::fs::File;
@@ -215,7 +212,7 @@ mod tests {
                 data: *const u8,
                 data_size: usize,
                 picture: *const WebPPicture,
-            ) -> ::std::os::raw::c_int {
+            ) -> ::std::ffi::c_int {
                 let out: &mut Vec<u8> = &mut *((*picture).custom_ptr as *mut std::vec::Vec<u8>);
                 out.extend_from_slice(std::slice::from_raw_parts(data, data_size));
                 0
@@ -265,7 +262,7 @@ mod tests {
     #[test]
     fn poke() {
         unsafe {
-            assert_eq!(66052, WebPGetEncoderVersion());
+            assert_eq!(66304, WebPGetEncoderVersion());
 
             let mut data = ::std::ptr::null_mut();
             let rgb = [1u8, 2, 3];
