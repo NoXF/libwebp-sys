@@ -62,8 +62,12 @@ impl WebPConfig {
     pub fn new_with_preset(preset: WebPPreset, quality: f32) -> Result<Self, ()> {
         unsafe {
             let mut out = core::mem::MaybeUninit::uninit();
-            if WebPConfigInitInternal(out.as_mut_ptr(), preset, quality, ffi::WEBP_DECODER_ABI_VERSION as _)
-                != 0
+            if WebPConfigInitInternal(
+                out.as_mut_ptr(),
+                preset,
+                quality,
+                ffi::WEBP_DECODER_ABI_VERSION as _,
+            ) != 0
             {
                 Ok(out.assume_init())
             } else {

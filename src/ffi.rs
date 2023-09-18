@@ -133,6 +133,7 @@ pub struct WebPConfig {
     pub qmax: ::core::ffi::c_int,
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPConfig() {
     const UNINIT: ::core::mem::MaybeUninit<WebPConfig> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
@@ -488,6 +489,7 @@ pub struct WebPAuxStats {
     pub pad: [u32; 2usize],
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPAuxStats() {
     const UNINIT: ::core::mem::MaybeUninit<WebPAuxStats> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
@@ -708,6 +710,7 @@ pub struct WebPMemoryWriter {
     pub pad: [u32; 1usize],
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPMemoryWriter() {
     const UNINIT: ::core::mem::MaybeUninit<WebPMemoryWriter> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
@@ -842,6 +845,7 @@ pub struct WebPPicture {
     pub pad7: [*mut ::core::ffi::c_void; 2usize],
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPPicture() {
     const UNINIT: ::core::mem::MaybeUninit<WebPPicture> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
@@ -1450,6 +1454,7 @@ pub struct WebPRGBABuffer {
     pub size: usize,
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPRGBABuffer() {
     const UNINIT: ::core::mem::MaybeUninit<WebPRGBABuffer> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
@@ -1511,6 +1516,7 @@ pub struct WebPYUVABuffer {
     pub a_size: usize,
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPYUVABuffer() {
     const UNINIT: ::core::mem::MaybeUninit<WebPYUVABuffer> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
@@ -1663,6 +1669,7 @@ pub union WebPDecBuffer__bindgen_ty_1 {
     pub YUVA: WebPYUVABuffer,
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPDecBuffer__bindgen_ty_1() {
     const UNINIT: ::core::mem::MaybeUninit<WebPDecBuffer__bindgen_ty_1> =
         ::core::mem::MaybeUninit::uninit();
@@ -1704,6 +1711,7 @@ impl ::core::fmt::Debug for WebPDecBuffer__bindgen_ty_1 {
     }
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPDecBuffer() {
     const UNINIT: ::core::mem::MaybeUninit<WebPDecBuffer> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
@@ -1908,6 +1916,7 @@ pub struct WebPBitstreamFeatures {
     pub pad: [u32; 5usize],
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPBitstreamFeatures() {
     const UNINIT: ::core::mem::MaybeUninit<WebPBitstreamFeatures> =
         ::core::mem::MaybeUninit::uninit();
@@ -2011,6 +2020,7 @@ pub struct WebPDecoderOptions {
     pub pad: [u32; 5usize],
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPDecoderOptions() {
     const UNINIT: ::core::mem::MaybeUninit<WebPDecoderOptions> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
@@ -2183,6 +2193,7 @@ pub struct WebPDecoderConfig {
     pub options: WebPDecoderOptions,
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPDecoderConfig() {
     const UNINIT: ::core::mem::MaybeUninit<WebPDecoderConfig> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
@@ -2285,6 +2296,7 @@ pub struct WebPData {
     pub size: usize,
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPData() {
     const UNINIT: ::core::mem::MaybeUninit<WebPData> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
@@ -2399,6 +2411,7 @@ pub struct WebPMuxFrameInfo {
     pub pad: [u32; 1usize],
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPMuxFrameInfo() {
     const UNINIT: ::core::mem::MaybeUninit<WebPMuxFrameInfo> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
@@ -2524,6 +2537,7 @@ pub struct WebPMuxAnimParams {
     pub loop_count: ::core::ffi::c_int,
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPMuxAnimParams() {
     const UNINIT: ::core::mem::MaybeUninit<WebPMuxAnimParams> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
@@ -2614,6 +2628,7 @@ pub struct WebPAnimEncoderOptions {
     pub padding: [u32; 4usize],
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPAnimEncoderOptions() {
     const UNINIT: ::core::mem::MaybeUninit<WebPAnimEncoderOptions> =
         ::core::mem::MaybeUninit::uninit();
@@ -2792,6 +2807,7 @@ pub struct WebPIterator {
     pub private_: *mut ::core::ffi::c_void,
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPIterator() {
     const UNINIT: ::core::mem::MaybeUninit<WebPIterator> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
@@ -2972,6 +2988,7 @@ pub struct WebPChunkIterator {
     pub private_: *mut ::core::ffi::c_void,
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPChunkIterator() {
     const UNINIT: ::core::mem::MaybeUninit<WebPChunkIterator> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
@@ -3066,6 +3083,7 @@ pub struct WebPAnimDecoderOptions {
     pub padding: [u32; 7usize],
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPAnimDecoderOptions() {
     const UNINIT: ::core::mem::MaybeUninit<WebPAnimDecoderOptions> =
         ::core::mem::MaybeUninit::uninit();
@@ -3135,6 +3153,7 @@ pub struct WebPAnimInfo {
     pub pad: [u32; 4usize],
 }
 #[test]
+#[cfg(not(target_pointer_width = "32"))]
 fn bindgen_test_layout_WebPAnimInfo() {
     const UNINIT: ::core::mem::MaybeUninit<WebPAnimInfo> = ::core::mem::MaybeUninit::uninit();
     let ptr = UNINIT.as_ptr();
