@@ -9,25 +9,20 @@ use std as core;
 mod ffi;
 pub use ffi::*;
 
-const WEBP_DEMUX_ABI_VERSION: core::ffi::c_int = ffi::WEBP_DEMUX_ABI_VERSION as core::ffi::c_int;
-const WEBP_MUX_ABI_VERSION: core::ffi::c_int = ffi::WEBP_MUX_ABI_VERSION as core::ffi::c_int;
-const WEBP_DECODER_ABI_VERSION: core::ffi::c_int =
-    ffi::WEBP_DECODER_ABI_VERSION as core::ffi::c_int;
-
 pub fn WebPMuxNew() -> *mut WebPMux {
-    unsafe { WebPNewInternal(WEBP_MUX_ABI_VERSION) }
+    unsafe { WebPNewInternal(ffi::WEBP_MUX_ABI_VERSION as _) }
 }
 
 pub fn WebPGetMuxABIVersion() -> core::ffi::c_int {
-    WEBP_MUX_ABI_VERSION
+    WEBP_MUX_ABI_VERSION as _
 }
 
 pub fn WebPGetDemuxABIVersion() -> core::ffi::c_int {
-    WEBP_DEMUX_ABI_VERSION
+    ffi::WEBP_DEMUX_ABI_VERSION as _
 }
 
 pub unsafe fn WebPInitDecoderConfig(config: *mut WebPDecoderConfig) -> bool {
-    WebPInitDecoderConfigInternal(config, WEBP_DECODER_ABI_VERSION) != 0
+    WebPInitDecoderConfigInternal(config, ffi::WEBP_DECODER_ABI_VERSION as _) != 0
 }
 
 impl WebPDecoderConfig {
@@ -48,7 +43,7 @@ pub unsafe fn WebPInitConfig(config: *mut WebPConfig) -> bool {
         config,
         WebPPreset::WEBP_PRESET_DEFAULT,
         75.0,
-        WEBP_DECODER_ABI_VERSION,
+        ffi::WEBP_DECODER_ABI_VERSION as _,
     ) != 0
 }
 
@@ -67,7 +62,7 @@ impl WebPConfig {
     pub fn new_with_preset(preset: WebPPreset, quality: f32) -> Result<Self, ()> {
         unsafe {
             let mut out = core::mem::MaybeUninit::uninit();
-            if WebPConfigInitInternal(out.as_mut_ptr(), preset, quality, WEBP_DECODER_ABI_VERSION)
+            if WebPConfigInitInternal(out.as_mut_ptr(), preset, quality, ffi::WEBP_DECODER_ABI_VERSION as _)
                 != 0
             {
                 Ok(out.assume_init())
@@ -79,7 +74,7 @@ impl WebPConfig {
 }
 
 pub unsafe fn WebPPictureInit(config: *mut WebPPicture) -> bool {
-    WebPPictureInitInternal(config, WEBP_DECODER_ABI_VERSION) != 0
+    WebPPictureInitInternal(config, ffi::WEBP_DECODER_ABI_VERSION as _) != 0
 }
 
 impl WebPPicture {
@@ -100,7 +95,7 @@ pub unsafe fn WebPGetFeatures(
     arg2: usize,
     arg3: *mut WebPBitstreamFeatures,
 ) -> VP8StatusCode {
-    WebPGetFeaturesInternal(arg1, arg2, arg3, WEBP_DECODER_ABI_VERSION)
+    WebPGetFeaturesInternal(arg1, arg2, arg3, ffi::WEBP_DECODER_ABI_VERSION as _)
 }
 
 pub fn WebPDataInit(data: &mut WebPData) {
