@@ -123,6 +123,30 @@ pub unsafe fn WebPDataClear(data: &mut WebPData) {
     WebPDataInit(data);
 }
 
+pub unsafe fn WebPAnimDecoderOptionsInit(arg1: *mut WebPAnimDecoderOptions) -> core::ffi::c_int {
+    WebPAnimDecoderOptionsInitInternal(arg1, ffi::WEBP_DEMUX_ABI_VERSION as _)
+}
+
+pub unsafe fn WebPAnimDecoderNew(
+    arg1: *const WebPData,
+    arg2: *const WebPAnimDecoderOptions,
+) -> *mut WebPAnimDecoder {
+    WebPAnimDecoderNewInternal(arg1, arg2, ffi::WEBP_DEMUX_ABI_VERSION as _)
+}
+
+impl Default for WebPAnimInfo {
+    fn default() -> Self {
+        WebPAnimInfo {
+            canvas_width: 0,
+            canvas_height: 0,
+            loop_count: 0,
+            bgcolor: 0,
+            frame_count: 0,
+            pad: [0u32; 4usize],
+        }
+    }
+}
+
 #[cfg(all(test, feature = "std"))]
 mod tests {
     use super::*;
@@ -279,6 +303,45 @@ mod tests {
             assert!(!decoded.is_null());
             WebPFree(data as *mut _);
             WebPFree(decoded as *mut _);
+        }
+    }
+
+    #[test]
+    fn test_decode_anim() {
+        let mut buf = Vec::new();
+        let len = File::open("./tests/test_anim.webp")
+            .unwrap()
+            .read_to_end(&mut buf)
+            .unwrap();
+
+        unsafe {
+            let mut width = 0;
+            let mut height = 0;
+            WebPGetInfo(buf.as_ptr(), len, &mut width, &mut height);
+            assert!(width == 400);
+            assert!(height == 400);
+
+            let data = WebPData {
+                bytes: buf.as_ptr(),
+                size: len,
+            };
+
+            let mut options = std::mem::zeroed();
+            // WebPAnimDecoderOptionsInitInternal(&mut options, WebPGetDemuxABIVersion());
+            // let decoder = WebPAnimDecoderNewInternal(&data, &options, WebPGetDemuxABIVersion());
+            WebPAnimDecoderOptionsInit(&mut options);
+            let decoder = WebPAnimDecoderNew(&data, &options);
+
+            let mut anim_info = WebPAnimInfo::default();
+            WebPAnimDecoderGetInfo(decoder, &mut anim_info);
+
+            while WebPAnimDecoderHasMoreFrames(decoder) > 0 {
+                let mut frame_buf = std::ptr::null_mut();
+                let mut timestamp = 0;
+                WebPAnimDecoderGetNext(decoder, &mut frame_buf as *mut *mut u8, &mut timestamp);
+            }
+
+            WebPAnimDecoderDelete(decoder);
         }
     }
 }
