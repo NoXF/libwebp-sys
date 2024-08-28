@@ -73,17 +73,27 @@ fn setup_build(build: &mut cc::Build, include_dir: &PathBuf) {
             // If any optimizations are ennabled, we must remove -gdwarf flags
             // Which we can only do by stopping debug mode entirely since we can't
             // fix env flags.
-            let gccflags = build.get_compiler().cflags_env().to_string_lossy().to_string();
+            let gccflags = build
+                .get_compiler()
+                .cflags_env()
+                .to_string_lossy()
+                .to_string();
 
-            if gccflags.contains("-O0") || gccflags.contains("-O1") 
-            || gccflags.contains("-O2") || gccflags.contains("-O3") 
-            || gccflags.contains("-Ofast") || gccflags.contains("-Os")
-            || gccflags.contains("--opt-level=0") || gccflags.contains("--opt-level=1")
-            || gccflags.contains("--opt-level=2") || gccflags.contains("--opt-level=3")
-            || gccflags.contains("--opt-level=s") || gccflags.contains("--opt-level=z") {
+            if gccflags.contains("-O0")
+                || gccflags.contains("-O1")
+                || gccflags.contains("-O2")
+                || gccflags.contains("-O3")
+                || gccflags.contains("-Ofast")
+                || gccflags.contains("-Os")
+                || gccflags.contains("--opt-level=0")
+                || gccflags.contains("--opt-level=1")
+                || gccflags.contains("--opt-level=2")
+                || gccflags.contains("--opt-level=3")
+                || gccflags.contains("--opt-level=s")
+                || gccflags.contains("--opt-level=z")
+            {
                 build.debug(false);
             }
-            
         }
         _ => {}
     };
