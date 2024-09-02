@@ -14,6 +14,11 @@ build = "build.rs"
 homepage = "https://github.com/NoXF/libwebp-sys"
 repository = "https://github.com/NoXF/libwebp-sys"
 
+edition = "2021"
+
+[profile.test]
+opt-level = 2
+
 [build-dependencies]
 cc = "1"
 glob = "0.3"

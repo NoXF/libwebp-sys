@@ -129,7 +129,7 @@ jobs:
         run: |
           cargo test ${{ matrix.features }} --target ${{ matrix.target }}
       - name: Check wasm
-        if: matrix.target == 'wasm32-unknown-unknown'
+        if: matrix.target == 'wasm32-unknown-emscripten'
         run: |
           cargo check ${{ matrix.features }} --target ${{ matrix.target }}
         env:
