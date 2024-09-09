@@ -48,25 +48,28 @@ fn setup_build(build: &mut cc::Build, include_dir: &PathBuf) {
         build.flag("-D_CRT_SECURE_NO_WARNINGS");
     }
 
-    if let Ok(target_cpu) = env::var("TARGET_CPU") {
-        build.flag_if_supported(&format!("-march={}", target_cpu));
-    }
+    let target_arch = env::var("CARGO_CFG_TARGET_ARCH").expect("CARGO_CFG_TARGET_ARCH");
+    let target_features = env::var("CARGO_CFG_TARGET_FEATURE").expect("CARGO_CFG_TARGET_FEATURE");
+    let has_feature = |f: &str| target_features.split(',').any(|feature| feature == f);
 
-    let target = env::var("CARGO_CFG_TARGET_ARCH").expect("CARGO_CFG_TARGET_ARCH");
-    match target.as_str() {
+    let target_cpu = env::var("TARGET_CPU").ok();
+    let target_cpu = target_cpu.as_deref().unwrap_or(&*target_arch);
+    build.flag_if_supported(format!("-march={}", target_cpu));
+
+    match target_arch.as_str() {
         "x86_64" | "i686" => {
             build.define("WEBP_HAVE_SSE2", Some("1"));
-            if cfg!(feature = "sse41") {
+            if cfg!(feature = "sse41") || has_feature("sse4.1") {
                 build.define("WEBP_HAVE_SSE41", Some("1"));
                 build.flag_if_supported("-msse4.1");
             }
-            if cfg!(feature = "avx2") {
+            if cfg!(feature = "avx2") || has_feature("avx2") {
                 build.define("WEBP_HAVE_AVX2", Some("1"));
                 build.flag_if_supported("-mavx2");
             }
         }
         "aarch64" => {
-            if cfg!(feature = "neon") {
+            if cfg!(feature = "neon") || has_feature("neon") {
                 build.define("WEBP_HAVE_NEON", Some("1"));
             }
 
