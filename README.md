@@ -4,7 +4,7 @@
 
 libwebp is built with the [`cc`](//lib.rs/cc) crate. It needs a C compiler, but `cmake` is not used.
 
-Set `TARGET_CPU` env var to `native` or your desired CPU architecture to optimize the C code for it.
+Set `RUSTFLAGS="-Ctarget-cpu=native"` or your desired CPU architecture to optimize the C code for it.
 
 ## Usage
 
@@ -15,18 +15,15 @@ Add the following to the `Cargo.toml` in your project:
 libwebp-sys = "0.9"
 ```
 
-or to require newer CPUs with SIMD support:
-
-```toml
-[dependencies]
-libwebp-sys = { version = "0.9", features = ["avx2", "sse41", "neon"] }
-```
-
 or to require `no_std` support:
 
 ```toml
-libwebp-sys = { version = "0.9", default-features = false, features = ["parallel", "neon"] }
+libwebp-sys = { version = "0.9", default-features = false, features = ["parallel"] }
 ```
+
+The `neon`, `sse41` and `avx2` feature flags can be set to force support for Neon, SSE 4.1 and AVX2
+respectively, but this is usually unnecessary as it can be set through
+`-Ctarget-feature` (e.g. `RUSTFLAGS="-Ctarget-feature=avx2"`) as well.
 
 ## Examples
 
