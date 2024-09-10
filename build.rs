@@ -28,10 +28,8 @@ fn main() {
         cc.file(manifest_dir.join(f));
     }
 
-    for f in glob::glob("vendor/sharpyuv/**/*.c")
-        .expect("glob vender/src failed")
-        .flatten()
-    {
+    for f in glob::glob("vendor/sharpyuv/**/*.c").expect("glob vendor/src failed") {
+        let f = f.expect("glob iteration vendor/src failed");
         sharpyuv_build.file(manifest_dir.join(f));
     }
     sharpyuv_build.compile("sharpyuv");
