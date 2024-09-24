@@ -1,10 +1,20 @@
-extern crate cc;
-extern crate glob;
-
 use std::env;
 use std::path::PathBuf;
 
 fn main() {
+    if cfg!(feature = "system-link") {
+        let lib_name = "libwebp";
+        let find_system_lib = pkg_config::Config::new()
+            .statik(true)
+            .probe(lib_name)
+            .is_ok();
+
+        if find_system_lib {
+            println!("cargo:rustc-link-lib=static={}", lib_name);
+            return;
+        }
+    }
+
     let manifest_dir =
         PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR"));
     let vendor = manifest_dir.join("vendor");
