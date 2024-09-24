@@ -47,7 +47,7 @@ fn setup_build(build: &mut cc::Build, include_dir: &PathBuf) {
     }
 
     let target_arch = env::var("CARGO_CFG_TARGET_ARCH").expect("CARGO_CFG_TARGET_ARCH");
-    let target_features = env::var("CARGO_CFG_TARGET_FEATURE").expect("CARGO_CFG_TARGET_FEATURE");
+    let target_features = env::var("CARGO_CFG_TARGET_FEATURE").unwrap_or_default();
     let has_feature = |f: &str| target_features.split(',').any(|feature| feature == f);
 
     let target_cpu = env::var("TARGET_CPU").ok();
