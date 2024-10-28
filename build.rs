@@ -52,7 +52,7 @@ fn setup_build(build: &mut cc::Build, include_dir: &PathBuf) {
 
     let target_cpu = env::var("TARGET_CPU").ok();
     let target_cpu = target_cpu.as_deref().unwrap_or(&*target_arch);
-    build.flag_if_supported(format!("-march={}", target_cpu));
+    build.flag_if_supported(&format!("-march={}", target_cpu));
 
     match target_arch.as_str() {
         "x86_64" | "i686" => {
