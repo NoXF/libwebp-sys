@@ -17,9 +17,7 @@ fn main() {
     }
 
     let mut cc = cc::Build::new();
-    let mut sharpyuv_build = cc::Build::new();
     setup_build(&mut cc, &vendor);
-    setup_build(&mut sharpyuv_build, &vendor);
 
     for f in glob::glob("vendor/src/**/*.c")
         .expect("glob vender/src failed")
@@ -30,9 +28,8 @@ fn main() {
 
     for f in glob::glob("vendor/sharpyuv/**/*.c").expect("glob vendor/src failed") {
         let f = f.expect("glob iteration vendor/src failed");
-        sharpyuv_build.file(manifest_dir.join(f));
+        cc.file(manifest_dir.join(f));
     }
-    sharpyuv_build.compile("sharpyuv");
     cc.compile("webpsys");
 }
 
