@@ -13,6 +13,8 @@ readme = "README.md"
 build = "build.rs"
 homepage = "https://github.com/NoXF/libwebp-sys"
 repository = "https://github.com/NoXF/libwebp-sys"
+include = ["src/*.rs", "README.md", "build.rs", "/vendor/src/", "/vendor/sharpyuv", "/vendor/COPYING", "/vendor/PATENTS"]
+exclude = ["*.sh", "*.am"]
 
 edition = "2021"
 
@@ -20,8 +22,8 @@ edition = "2021"
 opt-level = 2
 
 [build-dependencies]
-cc = "1"
-glob = "0.3"
+cc = "1.1"
+glob = "0.3.1"
 
 [features]
 default = ["std", "parallel"]

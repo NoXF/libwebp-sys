@@ -285,7 +285,7 @@ mod tests {
     #[test]
     fn poke() {
         unsafe {
-            assert_eq!(66305, WebPGetEncoderVersion());
+            assert_eq!(66560, WebPGetEncoderVersion());
 
             let mut data = ::std::ptr::null_mut();
             let rgb = [1u8, 2, 3];
