@@ -12,13 +12,13 @@ Add the following to the `Cargo.toml` in your project:
 
 ```toml
 [dependencies]
-libwebp-sys = "0.9"
+libwebp-sys = "0.12"
 ```
 
 or to require `no_std` support:
 
 ```toml
-libwebp-sys = { version = "0.9", default-features = false, features = ["parallel"] }
+libwebp-sys = { version = "0.12", default-features = false, features = ["parallel"] }
 ```
 
 The `neon`, `sse41` and `avx2` feature flags can be set to force support for Neon, SSE 4.1 and AVX2
