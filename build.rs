@@ -2,7 +2,7 @@ use std::env;
 use std::path::PathBuf;
 
 fn main() {
-    if cfg!(feature = "system-link") {
+    if cfg!(feature = "system-dylib") {
         let lib_name = "libwebp";
         let find_system_lib = pkg_config::Config::new().probe(lib_name).is_ok();
 
