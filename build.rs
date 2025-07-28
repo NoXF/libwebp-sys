@@ -7,10 +7,24 @@ fn main() {
         let find_system_lib = pkg_config::Config::new().probe(lib_name).is_ok();
 
         if find_system_lib {
-            println!("cargo:rustc-link-lib={}", lib_name);
+            println!("cargo:rustc-link-lib={lib_name}");
             return;
         }
     }
+
+    let bindings = bindgen::Builder::default()
+        .header("wrap.h")
+        .default_enum_style(bindgen::EnumVariation::Rust {
+            non_exhaustive: true,
+        })
+        .impl_debug(true)
+        .allowlist_function("[wW][eE][bB].*")
+        .allowlist_var("[wW][eE][bB].*")
+        .allowlist_type("[wW][eE][bB].*")
+        .generate()
+        .expect("Unable to generate bindnigs");
+
+    bindings.write_to_file("src/ffi.rs").unwrap();
 
     let manifest_dir =
         PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR"));
@@ -56,7 +70,7 @@ fn setup_build(build: &mut cc::Build, include_dir: &PathBuf) {
 
     let target_cpu = env::var("TARGET_CPU").ok();
     let target_cpu = target_cpu.as_deref().unwrap_or(&*target_arch);
-    build.flag_if_supported(&format!("-march={}", target_cpu));
+    build.flag_if_supported(format!("-march={target_cpu}"));
 
     match target_arch.as_str() {
         "x86_64" | "i686" => {
