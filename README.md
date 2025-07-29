@@ -12,7 +12,7 @@ Add the following to the `Cargo.toml` in your project:
 
 ```toml
 [dependencies]
-libwebp-sys = "0.12"
+libwebp-sys = "0.13"
 ```
 
 or to require `no_std` support:
