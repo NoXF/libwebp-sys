@@ -1,10 +1,9 @@
 [package]
-
 name = "libwebp-sys"
-version = "0.12.1"
+version = "0.12.2"
 authors = [
-  "XianYou <xianyou.cyq@alibaba-inc.com>",
-  "Kornel Lesiński <kornel@geekhood.net>",
+    "XianYou <xianyou.cyq@alibaba-inc.com>",
+    "Kornel Lesiński <kornel@geekhood.net>",
 ]
 keywords = ["WebP", "Image", "Codec", "Decoder", "Encoder"]
 description = "Bindings to libwebp (bindgen, static linking)"
@@ -13,10 +12,18 @@ readme = "README.md"
 build = "build.rs"
 homepage = "https://github.com/NoXF/libwebp-sys"
 repository = "https://github.com/NoXF/libwebp-sys"
-include = ["src/*.rs", "README.md", "build.rs", "/vendor/src/", "/vendor/sharpyuv", "/vendor/COPYING", "/vendor/PATENTS"]
+include = [
+    "src/*.rs",
+    "README.md",
+    "build.rs",
+    "/vendor/src/",
+    "/vendor/sharpyuv",
+    "/vendor/COPYING",
+    "/vendor/PATENTS",
+]
 exclude = ["*.sh", "*.am"]
 
-edition = "2021"
+edition = "2024"
 
 [profile.test]
 opt-level = 2
@@ -24,13 +31,15 @@ opt-level = 2
 [build-dependencies]
 cc = "1"
 glob = "0.3"
-pkg-config = "0.3.27"
+pkg-config = "0.3"
+bindgen = "0.72"
 
 [features]
 default = ["std", "parallel"]
 std = []
 parallel = ["cc/parallel"]
-neon = []                      # ARM NEON SIMD (will crash on ARM CPUs without it)
-sse41 = []                     # x64 SSE 4.1 (will crash on x86 CPUs without it)
-avx2 = []                      # x64 AVX2 (will crash on x86 CPUs without it)
-system-dylib = []                     # Use the system-installed dylib instead of compiling a static library from the vendor
+neon = [] # ARM NEON SIMD (will crash on ARM CPUs without it)
+sse41 = [] # x64 SSE 4.1 (will crash on x86 CPUs without it)
+avx2 = [] # x64 AVX2 (will crash on x86 CPUs without it)
+system-dylib = [
+] # Use the system-installed dylib instead of compiling a static library from the vendor

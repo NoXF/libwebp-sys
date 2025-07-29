@@ -1,5 +1,10 @@
 #![cfg_attr(not(feature = "std"), no_std)]
-#![allow(non_snake_case, clippy::missing_safety_doc, clippy::result_unit_err)]
+#![allow(
+    non_snake_case,
+    clippy::missing_safety_doc,
+    clippy::result_unit_err,
+    clippy::derivable_impls
+)]
 // bindgen --default-enum-style=rust --distrust-clang-mangling --use-core --impl-debug --allowlist-function='[wW][eE][bB].*' --allowlist-var='[wW][eE][bB].*' --allowlist-type='[wW][eE][bB].*' wrap.h -- -I./vendor > src/ffi.rs
 
 #[cfg(feature = "std")]
@@ -22,7 +27,7 @@ pub fn WebPGetDemuxABIVersion() -> core::ffi::c_int {
 }
 
 pub unsafe fn WebPInitDecoderConfig(config: *mut WebPDecoderConfig) -> bool {
-    WebPInitDecoderConfigInternal(config, ffi::WEBP_DECODER_ABI_VERSION as _) != 0
+    unsafe { WebPInitDecoderConfigInternal(config, ffi::WEBP_DECODER_ABI_VERSION as _) != 0 }
 }
 
 impl WebPDecoderConfig {
@@ -39,12 +44,14 @@ impl WebPDecoderConfig {
 }
 
 pub unsafe fn WebPInitConfig(config: *mut WebPConfig) -> bool {
-    WebPConfigInitInternal(
-        config,
-        WebPPreset::WEBP_PRESET_DEFAULT,
-        75.0,
-        ffi::WEBP_DECODER_ABI_VERSION as _,
-    ) != 0
+    unsafe {
+        WebPConfigInitInternal(
+            config,
+            WebPPreset::WEBP_PRESET_DEFAULT,
+            75.0,
+            ffi::WEBP_DECODER_ABI_VERSION as _,
+        ) != 0
+    }
 }
 
 impl WebPConfig {
@@ -78,7 +85,7 @@ impl WebPConfig {
 }
 
 pub unsafe fn WebPPictureInit(config: *mut WebPPicture) -> bool {
-    WebPPictureInitInternal(config, ffi::WEBP_DECODER_ABI_VERSION as _) != 0
+    unsafe { WebPPictureInitInternal(config, ffi::WEBP_DECODER_ABI_VERSION as _) != 0 }
 }
 
 impl WebPPicture {
@@ -99,7 +106,7 @@ pub unsafe fn WebPGetFeatures(
     arg2: usize,
     arg3: *mut WebPBitstreamFeatures,
 ) -> VP8StatusCode {
-    WebPGetFeaturesInternal(arg1, arg2, arg3, ffi::WEBP_DECODER_ABI_VERSION as _)
+    unsafe { WebPGetFeaturesInternal(arg1, arg2, arg3, ffi::WEBP_DECODER_ABI_VERSION as _) }
 }
 
 pub fn WebPDataInit(data: &mut WebPData) {
@@ -119,19 +126,21 @@ impl Default for WebPData {
 }
 
 pub unsafe fn WebPDataClear(data: &mut WebPData) {
-    WebPFree(data.bytes as *mut _);
+    unsafe {
+        WebPFree(data.bytes as *mut _);
+    }
     WebPDataInit(data);
 }
 
 pub unsafe fn WebPAnimDecoderOptionsInit(arg1: *mut WebPAnimDecoderOptions) -> core::ffi::c_int {
-    WebPAnimDecoderOptionsInitInternal(arg1, ffi::WEBP_DEMUX_ABI_VERSION as _)
+    unsafe { WebPAnimDecoderOptionsInitInternal(arg1, ffi::WEBP_DEMUX_ABI_VERSION as _) }
 }
 
 pub unsafe fn WebPAnimDecoderNew(
     arg1: *const WebPData,
     arg2: *const WebPAnimDecoderOptions,
 ) -> *mut WebPAnimDecoder {
-    WebPAnimDecoderNewInternal(arg1, arg2, ffi::WEBP_DEMUX_ABI_VERSION as _)
+    unsafe { WebPAnimDecoderNewInternal(arg1, arg2, ffi::WEBP_DEMUX_ABI_VERSION as _) }
 }
 
 impl Default for WebPAnimInfo {
@@ -236,8 +245,10 @@ mod tests {
                 data_size: usize,
                 picture: *const WebPPicture,
             ) -> ::std::ffi::c_int {
-                let out: &mut Vec<u8> = &mut *((*picture).custom_ptr as *mut std::vec::Vec<u8>);
-                out.extend_from_slice(std::slice::from_raw_parts(data, data_size));
+                unsafe {
+                    let out: &mut Vec<u8> = &mut *((*picture).custom_ptr as *mut std::vec::Vec<u8>);
+                    out.extend_from_slice(std::slice::from_raw_parts(data, data_size));
+                }
                 0
             }
 
@@ -285,7 +296,7 @@ mod tests {
     #[test]
     fn poke() {
         unsafe {
-            assert_eq!(66816, WebPGetEncoderVersion());
+            assert_eq!(67072, WebPGetEncoderVersion());
 
             let mut data = ::std::ptr::null_mut();
             let rgb = [1u8, 2, 3];
