@@ -6,20 +6,20 @@ pub const WEBP_DECODER_ABI_VERSION: u32 = 528;
 pub const WEBP_MUX_ABI_VERSION: u32 = 265;
 pub const WEBP_DEMUX_ABI_VERSION: u32 = 263;
 unsafe extern "C" {
-    pub fn WebPMalloc(size: usize) -> *mut ::std::os::raw::c_void;
+    pub fn WebPMalloc(size: usize) -> *mut ::core::ffi::c_void;
 }
 unsafe extern "C" {
-    pub fn WebPFree(ptr: *mut ::std::os::raw::c_void);
+    pub fn WebPFree(ptr: *mut ::core::ffi::c_void);
 }
 unsafe extern "C" {
-    pub fn WebPGetEncoderVersion() -> ::std::os::raw::c_int;
+    pub fn WebPGetEncoderVersion() -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPEncodeRGB(
         rgb: *const u8,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        stride: ::std::os::raw::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        stride: ::core::ffi::c_int,
         quality_factor: f32,
         output: *mut *mut u8,
     ) -> usize;
@@ -27,9 +27,9 @@ unsafe extern "C" {
 unsafe extern "C" {
     pub fn WebPEncodeBGR(
         bgr: *const u8,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        stride: ::std::os::raw::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        stride: ::core::ffi::c_int,
         quality_factor: f32,
         output: *mut *mut u8,
     ) -> usize;
@@ -37,9 +37,9 @@ unsafe extern "C" {
 unsafe extern "C" {
     pub fn WebPEncodeRGBA(
         rgba: *const u8,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        stride: ::std::os::raw::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        stride: ::core::ffi::c_int,
         quality_factor: f32,
         output: *mut *mut u8,
     ) -> usize;
@@ -47,9 +47,9 @@ unsafe extern "C" {
 unsafe extern "C" {
     pub fn WebPEncodeBGRA(
         bgra: *const u8,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        stride: ::std::os::raw::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        stride: ::core::ffi::c_int,
         quality_factor: f32,
         output: *mut *mut u8,
     ) -> usize;
@@ -57,41 +57,40 @@ unsafe extern "C" {
 unsafe extern "C" {
     pub fn WebPEncodeLosslessRGB(
         rgb: *const u8,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        stride: ::std::os::raw::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        stride: ::core::ffi::c_int,
         output: *mut *mut u8,
     ) -> usize;
 }
 unsafe extern "C" {
     pub fn WebPEncodeLosslessBGR(
         bgr: *const u8,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        stride: ::std::os::raw::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        stride: ::core::ffi::c_int,
         output: *mut *mut u8,
     ) -> usize;
 }
 unsafe extern "C" {
     pub fn WebPEncodeLosslessRGBA(
         rgba: *const u8,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        stride: ::std::os::raw::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        stride: ::core::ffi::c_int,
         output: *mut *mut u8,
     ) -> usize;
 }
 unsafe extern "C" {
     pub fn WebPEncodeLosslessBGRA(
         bgra: *const u8,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-        stride: ::std::os::raw::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+        stride: ::core::ffi::c_int,
         output: *mut *mut u8,
     ) -> usize;
 }
 #[repr(u32)]
-#[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum WebPImageHint {
     WEBP_HINT_DEFAULT = 0,
@@ -103,95 +102,94 @@ pub enum WebPImageHint {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct WebPConfig {
-    pub lossless: ::std::os::raw::c_int,
+    pub lossless: ::core::ffi::c_int,
     pub quality: f32,
-    pub method: ::std::os::raw::c_int,
+    pub method: ::core::ffi::c_int,
     pub image_hint: WebPImageHint,
-    pub target_size: ::std::os::raw::c_int,
+    pub target_size: ::core::ffi::c_int,
     pub target_PSNR: f32,
-    pub segments: ::std::os::raw::c_int,
-    pub sns_strength: ::std::os::raw::c_int,
-    pub filter_strength: ::std::os::raw::c_int,
-    pub filter_sharpness: ::std::os::raw::c_int,
-    pub filter_type: ::std::os::raw::c_int,
-    pub autofilter: ::std::os::raw::c_int,
-    pub alpha_compression: ::std::os::raw::c_int,
-    pub alpha_filtering: ::std::os::raw::c_int,
-    pub alpha_quality: ::std::os::raw::c_int,
-    pub pass: ::std::os::raw::c_int,
-    pub show_compressed: ::std::os::raw::c_int,
-    pub preprocessing: ::std::os::raw::c_int,
-    pub partitions: ::std::os::raw::c_int,
-    pub partition_limit: ::std::os::raw::c_int,
-    pub emulate_jpeg_size: ::std::os::raw::c_int,
-    pub thread_level: ::std::os::raw::c_int,
-    pub low_memory: ::std::os::raw::c_int,
-    pub near_lossless: ::std::os::raw::c_int,
-    pub exact: ::std::os::raw::c_int,
-    pub use_delta_palette: ::std::os::raw::c_int,
-    pub use_sharp_yuv: ::std::os::raw::c_int,
-    pub qmin: ::std::os::raw::c_int,
-    pub qmax: ::std::os::raw::c_int,
+    pub segments: ::core::ffi::c_int,
+    pub sns_strength: ::core::ffi::c_int,
+    pub filter_strength: ::core::ffi::c_int,
+    pub filter_sharpness: ::core::ffi::c_int,
+    pub filter_type: ::core::ffi::c_int,
+    pub autofilter: ::core::ffi::c_int,
+    pub alpha_compression: ::core::ffi::c_int,
+    pub alpha_filtering: ::core::ffi::c_int,
+    pub alpha_quality: ::core::ffi::c_int,
+    pub pass: ::core::ffi::c_int,
+    pub show_compressed: ::core::ffi::c_int,
+    pub preprocessing: ::core::ffi::c_int,
+    pub partitions: ::core::ffi::c_int,
+    pub partition_limit: ::core::ffi::c_int,
+    pub emulate_jpeg_size: ::core::ffi::c_int,
+    pub thread_level: ::core::ffi::c_int,
+    pub low_memory: ::core::ffi::c_int,
+    pub near_lossless: ::core::ffi::c_int,
+    pub exact: ::core::ffi::c_int,
+    pub use_delta_palette: ::core::ffi::c_int,
+    pub use_sharp_yuv: ::core::ffi::c_int,
+    pub qmin: ::core::ffi::c_int,
+    pub qmax: ::core::ffi::c_int,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPConfig"][::std::mem::size_of::<WebPConfig>() - 116usize];
-    ["Alignment of WebPConfig"][::std::mem::align_of::<WebPConfig>() - 4usize];
+    ["Size of WebPConfig"][::core::mem::size_of::<WebPConfig>() - 116usize];
+    ["Alignment of WebPConfig"][::core::mem::align_of::<WebPConfig>() - 4usize];
     ["Offset of field: WebPConfig::lossless"]
-        [::std::mem::offset_of!(WebPConfig, lossless) - 0usize];
-    ["Offset of field: WebPConfig::quality"][::std::mem::offset_of!(WebPConfig, quality) - 4usize];
-    ["Offset of field: WebPConfig::method"][::std::mem::offset_of!(WebPConfig, method) - 8usize];
+        [::core::mem::offset_of!(WebPConfig, lossless) - 0usize];
+    ["Offset of field: WebPConfig::quality"][::core::mem::offset_of!(WebPConfig, quality) - 4usize];
+    ["Offset of field: WebPConfig::method"][::core::mem::offset_of!(WebPConfig, method) - 8usize];
     ["Offset of field: WebPConfig::image_hint"]
-        [::std::mem::offset_of!(WebPConfig, image_hint) - 12usize];
+        [::core::mem::offset_of!(WebPConfig, image_hint) - 12usize];
     ["Offset of field: WebPConfig::target_size"]
-        [::std::mem::offset_of!(WebPConfig, target_size) - 16usize];
+        [::core::mem::offset_of!(WebPConfig, target_size) - 16usize];
     ["Offset of field: WebPConfig::target_PSNR"]
-        [::std::mem::offset_of!(WebPConfig, target_PSNR) - 20usize];
+        [::core::mem::offset_of!(WebPConfig, target_PSNR) - 20usize];
     ["Offset of field: WebPConfig::segments"]
-        [::std::mem::offset_of!(WebPConfig, segments) - 24usize];
+        [::core::mem::offset_of!(WebPConfig, segments) - 24usize];
     ["Offset of field: WebPConfig::sns_strength"]
-        [::std::mem::offset_of!(WebPConfig, sns_strength) - 28usize];
+        [::core::mem::offset_of!(WebPConfig, sns_strength) - 28usize];
     ["Offset of field: WebPConfig::filter_strength"]
-        [::std::mem::offset_of!(WebPConfig, filter_strength) - 32usize];
+        [::core::mem::offset_of!(WebPConfig, filter_strength) - 32usize];
     ["Offset of field: WebPConfig::filter_sharpness"]
-        [::std::mem::offset_of!(WebPConfig, filter_sharpness) - 36usize];
+        [::core::mem::offset_of!(WebPConfig, filter_sharpness) - 36usize];
     ["Offset of field: WebPConfig::filter_type"]
-        [::std::mem::offset_of!(WebPConfig, filter_type) - 40usize];
+        [::core::mem::offset_of!(WebPConfig, filter_type) - 40usize];
     ["Offset of field: WebPConfig::autofilter"]
-        [::std::mem::offset_of!(WebPConfig, autofilter) - 44usize];
+        [::core::mem::offset_of!(WebPConfig, autofilter) - 44usize];
     ["Offset of field: WebPConfig::alpha_compression"]
-        [::std::mem::offset_of!(WebPConfig, alpha_compression) - 48usize];
+        [::core::mem::offset_of!(WebPConfig, alpha_compression) - 48usize];
     ["Offset of field: WebPConfig::alpha_filtering"]
-        [::std::mem::offset_of!(WebPConfig, alpha_filtering) - 52usize];
+        [::core::mem::offset_of!(WebPConfig, alpha_filtering) - 52usize];
     ["Offset of field: WebPConfig::alpha_quality"]
-        [::std::mem::offset_of!(WebPConfig, alpha_quality) - 56usize];
-    ["Offset of field: WebPConfig::pass"][::std::mem::offset_of!(WebPConfig, pass) - 60usize];
+        [::core::mem::offset_of!(WebPConfig, alpha_quality) - 56usize];
+    ["Offset of field: WebPConfig::pass"][::core::mem::offset_of!(WebPConfig, pass) - 60usize];
     ["Offset of field: WebPConfig::show_compressed"]
-        [::std::mem::offset_of!(WebPConfig, show_compressed) - 64usize];
+        [::core::mem::offset_of!(WebPConfig, show_compressed) - 64usize];
     ["Offset of field: WebPConfig::preprocessing"]
-        [::std::mem::offset_of!(WebPConfig, preprocessing) - 68usize];
+        [::core::mem::offset_of!(WebPConfig, preprocessing) - 68usize];
     ["Offset of field: WebPConfig::partitions"]
-        [::std::mem::offset_of!(WebPConfig, partitions) - 72usize];
+        [::core::mem::offset_of!(WebPConfig, partitions) - 72usize];
     ["Offset of field: WebPConfig::partition_limit"]
-        [::std::mem::offset_of!(WebPConfig, partition_limit) - 76usize];
+        [::core::mem::offset_of!(WebPConfig, partition_limit) - 76usize];
     ["Offset of field: WebPConfig::emulate_jpeg_size"]
-        [::std::mem::offset_of!(WebPConfig, emulate_jpeg_size) - 80usize];
+        [::core::mem::offset_of!(WebPConfig, emulate_jpeg_size) - 80usize];
     ["Offset of field: WebPConfig::thread_level"]
-        [::std::mem::offset_of!(WebPConfig, thread_level) - 84usize];
+        [::core::mem::offset_of!(WebPConfig, thread_level) - 84usize];
     ["Offset of field: WebPConfig::low_memory"]
-        [::std::mem::offset_of!(WebPConfig, low_memory) - 88usize];
+        [::core::mem::offset_of!(WebPConfig, low_memory) - 88usize];
     ["Offset of field: WebPConfig::near_lossless"]
-        [::std::mem::offset_of!(WebPConfig, near_lossless) - 92usize];
-    ["Offset of field: WebPConfig::exact"][::std::mem::offset_of!(WebPConfig, exact) - 96usize];
+        [::core::mem::offset_of!(WebPConfig, near_lossless) - 92usize];
+    ["Offset of field: WebPConfig::exact"][::core::mem::offset_of!(WebPConfig, exact) - 96usize];
     ["Offset of field: WebPConfig::use_delta_palette"]
-        [::std::mem::offset_of!(WebPConfig, use_delta_palette) - 100usize];
+        [::core::mem::offset_of!(WebPConfig, use_delta_palette) - 100usize];
     ["Offset of field: WebPConfig::use_sharp_yuv"]
-        [::std::mem::offset_of!(WebPConfig, use_sharp_yuv) - 104usize];
-    ["Offset of field: WebPConfig::qmin"][::std::mem::offset_of!(WebPConfig, qmin) - 108usize];
-    ["Offset of field: WebPConfig::qmax"][::std::mem::offset_of!(WebPConfig, qmax) - 112usize];
+        [::core::mem::offset_of!(WebPConfig, use_sharp_yuv) - 104usize];
+    ["Offset of field: WebPConfig::qmin"][::core::mem::offset_of!(WebPConfig, qmin) - 108usize];
+    ["Offset of field: WebPConfig::qmax"][::core::mem::offset_of!(WebPConfig, qmax) - 112usize];
 };
 #[repr(u32)]
-#[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum WebPPreset {
     WEBP_PRESET_DEFAULT = 0,
@@ -206,91 +204,91 @@ unsafe extern "C" {
         arg1: *mut WebPConfig,
         arg2: WebPPreset,
         arg3: f32,
-        arg4: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        arg4: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPConfigLosslessPreset(
         config: *mut WebPConfig,
-        level: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        level: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPValidateConfig(config: *const WebPConfig) -> ::std::os::raw::c_int;
+    pub fn WebPValidateConfig(config: *const WebPConfig) -> ::core::ffi::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct WebPAuxStats {
-    pub coded_size: ::std::os::raw::c_int,
+    pub coded_size: ::core::ffi::c_int,
     pub PSNR: [f32; 5usize],
-    pub block_count: [::std::os::raw::c_int; 3usize],
-    pub header_bytes: [::std::os::raw::c_int; 2usize],
-    pub residual_bytes: [[::std::os::raw::c_int; 4usize]; 3usize],
-    pub segment_size: [::std::os::raw::c_int; 4usize],
-    pub segment_quant: [::std::os::raw::c_int; 4usize],
-    pub segment_level: [::std::os::raw::c_int; 4usize],
-    pub alpha_data_size: ::std::os::raw::c_int,
-    pub layer_data_size: ::std::os::raw::c_int,
+    pub block_count: [::core::ffi::c_int; 3usize],
+    pub header_bytes: [::core::ffi::c_int; 2usize],
+    pub residual_bytes: [[::core::ffi::c_int; 4usize]; 3usize],
+    pub segment_size: [::core::ffi::c_int; 4usize],
+    pub segment_quant: [::core::ffi::c_int; 4usize],
+    pub segment_level: [::core::ffi::c_int; 4usize],
+    pub alpha_data_size: ::core::ffi::c_int,
+    pub layer_data_size: ::core::ffi::c_int,
     pub lossless_features: u32,
-    pub histogram_bits: ::std::os::raw::c_int,
-    pub transform_bits: ::std::os::raw::c_int,
-    pub cache_bits: ::std::os::raw::c_int,
-    pub palette_size: ::std::os::raw::c_int,
-    pub lossless_size: ::std::os::raw::c_int,
-    pub lossless_hdr_size: ::std::os::raw::c_int,
-    pub lossless_data_size: ::std::os::raw::c_int,
-    pub cross_color_transform_bits: ::std::os::raw::c_int,
+    pub histogram_bits: ::core::ffi::c_int,
+    pub transform_bits: ::core::ffi::c_int,
+    pub cache_bits: ::core::ffi::c_int,
+    pub palette_size: ::core::ffi::c_int,
+    pub lossless_size: ::core::ffi::c_int,
+    pub lossless_hdr_size: ::core::ffi::c_int,
+    pub lossless_data_size: ::core::ffi::c_int,
+    pub cross_color_transform_bits: ::core::ffi::c_int,
     pub pad: [u32; 1usize],
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPAuxStats"][::std::mem::size_of::<WebPAuxStats>() - 188usize];
-    ["Alignment of WebPAuxStats"][::std::mem::align_of::<WebPAuxStats>() - 4usize];
+    ["Size of WebPAuxStats"][::core::mem::size_of::<WebPAuxStats>() - 188usize];
+    ["Alignment of WebPAuxStats"][::core::mem::align_of::<WebPAuxStats>() - 4usize];
     ["Offset of field: WebPAuxStats::coded_size"]
-        [::std::mem::offset_of!(WebPAuxStats, coded_size) - 0usize];
-    ["Offset of field: WebPAuxStats::PSNR"][::std::mem::offset_of!(WebPAuxStats, PSNR) - 4usize];
+        [::core::mem::offset_of!(WebPAuxStats, coded_size) - 0usize];
+    ["Offset of field: WebPAuxStats::PSNR"][::core::mem::offset_of!(WebPAuxStats, PSNR) - 4usize];
     ["Offset of field: WebPAuxStats::block_count"]
-        [::std::mem::offset_of!(WebPAuxStats, block_count) - 24usize];
+        [::core::mem::offset_of!(WebPAuxStats, block_count) - 24usize];
     ["Offset of field: WebPAuxStats::header_bytes"]
-        [::std::mem::offset_of!(WebPAuxStats, header_bytes) - 36usize];
+        [::core::mem::offset_of!(WebPAuxStats, header_bytes) - 36usize];
     ["Offset of field: WebPAuxStats::residual_bytes"]
-        [::std::mem::offset_of!(WebPAuxStats, residual_bytes) - 44usize];
+        [::core::mem::offset_of!(WebPAuxStats, residual_bytes) - 44usize];
     ["Offset of field: WebPAuxStats::segment_size"]
-        [::std::mem::offset_of!(WebPAuxStats, segment_size) - 92usize];
+        [::core::mem::offset_of!(WebPAuxStats, segment_size) - 92usize];
     ["Offset of field: WebPAuxStats::segment_quant"]
-        [::std::mem::offset_of!(WebPAuxStats, segment_quant) - 108usize];
+        [::core::mem::offset_of!(WebPAuxStats, segment_quant) - 108usize];
     ["Offset of field: WebPAuxStats::segment_level"]
-        [::std::mem::offset_of!(WebPAuxStats, segment_level) - 124usize];
+        [::core::mem::offset_of!(WebPAuxStats, segment_level) - 124usize];
     ["Offset of field: WebPAuxStats::alpha_data_size"]
-        [::std::mem::offset_of!(WebPAuxStats, alpha_data_size) - 140usize];
+        [::core::mem::offset_of!(WebPAuxStats, alpha_data_size) - 140usize];
     ["Offset of field: WebPAuxStats::layer_data_size"]
-        [::std::mem::offset_of!(WebPAuxStats, layer_data_size) - 144usize];
+        [::core::mem::offset_of!(WebPAuxStats, layer_data_size) - 144usize];
     ["Offset of field: WebPAuxStats::lossless_features"]
-        [::std::mem::offset_of!(WebPAuxStats, lossless_features) - 148usize];
+        [::core::mem::offset_of!(WebPAuxStats, lossless_features) - 148usize];
     ["Offset of field: WebPAuxStats::histogram_bits"]
-        [::std::mem::offset_of!(WebPAuxStats, histogram_bits) - 152usize];
+        [::core::mem::offset_of!(WebPAuxStats, histogram_bits) - 152usize];
     ["Offset of field: WebPAuxStats::transform_bits"]
-        [::std::mem::offset_of!(WebPAuxStats, transform_bits) - 156usize];
+        [::core::mem::offset_of!(WebPAuxStats, transform_bits) - 156usize];
     ["Offset of field: WebPAuxStats::cache_bits"]
-        [::std::mem::offset_of!(WebPAuxStats, cache_bits) - 160usize];
+        [::core::mem::offset_of!(WebPAuxStats, cache_bits) - 160usize];
     ["Offset of field: WebPAuxStats::palette_size"]
-        [::std::mem::offset_of!(WebPAuxStats, palette_size) - 164usize];
+        [::core::mem::offset_of!(WebPAuxStats, palette_size) - 164usize];
     ["Offset of field: WebPAuxStats::lossless_size"]
-        [::std::mem::offset_of!(WebPAuxStats, lossless_size) - 168usize];
+        [::core::mem::offset_of!(WebPAuxStats, lossless_size) - 168usize];
     ["Offset of field: WebPAuxStats::lossless_hdr_size"]
-        [::std::mem::offset_of!(WebPAuxStats, lossless_hdr_size) - 172usize];
+        [::core::mem::offset_of!(WebPAuxStats, lossless_hdr_size) - 172usize];
     ["Offset of field: WebPAuxStats::lossless_data_size"]
-        [::std::mem::offset_of!(WebPAuxStats, lossless_data_size) - 176usize];
+        [::core::mem::offset_of!(WebPAuxStats, lossless_data_size) - 176usize];
     ["Offset of field: WebPAuxStats::cross_color_transform_bits"]
-        [::std::mem::offset_of!(WebPAuxStats, cross_color_transform_bits) - 180usize];
-    ["Offset of field: WebPAuxStats::pad"][::std::mem::offset_of!(WebPAuxStats, pad) - 184usize];
+        [::core::mem::offset_of!(WebPAuxStats, cross_color_transform_bits) - 180usize];
+    ["Offset of field: WebPAuxStats::pad"][::core::mem::offset_of!(WebPAuxStats, pad) - 184usize];
 };
-pub type WebPWriterFunction = ::std::option::Option<
+pub type WebPWriterFunction = ::core::option::Option<
     unsafe extern "C" fn(
         data: *const u8,
         data_size: usize,
         picture: *const WebPPicture,
-    ) -> ::std::os::raw::c_int,
+    ) -> ::core::ffi::c_int,
 >;
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -302,16 +300,16 @@ pub struct WebPMemoryWriter {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPMemoryWriter"][::std::mem::size_of::<WebPMemoryWriter>() - 32usize];
-    ["Alignment of WebPMemoryWriter"][::std::mem::align_of::<WebPMemoryWriter>() - 8usize];
+    ["Size of WebPMemoryWriter"][::core::mem::size_of::<WebPMemoryWriter>() - 32usize];
+    ["Alignment of WebPMemoryWriter"][::core::mem::align_of::<WebPMemoryWriter>() - 8usize];
     ["Offset of field: WebPMemoryWriter::mem"]
-        [::std::mem::offset_of!(WebPMemoryWriter, mem) - 0usize];
+        [::core::mem::offset_of!(WebPMemoryWriter, mem) - 0usize];
     ["Offset of field: WebPMemoryWriter::size"]
-        [::std::mem::offset_of!(WebPMemoryWriter, size) - 8usize];
+        [::core::mem::offset_of!(WebPMemoryWriter, size) - 8usize];
     ["Offset of field: WebPMemoryWriter::max_size"]
-        [::std::mem::offset_of!(WebPMemoryWriter, max_size) - 16usize];
+        [::core::mem::offset_of!(WebPMemoryWriter, max_size) - 16usize];
     ["Offset of field: WebPMemoryWriter::pad"]
-        [::std::mem::offset_of!(WebPMemoryWriter, pad) - 24usize];
+        [::core::mem::offset_of!(WebPMemoryWriter, pad) - 24usize];
 };
 unsafe extern "C" {
     pub fn WebPMemoryWriterInit(writer: *mut WebPMemoryWriter);
@@ -324,19 +322,18 @@ unsafe extern "C" {
         data: *const u8,
         data_size: usize,
         picture: *const WebPPicture,
-    ) -> ::std::os::raw::c_int;
+    ) -> ::core::ffi::c_int;
 }
-pub type WebPProgressHook = ::std::option::Option<
+pub type WebPProgressHook = ::core::option::Option<
     unsafe extern "C" fn(
-        percent: ::std::os::raw::c_int,
+        percent: ::core::ffi::c_int,
         picture: *const WebPPicture,
-    ) -> ::std::os::raw::c_int,
+    ) -> ::core::ffi::c_int,
 >;
 impl WebPEncCSP {
     pub const WEBP_CSP_ALPHA_BIT: WebPEncCSP = WebPEncCSP::WEBP_YUV420A;
 }
 #[repr(u32)]
-#[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum WebPEncCSP {
     WEBP_YUV420 = 0,
@@ -344,7 +341,6 @@ pub enum WebPEncCSP {
     WEBP_CSP_UV_MASK = 3,
 }
 #[repr(u32)]
-#[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum WebPEncodingError {
     VP8_ENC_OK = 0,
@@ -363,101 +359,102 @@ pub enum WebPEncodingError {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct WebPPicture {
-    pub use_argb: ::std::os::raw::c_int,
+    pub use_argb: ::core::ffi::c_int,
     pub colorspace: WebPEncCSP,
-    pub width: ::std::os::raw::c_int,
-    pub height: ::std::os::raw::c_int,
+    pub width: ::core::ffi::c_int,
+    pub height: ::core::ffi::c_int,
     pub y: *mut u8,
     pub u: *mut u8,
     pub v: *mut u8,
-    pub y_stride: ::std::os::raw::c_int,
-    pub uv_stride: ::std::os::raw::c_int,
+    pub y_stride: ::core::ffi::c_int,
+    pub uv_stride: ::core::ffi::c_int,
     pub a: *mut u8,
-    pub a_stride: ::std::os::raw::c_int,
+    pub a_stride: ::core::ffi::c_int,
     pub pad1: [u32; 2usize],
     pub argb: *mut u32,
-    pub argb_stride: ::std::os::raw::c_int,
+    pub argb_stride: ::core::ffi::c_int,
     pub pad2: [u32; 3usize],
     pub writer: WebPWriterFunction,
-    pub custom_ptr: *mut ::std::os::raw::c_void,
-    pub extra_info_type: ::std::os::raw::c_int,
+    pub custom_ptr: *mut ::core::ffi::c_void,
+    pub extra_info_type: ::core::ffi::c_int,
     pub extra_info: *mut u8,
     pub stats: *mut WebPAuxStats,
     pub error_code: WebPEncodingError,
     pub progress_hook: WebPProgressHook,
-    pub user_data: *mut ::std::os::raw::c_void,
+    pub user_data: *mut ::core::ffi::c_void,
     pub pad3: [u32; 3usize],
     pub pad4: *mut u8,
     pub pad5: *mut u8,
     pub pad6: [u32; 8usize],
-    pub memory_: *mut ::std::os::raw::c_void,
-    pub memory_argb_: *mut ::std::os::raw::c_void,
-    pub pad7: [*mut ::std::os::raw::c_void; 2usize],
+    pub memory_: *mut ::core::ffi::c_void,
+    pub memory_argb_: *mut ::core::ffi::c_void,
+    pub pad7: [*mut ::core::ffi::c_void; 2usize],
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPPicture"][::std::mem::size_of::<WebPPicture>() - 256usize];
-    ["Alignment of WebPPicture"][::std::mem::align_of::<WebPPicture>() - 8usize];
+    ["Size of WebPPicture"][::core::mem::size_of::<WebPPicture>() - 256usize];
+    ["Alignment of WebPPicture"][::core::mem::align_of::<WebPPicture>() - 8usize];
     ["Offset of field: WebPPicture::use_argb"]
-        [::std::mem::offset_of!(WebPPicture, use_argb) - 0usize];
+        [::core::mem::offset_of!(WebPPicture, use_argb) - 0usize];
     ["Offset of field: WebPPicture::colorspace"]
-        [::std::mem::offset_of!(WebPPicture, colorspace) - 4usize];
-    ["Offset of field: WebPPicture::width"][::std::mem::offset_of!(WebPPicture, width) - 8usize];
-    ["Offset of field: WebPPicture::height"][::std::mem::offset_of!(WebPPicture, height) - 12usize];
-    ["Offset of field: WebPPicture::y"][::std::mem::offset_of!(WebPPicture, y) - 16usize];
-    ["Offset of field: WebPPicture::u"][::std::mem::offset_of!(WebPPicture, u) - 24usize];
-    ["Offset of field: WebPPicture::v"][::std::mem::offset_of!(WebPPicture, v) - 32usize];
+        [::core::mem::offset_of!(WebPPicture, colorspace) - 4usize];
+    ["Offset of field: WebPPicture::width"][::core::mem::offset_of!(WebPPicture, width) - 8usize];
+    ["Offset of field: WebPPicture::height"]
+        [::core::mem::offset_of!(WebPPicture, height) - 12usize];
+    ["Offset of field: WebPPicture::y"][::core::mem::offset_of!(WebPPicture, y) - 16usize];
+    ["Offset of field: WebPPicture::u"][::core::mem::offset_of!(WebPPicture, u) - 24usize];
+    ["Offset of field: WebPPicture::v"][::core::mem::offset_of!(WebPPicture, v) - 32usize];
     ["Offset of field: WebPPicture::y_stride"]
-        [::std::mem::offset_of!(WebPPicture, y_stride) - 40usize];
+        [::core::mem::offset_of!(WebPPicture, y_stride) - 40usize];
     ["Offset of field: WebPPicture::uv_stride"]
-        [::std::mem::offset_of!(WebPPicture, uv_stride) - 44usize];
-    ["Offset of field: WebPPicture::a"][::std::mem::offset_of!(WebPPicture, a) - 48usize];
+        [::core::mem::offset_of!(WebPPicture, uv_stride) - 44usize];
+    ["Offset of field: WebPPicture::a"][::core::mem::offset_of!(WebPPicture, a) - 48usize];
     ["Offset of field: WebPPicture::a_stride"]
-        [::std::mem::offset_of!(WebPPicture, a_stride) - 56usize];
-    ["Offset of field: WebPPicture::pad1"][::std::mem::offset_of!(WebPPicture, pad1) - 60usize];
-    ["Offset of field: WebPPicture::argb"][::std::mem::offset_of!(WebPPicture, argb) - 72usize];
+        [::core::mem::offset_of!(WebPPicture, a_stride) - 56usize];
+    ["Offset of field: WebPPicture::pad1"][::core::mem::offset_of!(WebPPicture, pad1) - 60usize];
+    ["Offset of field: WebPPicture::argb"][::core::mem::offset_of!(WebPPicture, argb) - 72usize];
     ["Offset of field: WebPPicture::argb_stride"]
-        [::std::mem::offset_of!(WebPPicture, argb_stride) - 80usize];
-    ["Offset of field: WebPPicture::pad2"][::std::mem::offset_of!(WebPPicture, pad2) - 84usize];
-    ["Offset of field: WebPPicture::writer"][::std::mem::offset_of!(WebPPicture, writer) - 96usize];
+        [::core::mem::offset_of!(WebPPicture, argb_stride) - 80usize];
+    ["Offset of field: WebPPicture::pad2"][::core::mem::offset_of!(WebPPicture, pad2) - 84usize];
+    ["Offset of field: WebPPicture::writer"]
+        [::core::mem::offset_of!(WebPPicture, writer) - 96usize];
     ["Offset of field: WebPPicture::custom_ptr"]
-        [::std::mem::offset_of!(WebPPicture, custom_ptr) - 104usize];
+        [::core::mem::offset_of!(WebPPicture, custom_ptr) - 104usize];
     ["Offset of field: WebPPicture::extra_info_type"]
-        [::std::mem::offset_of!(WebPPicture, extra_info_type) - 112usize];
+        [::core::mem::offset_of!(WebPPicture, extra_info_type) - 112usize];
     ["Offset of field: WebPPicture::extra_info"]
-        [::std::mem::offset_of!(WebPPicture, extra_info) - 120usize];
-    ["Offset of field: WebPPicture::stats"][::std::mem::offset_of!(WebPPicture, stats) - 128usize];
+        [::core::mem::offset_of!(WebPPicture, extra_info) - 120usize];
+    ["Offset of field: WebPPicture::stats"][::core::mem::offset_of!(WebPPicture, stats) - 128usize];
     ["Offset of field: WebPPicture::error_code"]
-        [::std::mem::offset_of!(WebPPicture, error_code) - 136usize];
+        [::core::mem::offset_of!(WebPPicture, error_code) - 136usize];
     ["Offset of field: WebPPicture::progress_hook"]
-        [::std::mem::offset_of!(WebPPicture, progress_hook) - 144usize];
+        [::core::mem::offset_of!(WebPPicture, progress_hook) - 144usize];
     ["Offset of field: WebPPicture::user_data"]
-        [::std::mem::offset_of!(WebPPicture, user_data) - 152usize];
-    ["Offset of field: WebPPicture::pad3"][::std::mem::offset_of!(WebPPicture, pad3) - 160usize];
-    ["Offset of field: WebPPicture::pad4"][::std::mem::offset_of!(WebPPicture, pad4) - 176usize];
-    ["Offset of field: WebPPicture::pad5"][::std::mem::offset_of!(WebPPicture, pad5) - 184usize];
-    ["Offset of field: WebPPicture::pad6"][::std::mem::offset_of!(WebPPicture, pad6) - 192usize];
+        [::core::mem::offset_of!(WebPPicture, user_data) - 152usize];
+    ["Offset of field: WebPPicture::pad3"][::core::mem::offset_of!(WebPPicture, pad3) - 160usize];
+    ["Offset of field: WebPPicture::pad4"][::core::mem::offset_of!(WebPPicture, pad4) - 176usize];
+    ["Offset of field: WebPPicture::pad5"][::core::mem::offset_of!(WebPPicture, pad5) - 184usize];
+    ["Offset of field: WebPPicture::pad6"][::core::mem::offset_of!(WebPPicture, pad6) - 192usize];
     ["Offset of field: WebPPicture::memory_"]
-        [::std::mem::offset_of!(WebPPicture, memory_) - 224usize];
+        [::core::mem::offset_of!(WebPPicture, memory_) - 224usize];
     ["Offset of field: WebPPicture::memory_argb_"]
-        [::std::mem::offset_of!(WebPPicture, memory_argb_) - 232usize];
-    ["Offset of field: WebPPicture::pad7"][::std::mem::offset_of!(WebPPicture, pad7) - 240usize];
+        [::core::mem::offset_of!(WebPPicture, memory_argb_) - 232usize];
+    ["Offset of field: WebPPicture::pad7"][::core::mem::offset_of!(WebPPicture, pad7) - 240usize];
 };
 unsafe extern "C" {
     pub fn WebPPictureInitInternal(
         arg1: *mut WebPPicture,
-        arg2: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        arg2: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPPictureAlloc(picture: *mut WebPPicture) -> ::std::os::raw::c_int;
+    pub fn WebPPictureAlloc(picture: *mut WebPPicture) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPPictureFree(picture: *mut WebPPicture);
 }
 unsafe extern "C" {
-    pub fn WebPPictureCopy(src: *const WebPPicture, dst: *mut WebPPicture)
-    -> ::std::os::raw::c_int;
+    pub fn WebPPictureCopy(src: *const WebPPicture, dst: *mut WebPPicture) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPPlaneDistortion(
@@ -465,129 +462,124 @@ unsafe extern "C" {
         src_stride: usize,
         ref_: *const u8,
         ref_stride: usize,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
         x_step: usize,
-        type_: ::std::os::raw::c_int,
+        type_: ::core::ffi::c_int,
         distortion: *mut f32,
         result: *mut f32,
-    ) -> ::std::os::raw::c_int;
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPPictureDistortion(
         src: *const WebPPicture,
         ref_: *const WebPPicture,
-        metric_type: ::std::os::raw::c_int,
+        metric_type: ::core::ffi::c_int,
         result: *mut f32,
-    ) -> ::std::os::raw::c_int;
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPPictureCrop(
         picture: *mut WebPPicture,
-        left: ::std::os::raw::c_int,
-        top: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        left: ::core::ffi::c_int,
+        top: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPPictureView(
         src: *const WebPPicture,
-        left: ::std::os::raw::c_int,
-        top: ::std::os::raw::c_int,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
+        left: ::core::ffi::c_int,
+        top: ::core::ffi::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
         dst: *mut WebPPicture,
-    ) -> ::std::os::raw::c_int;
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPPictureIsView(picture: *const WebPPicture) -> ::std::os::raw::c_int;
+    pub fn WebPPictureIsView(picture: *const WebPPicture) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPPictureRescale(
         picture: *mut WebPPicture,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPPictureImportRGB(
         picture: *mut WebPPicture,
         rgb: *const u8,
-        rgb_stride: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        rgb_stride: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPPictureImportRGBA(
         picture: *mut WebPPicture,
         rgba: *const u8,
-        rgba_stride: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        rgba_stride: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPPictureImportRGBX(
         picture: *mut WebPPicture,
         rgbx: *const u8,
-        rgbx_stride: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        rgbx_stride: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPPictureImportBGR(
         picture: *mut WebPPicture,
         bgr: *const u8,
-        bgr_stride: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        bgr_stride: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPPictureImportBGRA(
         picture: *mut WebPPicture,
         bgra: *const u8,
-        bgra_stride: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        bgra_stride: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPPictureImportBGRX(
         picture: *mut WebPPicture,
         bgrx: *const u8,
-        bgrx_stride: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        bgrx_stride: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPPictureARGBToYUVA(
-        picture: *mut WebPPicture,
-        arg1: WebPEncCSP,
-    ) -> ::std::os::raw::c_int;
+    pub fn WebPPictureARGBToYUVA(picture: *mut WebPPicture, arg1: WebPEncCSP)
+    -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPPictureARGBToYUVADithered(
         picture: *mut WebPPicture,
         colorspace: WebPEncCSP,
         dithering: f32,
-    ) -> ::std::os::raw::c_int;
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPPictureSharpARGBToYUVA(picture: *mut WebPPicture) -> ::std::os::raw::c_int;
+    pub fn WebPPictureSharpARGBToYUVA(picture: *mut WebPPicture) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPPictureSmartARGBToYUVA(picture: *mut WebPPicture) -> ::std::os::raw::c_int;
+    pub fn WebPPictureSmartARGBToYUVA(picture: *mut WebPPicture) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPPictureYUVAToARGB(picture: *mut WebPPicture) -> ::std::os::raw::c_int;
+    pub fn WebPPictureYUVAToARGB(picture: *mut WebPPicture) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPCleanupTransparentArea(picture: *mut WebPPicture);
 }
 unsafe extern "C" {
-    pub fn WebPPictureHasTransparency(picture: *const WebPPicture) -> ::std::os::raw::c_int;
+    pub fn WebPPictureHasTransparency(picture: *const WebPPicture) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPBlendAlpha(picture: *mut WebPPicture, background_rgb: u32);
 }
 unsafe extern "C" {
-    pub fn WebPEncode(
-        config: *const WebPConfig,
-        picture: *mut WebPPicture,
-    ) -> ::std::os::raw::c_int;
+    pub fn WebPEncode(config: *const WebPConfig, picture: *mut WebPPicture) -> ::core::ffi::c_int;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -595,66 +587,66 @@ pub struct WebPIDecoder {
     _unused: [u8; 0],
 }
 unsafe extern "C" {
-    pub fn WebPGetDecoderVersion() -> ::std::os::raw::c_int;
+    pub fn WebPGetDecoderVersion() -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPGetInfo(
         data: *const u8,
         data_size: usize,
-        width: *mut ::std::os::raw::c_int,
-        height: *mut ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        width: *mut ::core::ffi::c_int,
+        height: *mut ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPDecodeRGBA(
         data: *const u8,
         data_size: usize,
-        width: *mut ::std::os::raw::c_int,
-        height: *mut ::std::os::raw::c_int,
+        width: *mut ::core::ffi::c_int,
+        height: *mut ::core::ffi::c_int,
     ) -> *mut u8;
 }
 unsafe extern "C" {
     pub fn WebPDecodeARGB(
         data: *const u8,
         data_size: usize,
-        width: *mut ::std::os::raw::c_int,
-        height: *mut ::std::os::raw::c_int,
+        width: *mut ::core::ffi::c_int,
+        height: *mut ::core::ffi::c_int,
     ) -> *mut u8;
 }
 unsafe extern "C" {
     pub fn WebPDecodeBGRA(
         data: *const u8,
         data_size: usize,
-        width: *mut ::std::os::raw::c_int,
-        height: *mut ::std::os::raw::c_int,
+        width: *mut ::core::ffi::c_int,
+        height: *mut ::core::ffi::c_int,
     ) -> *mut u8;
 }
 unsafe extern "C" {
     pub fn WebPDecodeRGB(
         data: *const u8,
         data_size: usize,
-        width: *mut ::std::os::raw::c_int,
-        height: *mut ::std::os::raw::c_int,
+        width: *mut ::core::ffi::c_int,
+        height: *mut ::core::ffi::c_int,
     ) -> *mut u8;
 }
 unsafe extern "C" {
     pub fn WebPDecodeBGR(
         data: *const u8,
         data_size: usize,
-        width: *mut ::std::os::raw::c_int,
-        height: *mut ::std::os::raw::c_int,
+        width: *mut ::core::ffi::c_int,
+        height: *mut ::core::ffi::c_int,
     ) -> *mut u8;
 }
 unsafe extern "C" {
     pub fn WebPDecodeYUV(
         data: *const u8,
         data_size: usize,
-        width: *mut ::std::os::raw::c_int,
-        height: *mut ::std::os::raw::c_int,
+        width: *mut ::core::ffi::c_int,
+        height: *mut ::core::ffi::c_int,
         u: *mut *mut u8,
         v: *mut *mut u8,
-        stride: *mut ::std::os::raw::c_int,
-        uv_stride: *mut ::std::os::raw::c_int,
+        stride: *mut ::core::ffi::c_int,
+        uv_stride: *mut ::core::ffi::c_int,
     ) -> *mut u8;
 }
 unsafe extern "C" {
@@ -663,7 +655,7 @@ unsafe extern "C" {
         data_size: usize,
         output_buffer: *mut u8,
         output_buffer_size: usize,
-        output_stride: ::std::os::raw::c_int,
+        output_stride: ::core::ffi::c_int,
     ) -> *mut u8;
 }
 unsafe extern "C" {
@@ -672,7 +664,7 @@ unsafe extern "C" {
         data_size: usize,
         output_buffer: *mut u8,
         output_buffer_size: usize,
-        output_stride: ::std::os::raw::c_int,
+        output_stride: ::core::ffi::c_int,
     ) -> *mut u8;
 }
 unsafe extern "C" {
@@ -681,7 +673,7 @@ unsafe extern "C" {
         data_size: usize,
         output_buffer: *mut u8,
         output_buffer_size: usize,
-        output_stride: ::std::os::raw::c_int,
+        output_stride: ::core::ffi::c_int,
     ) -> *mut u8;
 }
 unsafe extern "C" {
@@ -690,7 +682,7 @@ unsafe extern "C" {
         data_size: usize,
         output_buffer: *mut u8,
         output_buffer_size: usize,
-        output_stride: ::std::os::raw::c_int,
+        output_stride: ::core::ffi::c_int,
     ) -> *mut u8;
 }
 unsafe extern "C" {
@@ -699,7 +691,7 @@ unsafe extern "C" {
         data_size: usize,
         output_buffer: *mut u8,
         output_buffer_size: usize,
-        output_stride: ::std::os::raw::c_int,
+        output_stride: ::core::ffi::c_int,
     ) -> *mut u8;
 }
 unsafe extern "C" {
@@ -708,17 +700,16 @@ unsafe extern "C" {
         data_size: usize,
         luma: *mut u8,
         luma_size: usize,
-        luma_stride: ::std::os::raw::c_int,
+        luma_stride: ::core::ffi::c_int,
         u: *mut u8,
         u_size: usize,
-        u_stride: ::std::os::raw::c_int,
+        u_stride: ::core::ffi::c_int,
         v: *mut u8,
         v_size: usize,
-        v_stride: ::std::os::raw::c_int,
+        v_stride: ::core::ffi::c_int,
     ) -> *mut u8;
 }
 #[repr(u32)]
-#[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum WEBP_CSP_MODE {
     MODE_RGB = 0,
@@ -740,19 +731,19 @@ pub enum WEBP_CSP_MODE {
 #[derive(Debug, Copy, Clone)]
 pub struct WebPRGBABuffer {
     pub rgba: *mut u8,
-    pub stride: ::std::os::raw::c_int,
+    pub stride: ::core::ffi::c_int,
     pub size: usize,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPRGBABuffer"][::std::mem::size_of::<WebPRGBABuffer>() - 24usize];
-    ["Alignment of WebPRGBABuffer"][::std::mem::align_of::<WebPRGBABuffer>() - 8usize];
+    ["Size of WebPRGBABuffer"][::core::mem::size_of::<WebPRGBABuffer>() - 24usize];
+    ["Alignment of WebPRGBABuffer"][::core::mem::align_of::<WebPRGBABuffer>() - 8usize];
     ["Offset of field: WebPRGBABuffer::rgba"]
-        [::std::mem::offset_of!(WebPRGBABuffer, rgba) - 0usize];
+        [::core::mem::offset_of!(WebPRGBABuffer, rgba) - 0usize];
     ["Offset of field: WebPRGBABuffer::stride"]
-        [::std::mem::offset_of!(WebPRGBABuffer, stride) - 8usize];
+        [::core::mem::offset_of!(WebPRGBABuffer, stride) - 8usize];
     ["Offset of field: WebPRGBABuffer::size"]
-        [::std::mem::offset_of!(WebPRGBABuffer, size) - 16usize];
+        [::core::mem::offset_of!(WebPRGBABuffer, size) - 16usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -761,10 +752,10 @@ pub struct WebPYUVABuffer {
     pub u: *mut u8,
     pub v: *mut u8,
     pub a: *mut u8,
-    pub y_stride: ::std::os::raw::c_int,
-    pub u_stride: ::std::os::raw::c_int,
-    pub v_stride: ::std::os::raw::c_int,
-    pub a_stride: ::std::os::raw::c_int,
+    pub y_stride: ::core::ffi::c_int,
+    pub u_stride: ::core::ffi::c_int,
+    pub v_stride: ::core::ffi::c_int,
+    pub a_stride: ::core::ffi::c_int,
     pub y_size: usize,
     pub u_size: usize,
     pub v_size: usize,
@@ -772,36 +763,36 @@ pub struct WebPYUVABuffer {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPYUVABuffer"][::std::mem::size_of::<WebPYUVABuffer>() - 80usize];
-    ["Alignment of WebPYUVABuffer"][::std::mem::align_of::<WebPYUVABuffer>() - 8usize];
-    ["Offset of field: WebPYUVABuffer::y"][::std::mem::offset_of!(WebPYUVABuffer, y) - 0usize];
-    ["Offset of field: WebPYUVABuffer::u"][::std::mem::offset_of!(WebPYUVABuffer, u) - 8usize];
-    ["Offset of field: WebPYUVABuffer::v"][::std::mem::offset_of!(WebPYUVABuffer, v) - 16usize];
-    ["Offset of field: WebPYUVABuffer::a"][::std::mem::offset_of!(WebPYUVABuffer, a) - 24usize];
+    ["Size of WebPYUVABuffer"][::core::mem::size_of::<WebPYUVABuffer>() - 80usize];
+    ["Alignment of WebPYUVABuffer"][::core::mem::align_of::<WebPYUVABuffer>() - 8usize];
+    ["Offset of field: WebPYUVABuffer::y"][::core::mem::offset_of!(WebPYUVABuffer, y) - 0usize];
+    ["Offset of field: WebPYUVABuffer::u"][::core::mem::offset_of!(WebPYUVABuffer, u) - 8usize];
+    ["Offset of field: WebPYUVABuffer::v"][::core::mem::offset_of!(WebPYUVABuffer, v) - 16usize];
+    ["Offset of field: WebPYUVABuffer::a"][::core::mem::offset_of!(WebPYUVABuffer, a) - 24usize];
     ["Offset of field: WebPYUVABuffer::y_stride"]
-        [::std::mem::offset_of!(WebPYUVABuffer, y_stride) - 32usize];
+        [::core::mem::offset_of!(WebPYUVABuffer, y_stride) - 32usize];
     ["Offset of field: WebPYUVABuffer::u_stride"]
-        [::std::mem::offset_of!(WebPYUVABuffer, u_stride) - 36usize];
+        [::core::mem::offset_of!(WebPYUVABuffer, u_stride) - 36usize];
     ["Offset of field: WebPYUVABuffer::v_stride"]
-        [::std::mem::offset_of!(WebPYUVABuffer, v_stride) - 40usize];
+        [::core::mem::offset_of!(WebPYUVABuffer, v_stride) - 40usize];
     ["Offset of field: WebPYUVABuffer::a_stride"]
-        [::std::mem::offset_of!(WebPYUVABuffer, a_stride) - 44usize];
+        [::core::mem::offset_of!(WebPYUVABuffer, a_stride) - 44usize];
     ["Offset of field: WebPYUVABuffer::y_size"]
-        [::std::mem::offset_of!(WebPYUVABuffer, y_size) - 48usize];
+        [::core::mem::offset_of!(WebPYUVABuffer, y_size) - 48usize];
     ["Offset of field: WebPYUVABuffer::u_size"]
-        [::std::mem::offset_of!(WebPYUVABuffer, u_size) - 56usize];
+        [::core::mem::offset_of!(WebPYUVABuffer, u_size) - 56usize];
     ["Offset of field: WebPYUVABuffer::v_size"]
-        [::std::mem::offset_of!(WebPYUVABuffer, v_size) - 64usize];
+        [::core::mem::offset_of!(WebPYUVABuffer, v_size) - 64usize];
     ["Offset of field: WebPYUVABuffer::a_size"]
-        [::std::mem::offset_of!(WebPYUVABuffer, a_size) - 72usize];
+        [::core::mem::offset_of!(WebPYUVABuffer, a_size) - 72usize];
 };
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct WebPDecBuffer {
     pub colorspace: WEBP_CSP_MODE,
-    pub width: ::std::os::raw::c_int,
-    pub height: ::std::os::raw::c_int,
-    pub is_external_memory: ::std::os::raw::c_int,
+    pub width: ::core::ffi::c_int,
+    pub height: ::core::ffi::c_int,
+    pub is_external_memory: ::core::ffi::c_int,
     pub u: WebPDecBuffer__bindgen_ty_1,
     pub pad: [u32; 4usize],
     pub private_memory: *mut u8,
@@ -815,38 +806,38 @@ pub union WebPDecBuffer__bindgen_ty_1 {
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
     ["Size of WebPDecBuffer__bindgen_ty_1"]
-        [::std::mem::size_of::<WebPDecBuffer__bindgen_ty_1>() - 80usize];
+        [::core::mem::size_of::<WebPDecBuffer__bindgen_ty_1>() - 80usize];
     ["Alignment of WebPDecBuffer__bindgen_ty_1"]
-        [::std::mem::align_of::<WebPDecBuffer__bindgen_ty_1>() - 8usize];
+        [::core::mem::align_of::<WebPDecBuffer__bindgen_ty_1>() - 8usize];
     ["Offset of field: WebPDecBuffer__bindgen_ty_1::RGBA"]
-        [::std::mem::offset_of!(WebPDecBuffer__bindgen_ty_1, RGBA) - 0usize];
+        [::core::mem::offset_of!(WebPDecBuffer__bindgen_ty_1, RGBA) - 0usize];
     ["Offset of field: WebPDecBuffer__bindgen_ty_1::YUVA"]
-        [::std::mem::offset_of!(WebPDecBuffer__bindgen_ty_1, YUVA) - 0usize];
+        [::core::mem::offset_of!(WebPDecBuffer__bindgen_ty_1, YUVA) - 0usize];
 };
-impl ::std::fmt::Debug for WebPDecBuffer__bindgen_ty_1 {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+impl ::core::fmt::Debug for WebPDecBuffer__bindgen_ty_1 {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
         write!(f, "WebPDecBuffer__bindgen_ty_1 {{ union }}")
     }
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPDecBuffer"][::std::mem::size_of::<WebPDecBuffer>() - 120usize];
-    ["Alignment of WebPDecBuffer"][::std::mem::align_of::<WebPDecBuffer>() - 8usize];
+    ["Size of WebPDecBuffer"][::core::mem::size_of::<WebPDecBuffer>() - 120usize];
+    ["Alignment of WebPDecBuffer"][::core::mem::align_of::<WebPDecBuffer>() - 8usize];
     ["Offset of field: WebPDecBuffer::colorspace"]
-        [::std::mem::offset_of!(WebPDecBuffer, colorspace) - 0usize];
+        [::core::mem::offset_of!(WebPDecBuffer, colorspace) - 0usize];
     ["Offset of field: WebPDecBuffer::width"]
-        [::std::mem::offset_of!(WebPDecBuffer, width) - 4usize];
+        [::core::mem::offset_of!(WebPDecBuffer, width) - 4usize];
     ["Offset of field: WebPDecBuffer::height"]
-        [::std::mem::offset_of!(WebPDecBuffer, height) - 8usize];
+        [::core::mem::offset_of!(WebPDecBuffer, height) - 8usize];
     ["Offset of field: WebPDecBuffer::is_external_memory"]
-        [::std::mem::offset_of!(WebPDecBuffer, is_external_memory) - 12usize];
-    ["Offset of field: WebPDecBuffer::u"][::std::mem::offset_of!(WebPDecBuffer, u) - 16usize];
-    ["Offset of field: WebPDecBuffer::pad"][::std::mem::offset_of!(WebPDecBuffer, pad) - 96usize];
+        [::core::mem::offset_of!(WebPDecBuffer, is_external_memory) - 12usize];
+    ["Offset of field: WebPDecBuffer::u"][::core::mem::offset_of!(WebPDecBuffer, u) - 16usize];
+    ["Offset of field: WebPDecBuffer::pad"][::core::mem::offset_of!(WebPDecBuffer, pad) - 96usize];
     ["Offset of field: WebPDecBuffer::private_memory"]
-        [::std::mem::offset_of!(WebPDecBuffer, private_memory) - 112usize];
+        [::core::mem::offset_of!(WebPDecBuffer, private_memory) - 112usize];
 };
-impl ::std::fmt::Debug for WebPDecBuffer {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+impl ::core::fmt::Debug for WebPDecBuffer {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
         write!(
             f,
             "WebPDecBuffer {{ colorspace: {:?}, width: {:?}, height: {:?}, is_external_memory: {:?}, u: {:?}, pad: {:?}, private_memory: {:?} }}",
@@ -863,14 +854,13 @@ impl ::std::fmt::Debug for WebPDecBuffer {
 unsafe extern "C" {
     pub fn WebPInitDecBufferInternal(
         arg1: *mut WebPDecBuffer,
-        arg2: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        arg2: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPFreeDecBuffer(buffer: *mut WebPDecBuffer);
 }
 #[repr(u32)]
-#[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum VP8StatusCode {
     VP8_STATUS_OK = 0,
@@ -890,36 +880,36 @@ unsafe extern "C" {
         csp: WEBP_CSP_MODE,
         output_buffer: *mut u8,
         output_buffer_size: usize,
-        output_stride: ::std::os::raw::c_int,
+        output_stride: ::core::ffi::c_int,
     ) -> *mut WebPIDecoder;
 }
 unsafe extern "C" {
     pub fn WebPINewYUVA(
         luma: *mut u8,
         luma_size: usize,
-        luma_stride: ::std::os::raw::c_int,
+        luma_stride: ::core::ffi::c_int,
         u: *mut u8,
         u_size: usize,
-        u_stride: ::std::os::raw::c_int,
+        u_stride: ::core::ffi::c_int,
         v: *mut u8,
         v_size: usize,
-        v_stride: ::std::os::raw::c_int,
+        v_stride: ::core::ffi::c_int,
         a: *mut u8,
         a_size: usize,
-        a_stride: ::std::os::raw::c_int,
+        a_stride: ::core::ffi::c_int,
     ) -> *mut WebPIDecoder;
 }
 unsafe extern "C" {
     pub fn WebPINewYUV(
         luma: *mut u8,
         luma_size: usize,
-        luma_stride: ::std::os::raw::c_int,
+        luma_stride: ::core::ffi::c_int,
         u: *mut u8,
         u_size: usize,
-        u_stride: ::std::os::raw::c_int,
+        u_stride: ::core::ffi::c_int,
         v: *mut u8,
         v_size: usize,
-        v_stride: ::std::os::raw::c_int,
+        v_stride: ::core::ffi::c_int,
     ) -> *mut WebPIDecoder;
 }
 unsafe extern "C" {
@@ -936,124 +926,124 @@ unsafe extern "C" {
 unsafe extern "C" {
     pub fn WebPIDecGetRGB(
         idec: *const WebPIDecoder,
-        last_y: *mut ::std::os::raw::c_int,
-        width: *mut ::std::os::raw::c_int,
-        height: *mut ::std::os::raw::c_int,
-        stride: *mut ::std::os::raw::c_int,
+        last_y: *mut ::core::ffi::c_int,
+        width: *mut ::core::ffi::c_int,
+        height: *mut ::core::ffi::c_int,
+        stride: *mut ::core::ffi::c_int,
     ) -> *mut u8;
 }
 unsafe extern "C" {
     pub fn WebPIDecGetYUVA(
         idec: *const WebPIDecoder,
-        last_y: *mut ::std::os::raw::c_int,
+        last_y: *mut ::core::ffi::c_int,
         u: *mut *mut u8,
         v: *mut *mut u8,
         a: *mut *mut u8,
-        width: *mut ::std::os::raw::c_int,
-        height: *mut ::std::os::raw::c_int,
-        stride: *mut ::std::os::raw::c_int,
-        uv_stride: *mut ::std::os::raw::c_int,
-        a_stride: *mut ::std::os::raw::c_int,
+        width: *mut ::core::ffi::c_int,
+        height: *mut ::core::ffi::c_int,
+        stride: *mut ::core::ffi::c_int,
+        uv_stride: *mut ::core::ffi::c_int,
+        a_stride: *mut ::core::ffi::c_int,
     ) -> *mut u8;
 }
 unsafe extern "C" {
     pub fn WebPIDecodedArea(
         idec: *const WebPIDecoder,
-        left: *mut ::std::os::raw::c_int,
-        top: *mut ::std::os::raw::c_int,
-        width: *mut ::std::os::raw::c_int,
-        height: *mut ::std::os::raw::c_int,
+        left: *mut ::core::ffi::c_int,
+        top: *mut ::core::ffi::c_int,
+        width: *mut ::core::ffi::c_int,
+        height: *mut ::core::ffi::c_int,
     ) -> *const WebPDecBuffer;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct WebPBitstreamFeatures {
-    pub width: ::std::os::raw::c_int,
-    pub height: ::std::os::raw::c_int,
-    pub has_alpha: ::std::os::raw::c_int,
-    pub has_animation: ::std::os::raw::c_int,
-    pub format: ::std::os::raw::c_int,
+    pub width: ::core::ffi::c_int,
+    pub height: ::core::ffi::c_int,
+    pub has_alpha: ::core::ffi::c_int,
+    pub has_animation: ::core::ffi::c_int,
+    pub format: ::core::ffi::c_int,
     pub pad: [u32; 5usize],
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPBitstreamFeatures"][::std::mem::size_of::<WebPBitstreamFeatures>() - 40usize];
+    ["Size of WebPBitstreamFeatures"][::core::mem::size_of::<WebPBitstreamFeatures>() - 40usize];
     ["Alignment of WebPBitstreamFeatures"]
-        [::std::mem::align_of::<WebPBitstreamFeatures>() - 4usize];
+        [::core::mem::align_of::<WebPBitstreamFeatures>() - 4usize];
     ["Offset of field: WebPBitstreamFeatures::width"]
-        [::std::mem::offset_of!(WebPBitstreamFeatures, width) - 0usize];
+        [::core::mem::offset_of!(WebPBitstreamFeatures, width) - 0usize];
     ["Offset of field: WebPBitstreamFeatures::height"]
-        [::std::mem::offset_of!(WebPBitstreamFeatures, height) - 4usize];
+        [::core::mem::offset_of!(WebPBitstreamFeatures, height) - 4usize];
     ["Offset of field: WebPBitstreamFeatures::has_alpha"]
-        [::std::mem::offset_of!(WebPBitstreamFeatures, has_alpha) - 8usize];
+        [::core::mem::offset_of!(WebPBitstreamFeatures, has_alpha) - 8usize];
     ["Offset of field: WebPBitstreamFeatures::has_animation"]
-        [::std::mem::offset_of!(WebPBitstreamFeatures, has_animation) - 12usize];
+        [::core::mem::offset_of!(WebPBitstreamFeatures, has_animation) - 12usize];
     ["Offset of field: WebPBitstreamFeatures::format"]
-        [::std::mem::offset_of!(WebPBitstreamFeatures, format) - 16usize];
+        [::core::mem::offset_of!(WebPBitstreamFeatures, format) - 16usize];
     ["Offset of field: WebPBitstreamFeatures::pad"]
-        [::std::mem::offset_of!(WebPBitstreamFeatures, pad) - 20usize];
+        [::core::mem::offset_of!(WebPBitstreamFeatures, pad) - 20usize];
 };
 unsafe extern "C" {
     pub fn WebPGetFeaturesInternal(
         arg1: *const u8,
         arg2: usize,
         arg3: *mut WebPBitstreamFeatures,
-        arg4: ::std::os::raw::c_int,
+        arg4: ::core::ffi::c_int,
     ) -> VP8StatusCode;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct WebPDecoderOptions {
-    pub bypass_filtering: ::std::os::raw::c_int,
-    pub no_fancy_upsampling: ::std::os::raw::c_int,
-    pub use_cropping: ::std::os::raw::c_int,
-    pub crop_left: ::std::os::raw::c_int,
-    pub crop_top: ::std::os::raw::c_int,
-    pub crop_width: ::std::os::raw::c_int,
-    pub crop_height: ::std::os::raw::c_int,
-    pub use_scaling: ::std::os::raw::c_int,
-    pub scaled_width: ::std::os::raw::c_int,
-    pub scaled_height: ::std::os::raw::c_int,
-    pub use_threads: ::std::os::raw::c_int,
-    pub dithering_strength: ::std::os::raw::c_int,
-    pub flip: ::std::os::raw::c_int,
-    pub alpha_dithering_strength: ::std::os::raw::c_int,
+    pub bypass_filtering: ::core::ffi::c_int,
+    pub no_fancy_upsampling: ::core::ffi::c_int,
+    pub use_cropping: ::core::ffi::c_int,
+    pub crop_left: ::core::ffi::c_int,
+    pub crop_top: ::core::ffi::c_int,
+    pub crop_width: ::core::ffi::c_int,
+    pub crop_height: ::core::ffi::c_int,
+    pub use_scaling: ::core::ffi::c_int,
+    pub scaled_width: ::core::ffi::c_int,
+    pub scaled_height: ::core::ffi::c_int,
+    pub use_threads: ::core::ffi::c_int,
+    pub dithering_strength: ::core::ffi::c_int,
+    pub flip: ::core::ffi::c_int,
+    pub alpha_dithering_strength: ::core::ffi::c_int,
     pub pad: [u32; 5usize],
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPDecoderOptions"][::std::mem::size_of::<WebPDecoderOptions>() - 76usize];
-    ["Alignment of WebPDecoderOptions"][::std::mem::align_of::<WebPDecoderOptions>() - 4usize];
+    ["Size of WebPDecoderOptions"][::core::mem::size_of::<WebPDecoderOptions>() - 76usize];
+    ["Alignment of WebPDecoderOptions"][::core::mem::align_of::<WebPDecoderOptions>() - 4usize];
     ["Offset of field: WebPDecoderOptions::bypass_filtering"]
-        [::std::mem::offset_of!(WebPDecoderOptions, bypass_filtering) - 0usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, bypass_filtering) - 0usize];
     ["Offset of field: WebPDecoderOptions::no_fancy_upsampling"]
-        [::std::mem::offset_of!(WebPDecoderOptions, no_fancy_upsampling) - 4usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, no_fancy_upsampling) - 4usize];
     ["Offset of field: WebPDecoderOptions::use_cropping"]
-        [::std::mem::offset_of!(WebPDecoderOptions, use_cropping) - 8usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, use_cropping) - 8usize];
     ["Offset of field: WebPDecoderOptions::crop_left"]
-        [::std::mem::offset_of!(WebPDecoderOptions, crop_left) - 12usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, crop_left) - 12usize];
     ["Offset of field: WebPDecoderOptions::crop_top"]
-        [::std::mem::offset_of!(WebPDecoderOptions, crop_top) - 16usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, crop_top) - 16usize];
     ["Offset of field: WebPDecoderOptions::crop_width"]
-        [::std::mem::offset_of!(WebPDecoderOptions, crop_width) - 20usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, crop_width) - 20usize];
     ["Offset of field: WebPDecoderOptions::crop_height"]
-        [::std::mem::offset_of!(WebPDecoderOptions, crop_height) - 24usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, crop_height) - 24usize];
     ["Offset of field: WebPDecoderOptions::use_scaling"]
-        [::std::mem::offset_of!(WebPDecoderOptions, use_scaling) - 28usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, use_scaling) - 28usize];
     ["Offset of field: WebPDecoderOptions::scaled_width"]
-        [::std::mem::offset_of!(WebPDecoderOptions, scaled_width) - 32usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, scaled_width) - 32usize];
     ["Offset of field: WebPDecoderOptions::scaled_height"]
-        [::std::mem::offset_of!(WebPDecoderOptions, scaled_height) - 36usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, scaled_height) - 36usize];
     ["Offset of field: WebPDecoderOptions::use_threads"]
-        [::std::mem::offset_of!(WebPDecoderOptions, use_threads) - 40usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, use_threads) - 40usize];
     ["Offset of field: WebPDecoderOptions::dithering_strength"]
-        [::std::mem::offset_of!(WebPDecoderOptions, dithering_strength) - 44usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, dithering_strength) - 44usize];
     ["Offset of field: WebPDecoderOptions::flip"]
-        [::std::mem::offset_of!(WebPDecoderOptions, flip) - 48usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, flip) - 48usize];
     ["Offset of field: WebPDecoderOptions::alpha_dithering_strength"]
-        [::std::mem::offset_of!(WebPDecoderOptions, alpha_dithering_strength) - 52usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, alpha_dithering_strength) - 52usize];
     ["Offset of field: WebPDecoderOptions::pad"]
-        [::std::mem::offset_of!(WebPDecoderOptions, pad) - 56usize];
+        [::core::mem::offset_of!(WebPDecoderOptions, pad) - 56usize];
 };
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -1064,17 +1054,17 @@ pub struct WebPDecoderConfig {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPDecoderConfig"][::std::mem::size_of::<WebPDecoderConfig>() - 240usize];
-    ["Alignment of WebPDecoderConfig"][::std::mem::align_of::<WebPDecoderConfig>() - 8usize];
+    ["Size of WebPDecoderConfig"][::core::mem::size_of::<WebPDecoderConfig>() - 240usize];
+    ["Alignment of WebPDecoderConfig"][::core::mem::align_of::<WebPDecoderConfig>() - 8usize];
     ["Offset of field: WebPDecoderConfig::input"]
-        [::std::mem::offset_of!(WebPDecoderConfig, input) - 0usize];
+        [::core::mem::offset_of!(WebPDecoderConfig, input) - 0usize];
     ["Offset of field: WebPDecoderConfig::output"]
-        [::std::mem::offset_of!(WebPDecoderConfig, output) - 40usize];
+        [::core::mem::offset_of!(WebPDecoderConfig, output) - 40usize];
     ["Offset of field: WebPDecoderConfig::options"]
-        [::std::mem::offset_of!(WebPDecoderConfig, options) - 160usize];
+        [::core::mem::offset_of!(WebPDecoderConfig, options) - 160usize];
 };
-impl ::std::fmt::Debug for WebPDecoderConfig {
-    fn fmt(&self, f: &mut ::std::fmt::Formatter<'_>) -> ::std::fmt::Result {
+impl ::core::fmt::Debug for WebPDecoderConfig {
+    fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
         write!(
             f,
             "WebPDecoderConfig {{ input: {:?}, output: {:?}, options: {:?} }}",
@@ -1085,11 +1075,11 @@ impl ::std::fmt::Debug for WebPDecoderConfig {
 unsafe extern "C" {
     pub fn WebPInitDecoderConfigInternal(
         arg1: *mut WebPDecoderConfig,
-        arg2: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        arg2: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPValidateDecoderConfig(config: *const WebPDecoderConfig) -> ::std::os::raw::c_int;
+    pub fn WebPValidateDecoderConfig(config: *const WebPDecoderConfig) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPIDecode(
@@ -1106,7 +1096,6 @@ unsafe extern "C" {
     ) -> VP8StatusCode;
 }
 #[repr(u32)]
-#[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum WebPFeatureFlags {
     ANIMATION_FLAG = 2,
@@ -1117,14 +1106,12 @@ pub enum WebPFeatureFlags {
     ALL_VALID_FLAGS = 62,
 }
 #[repr(u32)]
-#[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum WebPMuxAnimDispose {
     WEBP_MUX_DISPOSE_NONE = 0,
     WEBP_MUX_DISPOSE_BACKGROUND = 1,
 }
 #[repr(u32)]
-#[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum WebPMuxAnimBlend {
     WEBP_MUX_BLEND = 0,
@@ -1138,10 +1125,10 @@ pub struct WebPData {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPData"][::std::mem::size_of::<WebPData>() - 16usize];
-    ["Alignment of WebPData"][::std::mem::align_of::<WebPData>() - 8usize];
-    ["Offset of field: WebPData::bytes"][::std::mem::offset_of!(WebPData, bytes) - 0usize];
-    ["Offset of field: WebPData::size"][::std::mem::offset_of!(WebPData, size) - 8usize];
+    ["Size of WebPData"][::core::mem::size_of::<WebPData>() - 16usize];
+    ["Alignment of WebPData"][::core::mem::align_of::<WebPData>() - 8usize];
+    ["Offset of field: WebPData::bytes"][::core::mem::offset_of!(WebPData, bytes) - 0usize];
+    ["Offset of field: WebPData::size"][::core::mem::offset_of!(WebPData, size) - 8usize];
 };
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -1149,7 +1136,6 @@ pub struct WebPMux {
     _unused: [u8; 0],
 }
 #[repr(i32)]
-#[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum WebPMuxError {
     WEBP_MUX_OK = 1,
@@ -1160,7 +1146,6 @@ pub enum WebPMuxError {
     WEBP_MUX_NOT_ENOUGH_DATA = -4,
 }
 #[repr(u32)]
-#[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum WebPChunkId {
     WEBP_CHUNK_VP8X = 0,
@@ -1176,10 +1161,10 @@ pub enum WebPChunkId {
     WEBP_CHUNK_NIL = 10,
 }
 unsafe extern "C" {
-    pub fn WebPGetMuxVersion() -> ::std::os::raw::c_int;
+    pub fn WebPGetMuxVersion() -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPNewInternal(arg1: ::std::os::raw::c_int) -> *mut WebPMux;
+    pub fn WebPNewInternal(arg1: ::core::ffi::c_int) -> *mut WebPMux;
 }
 unsafe extern "C" {
     pub fn WebPMuxDelete(mux: *mut WebPMux);
@@ -1187,38 +1172,38 @@ unsafe extern "C" {
 unsafe extern "C" {
     pub fn WebPMuxCreateInternal(
         arg1: *const WebPData,
-        arg2: ::std::os::raw::c_int,
-        arg3: ::std::os::raw::c_int,
+        arg2: ::core::ffi::c_int,
+        arg3: ::core::ffi::c_int,
     ) -> *mut WebPMux;
 }
 unsafe extern "C" {
     pub fn WebPMuxSetChunk(
         mux: *mut WebPMux,
-        fourcc: *const ::std::os::raw::c_char,
+        fourcc: *const ::core::ffi::c_char,
         chunk_data: *const WebPData,
-        copy_data: ::std::os::raw::c_int,
+        copy_data: ::core::ffi::c_int,
     ) -> WebPMuxError;
 }
 unsafe extern "C" {
     pub fn WebPMuxGetChunk(
         mux: *const WebPMux,
-        fourcc: *const ::std::os::raw::c_char,
+        fourcc: *const ::core::ffi::c_char,
         chunk_data: *mut WebPData,
     ) -> WebPMuxError;
 }
 unsafe extern "C" {
     pub fn WebPMuxDeleteChunk(
         mux: *mut WebPMux,
-        fourcc: *const ::std::os::raw::c_char,
+        fourcc: *const ::core::ffi::c_char,
     ) -> WebPMuxError;
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct WebPMuxFrameInfo {
     pub bitstream: WebPData,
-    pub x_offset: ::std::os::raw::c_int,
-    pub y_offset: ::std::os::raw::c_int,
-    pub duration: ::std::os::raw::c_int,
+    pub x_offset: ::core::ffi::c_int,
+    pub y_offset: ::core::ffi::c_int,
+    pub duration: ::core::ffi::c_int,
     pub id: WebPChunkId,
     pub dispose_method: WebPMuxAnimDispose,
     pub blend_method: WebPMuxAnimBlend,
@@ -1226,37 +1211,37 @@ pub struct WebPMuxFrameInfo {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPMuxFrameInfo"][::std::mem::size_of::<WebPMuxFrameInfo>() - 48usize];
-    ["Alignment of WebPMuxFrameInfo"][::std::mem::align_of::<WebPMuxFrameInfo>() - 8usize];
+    ["Size of WebPMuxFrameInfo"][::core::mem::size_of::<WebPMuxFrameInfo>() - 48usize];
+    ["Alignment of WebPMuxFrameInfo"][::core::mem::align_of::<WebPMuxFrameInfo>() - 8usize];
     ["Offset of field: WebPMuxFrameInfo::bitstream"]
-        [::std::mem::offset_of!(WebPMuxFrameInfo, bitstream) - 0usize];
+        [::core::mem::offset_of!(WebPMuxFrameInfo, bitstream) - 0usize];
     ["Offset of field: WebPMuxFrameInfo::x_offset"]
-        [::std::mem::offset_of!(WebPMuxFrameInfo, x_offset) - 16usize];
+        [::core::mem::offset_of!(WebPMuxFrameInfo, x_offset) - 16usize];
     ["Offset of field: WebPMuxFrameInfo::y_offset"]
-        [::std::mem::offset_of!(WebPMuxFrameInfo, y_offset) - 20usize];
+        [::core::mem::offset_of!(WebPMuxFrameInfo, y_offset) - 20usize];
     ["Offset of field: WebPMuxFrameInfo::duration"]
-        [::std::mem::offset_of!(WebPMuxFrameInfo, duration) - 24usize];
+        [::core::mem::offset_of!(WebPMuxFrameInfo, duration) - 24usize];
     ["Offset of field: WebPMuxFrameInfo::id"]
-        [::std::mem::offset_of!(WebPMuxFrameInfo, id) - 28usize];
+        [::core::mem::offset_of!(WebPMuxFrameInfo, id) - 28usize];
     ["Offset of field: WebPMuxFrameInfo::dispose_method"]
-        [::std::mem::offset_of!(WebPMuxFrameInfo, dispose_method) - 32usize];
+        [::core::mem::offset_of!(WebPMuxFrameInfo, dispose_method) - 32usize];
     ["Offset of field: WebPMuxFrameInfo::blend_method"]
-        [::std::mem::offset_of!(WebPMuxFrameInfo, blend_method) - 36usize];
+        [::core::mem::offset_of!(WebPMuxFrameInfo, blend_method) - 36usize];
     ["Offset of field: WebPMuxFrameInfo::pad"]
-        [::std::mem::offset_of!(WebPMuxFrameInfo, pad) - 40usize];
+        [::core::mem::offset_of!(WebPMuxFrameInfo, pad) - 40usize];
 };
 unsafe extern "C" {
     pub fn WebPMuxSetImage(
         mux: *mut WebPMux,
         bitstream: *const WebPData,
-        copy_data: ::std::os::raw::c_int,
+        copy_data: ::core::ffi::c_int,
     ) -> WebPMuxError;
 }
 unsafe extern "C" {
     pub fn WebPMuxPushFrame(
         mux: *mut WebPMux,
         frame: *const WebPMuxFrameInfo,
-        copy_data: ::std::os::raw::c_int,
+        copy_data: ::core::ffi::c_int,
     ) -> WebPMuxError;
 }
 unsafe extern "C" {
@@ -1273,16 +1258,16 @@ unsafe extern "C" {
 #[derive(Debug, Copy, Clone)]
 pub struct WebPMuxAnimParams {
     pub bgcolor: u32,
-    pub loop_count: ::std::os::raw::c_int,
+    pub loop_count: ::core::ffi::c_int,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPMuxAnimParams"][::std::mem::size_of::<WebPMuxAnimParams>() - 8usize];
-    ["Alignment of WebPMuxAnimParams"][::std::mem::align_of::<WebPMuxAnimParams>() - 4usize];
+    ["Size of WebPMuxAnimParams"][::core::mem::size_of::<WebPMuxAnimParams>() - 8usize];
+    ["Alignment of WebPMuxAnimParams"][::core::mem::align_of::<WebPMuxAnimParams>() - 4usize];
     ["Offset of field: WebPMuxAnimParams::bgcolor"]
-        [::std::mem::offset_of!(WebPMuxAnimParams, bgcolor) - 0usize];
+        [::core::mem::offset_of!(WebPMuxAnimParams, bgcolor) - 0usize];
     ["Offset of field: WebPMuxAnimParams::loop_count"]
-        [::std::mem::offset_of!(WebPMuxAnimParams, loop_count) - 4usize];
+        [::core::mem::offset_of!(WebPMuxAnimParams, loop_count) - 4usize];
 };
 unsafe extern "C" {
     pub fn WebPMuxSetAnimationParams(
@@ -1299,15 +1284,15 @@ unsafe extern "C" {
 unsafe extern "C" {
     pub fn WebPMuxSetCanvasSize(
         mux: *mut WebPMux,
-        width: ::std::os::raw::c_int,
-        height: ::std::os::raw::c_int,
+        width: ::core::ffi::c_int,
+        height: ::core::ffi::c_int,
     ) -> WebPMuxError;
 }
 unsafe extern "C" {
     pub fn WebPMuxGetCanvasSize(
         mux: *const WebPMux,
-        width: *mut ::std::os::raw::c_int,
-        height: *mut ::std::os::raw::c_int,
+        width: *mut ::core::ffi::c_int,
+        height: *mut ::core::ffi::c_int,
     ) -> WebPMuxError;
 }
 unsafe extern "C" {
@@ -1317,7 +1302,7 @@ unsafe extern "C" {
     pub fn WebPMuxNumChunks(
         mux: *const WebPMux,
         id: WebPChunkId,
-        num_elements: *mut ::std::os::raw::c_int,
+        num_elements: *mut ::core::ffi::c_int,
     ) -> WebPMuxError;
 }
 unsafe extern "C" {
@@ -1332,63 +1317,63 @@ pub struct WebPAnimEncoder {
 #[derive(Debug, Copy, Clone)]
 pub struct WebPAnimEncoderOptions {
     pub anim_params: WebPMuxAnimParams,
-    pub minimize_size: ::std::os::raw::c_int,
-    pub kmin: ::std::os::raw::c_int,
-    pub kmax: ::std::os::raw::c_int,
-    pub allow_mixed: ::std::os::raw::c_int,
-    pub verbose: ::std::os::raw::c_int,
+    pub minimize_size: ::core::ffi::c_int,
+    pub kmin: ::core::ffi::c_int,
+    pub kmax: ::core::ffi::c_int,
+    pub allow_mixed: ::core::ffi::c_int,
+    pub verbose: ::core::ffi::c_int,
     pub padding: [u32; 4usize],
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPAnimEncoderOptions"][::std::mem::size_of::<WebPAnimEncoderOptions>() - 44usize];
+    ["Size of WebPAnimEncoderOptions"][::core::mem::size_of::<WebPAnimEncoderOptions>() - 44usize];
     ["Alignment of WebPAnimEncoderOptions"]
-        [::std::mem::align_of::<WebPAnimEncoderOptions>() - 4usize];
+        [::core::mem::align_of::<WebPAnimEncoderOptions>() - 4usize];
     ["Offset of field: WebPAnimEncoderOptions::anim_params"]
-        [::std::mem::offset_of!(WebPAnimEncoderOptions, anim_params) - 0usize];
+        [::core::mem::offset_of!(WebPAnimEncoderOptions, anim_params) - 0usize];
     ["Offset of field: WebPAnimEncoderOptions::minimize_size"]
-        [::std::mem::offset_of!(WebPAnimEncoderOptions, minimize_size) - 8usize];
+        [::core::mem::offset_of!(WebPAnimEncoderOptions, minimize_size) - 8usize];
     ["Offset of field: WebPAnimEncoderOptions::kmin"]
-        [::std::mem::offset_of!(WebPAnimEncoderOptions, kmin) - 12usize];
+        [::core::mem::offset_of!(WebPAnimEncoderOptions, kmin) - 12usize];
     ["Offset of field: WebPAnimEncoderOptions::kmax"]
-        [::std::mem::offset_of!(WebPAnimEncoderOptions, kmax) - 16usize];
+        [::core::mem::offset_of!(WebPAnimEncoderOptions, kmax) - 16usize];
     ["Offset of field: WebPAnimEncoderOptions::allow_mixed"]
-        [::std::mem::offset_of!(WebPAnimEncoderOptions, allow_mixed) - 20usize];
+        [::core::mem::offset_of!(WebPAnimEncoderOptions, allow_mixed) - 20usize];
     ["Offset of field: WebPAnimEncoderOptions::verbose"]
-        [::std::mem::offset_of!(WebPAnimEncoderOptions, verbose) - 24usize];
+        [::core::mem::offset_of!(WebPAnimEncoderOptions, verbose) - 24usize];
     ["Offset of field: WebPAnimEncoderOptions::padding"]
-        [::std::mem::offset_of!(WebPAnimEncoderOptions, padding) - 28usize];
+        [::core::mem::offset_of!(WebPAnimEncoderOptions, padding) - 28usize];
 };
 unsafe extern "C" {
     pub fn WebPAnimEncoderOptionsInitInternal(
         arg1: *mut WebPAnimEncoderOptions,
-        arg2: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        arg2: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPAnimEncoderNewInternal(
-        arg1: ::std::os::raw::c_int,
-        arg2: ::std::os::raw::c_int,
+        arg1: ::core::ffi::c_int,
+        arg2: ::core::ffi::c_int,
         arg3: *const WebPAnimEncoderOptions,
-        arg4: ::std::os::raw::c_int,
+        arg4: ::core::ffi::c_int,
     ) -> *mut WebPAnimEncoder;
 }
 unsafe extern "C" {
     pub fn WebPAnimEncoderAdd(
         enc: *mut WebPAnimEncoder,
         frame: *mut WebPPicture,
-        timestamp_ms: ::std::os::raw::c_int,
+        timestamp_ms: ::core::ffi::c_int,
         config: *const WebPConfig,
-    ) -> ::std::os::raw::c_int;
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPAnimEncoderAssemble(
         enc: *mut WebPAnimEncoder,
         webp_data: *mut WebPData,
-    ) -> ::std::os::raw::c_int;
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPAnimEncoderGetError(enc: *mut WebPAnimEncoder) -> *const ::std::os::raw::c_char;
+    pub fn WebPAnimEncoderGetError(enc: *mut WebPAnimEncoder) -> *const ::core::ffi::c_char;
 }
 unsafe extern "C" {
     pub fn WebPAnimEncoderDelete(enc: *mut WebPAnimEncoder);
@@ -1396,22 +1381,22 @@ unsafe extern "C" {
 unsafe extern "C" {
     pub fn WebPAnimEncoderSetChunk(
         enc: *mut WebPAnimEncoder,
-        fourcc: *const ::std::os::raw::c_char,
+        fourcc: *const ::core::ffi::c_char,
         chunk_data: *const WebPData,
-        copy_data: ::std::os::raw::c_int,
+        copy_data: ::core::ffi::c_int,
     ) -> WebPMuxError;
 }
 unsafe extern "C" {
     pub fn WebPAnimEncoderGetChunk(
         enc: *const WebPAnimEncoder,
-        fourcc: *const ::std::os::raw::c_char,
+        fourcc: *const ::core::ffi::c_char,
         chunk_data: *mut WebPData,
     ) -> WebPMuxError;
 }
 unsafe extern "C" {
     pub fn WebPAnimEncoderDeleteChunk(
         enc: *mut WebPAnimEncoder,
-        fourcc: *const ::std::os::raw::c_char,
+        fourcc: *const ::core::ffi::c_char,
     ) -> WebPMuxError;
 }
 #[repr(C)]
@@ -1420,10 +1405,9 @@ pub struct WebPDemuxer {
     _unused: [u8; 0],
 }
 unsafe extern "C" {
-    pub fn WebPGetDemuxVersion() -> ::std::os::raw::c_int;
+    pub fn WebPGetDemuxVersion() -> ::core::ffi::c_int;
 }
 #[repr(i32)]
-#[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum WebPDemuxState {
     WEBP_DEMUX_PARSE_ERROR = -1,
@@ -1434,16 +1418,15 @@ pub enum WebPDemuxState {
 unsafe extern "C" {
     pub fn WebPDemuxInternal(
         arg1: *const WebPData,
-        arg2: ::std::os::raw::c_int,
+        arg2: ::core::ffi::c_int,
         arg3: *mut WebPDemuxState,
-        arg4: ::std::os::raw::c_int,
+        arg4: ::core::ffi::c_int,
     ) -> *mut WebPDemuxer;
 }
 unsafe extern "C" {
     pub fn WebPDemuxDelete(dmux: *mut WebPDemuxer);
 }
 #[repr(u32)]
-#[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum WebPFormatFeature {
     WEBP_FF_FORMAT_FLAGS = 0,
@@ -1459,64 +1442,65 @@ unsafe extern "C" {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct WebPIterator {
-    pub frame_num: ::std::os::raw::c_int,
-    pub num_frames: ::std::os::raw::c_int,
-    pub x_offset: ::std::os::raw::c_int,
-    pub y_offset: ::std::os::raw::c_int,
-    pub width: ::std::os::raw::c_int,
-    pub height: ::std::os::raw::c_int,
-    pub duration: ::std::os::raw::c_int,
+    pub frame_num: ::core::ffi::c_int,
+    pub num_frames: ::core::ffi::c_int,
+    pub x_offset: ::core::ffi::c_int,
+    pub y_offset: ::core::ffi::c_int,
+    pub width: ::core::ffi::c_int,
+    pub height: ::core::ffi::c_int,
+    pub duration: ::core::ffi::c_int,
     pub dispose_method: WebPMuxAnimDispose,
-    pub complete: ::std::os::raw::c_int,
+    pub complete: ::core::ffi::c_int,
     pub fragment: WebPData,
-    pub has_alpha: ::std::os::raw::c_int,
+    pub has_alpha: ::core::ffi::c_int,
     pub blend_method: WebPMuxAnimBlend,
     pub pad: [u32; 2usize],
-    pub private_: *mut ::std::os::raw::c_void,
+    pub private_: *mut ::core::ffi::c_void,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPIterator"][::std::mem::size_of::<WebPIterator>() - 80usize];
-    ["Alignment of WebPIterator"][::std::mem::align_of::<WebPIterator>() - 8usize];
+    ["Size of WebPIterator"][::core::mem::size_of::<WebPIterator>() - 80usize];
+    ["Alignment of WebPIterator"][::core::mem::align_of::<WebPIterator>() - 8usize];
     ["Offset of field: WebPIterator::frame_num"]
-        [::std::mem::offset_of!(WebPIterator, frame_num) - 0usize];
+        [::core::mem::offset_of!(WebPIterator, frame_num) - 0usize];
     ["Offset of field: WebPIterator::num_frames"]
-        [::std::mem::offset_of!(WebPIterator, num_frames) - 4usize];
+        [::core::mem::offset_of!(WebPIterator, num_frames) - 4usize];
     ["Offset of field: WebPIterator::x_offset"]
-        [::std::mem::offset_of!(WebPIterator, x_offset) - 8usize];
+        [::core::mem::offset_of!(WebPIterator, x_offset) - 8usize];
     ["Offset of field: WebPIterator::y_offset"]
-        [::std::mem::offset_of!(WebPIterator, y_offset) - 12usize];
-    ["Offset of field: WebPIterator::width"][::std::mem::offset_of!(WebPIterator, width) - 16usize];
+        [::core::mem::offset_of!(WebPIterator, y_offset) - 12usize];
+    ["Offset of field: WebPIterator::width"]
+        [::core::mem::offset_of!(WebPIterator, width) - 16usize];
     ["Offset of field: WebPIterator::height"]
-        [::std::mem::offset_of!(WebPIterator, height) - 20usize];
+        [::core::mem::offset_of!(WebPIterator, height) - 20usize];
     ["Offset of field: WebPIterator::duration"]
-        [::std::mem::offset_of!(WebPIterator, duration) - 24usize];
+        [::core::mem::offset_of!(WebPIterator, duration) - 24usize];
     ["Offset of field: WebPIterator::dispose_method"]
-        [::std::mem::offset_of!(WebPIterator, dispose_method) - 28usize];
+        [::core::mem::offset_of!(WebPIterator, dispose_method) - 28usize];
     ["Offset of field: WebPIterator::complete"]
-        [::std::mem::offset_of!(WebPIterator, complete) - 32usize];
+        [::core::mem::offset_of!(WebPIterator, complete) - 32usize];
     ["Offset of field: WebPIterator::fragment"]
-        [::std::mem::offset_of!(WebPIterator, fragment) - 40usize];
+        [::core::mem::offset_of!(WebPIterator, fragment) - 40usize];
     ["Offset of field: WebPIterator::has_alpha"]
-        [::std::mem::offset_of!(WebPIterator, has_alpha) - 56usize];
+        [::core::mem::offset_of!(WebPIterator, has_alpha) - 56usize];
     ["Offset of field: WebPIterator::blend_method"]
-        [::std::mem::offset_of!(WebPIterator, blend_method) - 60usize];
-    ["Offset of field: WebPIterator::pad"][::std::mem::offset_of!(WebPIterator, pad) - 64usize];
+        [::core::mem::offset_of!(WebPIterator, blend_method) - 60usize];
+    ["Offset of field: WebPIterator::pad"][::core::mem::offset_of!(WebPIterator, pad) - 64usize];
     ["Offset of field: WebPIterator::private_"]
-        [::std::mem::offset_of!(WebPIterator, private_) - 72usize];
+        [::core::mem::offset_of!(WebPIterator, private_) - 72usize];
 };
 unsafe extern "C" {
     pub fn WebPDemuxGetFrame(
         dmux: *const WebPDemuxer,
-        frame_number: ::std::os::raw::c_int,
+        frame_number: ::core::ffi::c_int,
         iter: *mut WebPIterator,
-    ) -> ::std::os::raw::c_int;
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPDemuxNextFrame(iter: *mut WebPIterator) -> ::std::os::raw::c_int;
+    pub fn WebPDemuxNextFrame(iter: *mut WebPIterator) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPDemuxPrevFrame(iter: *mut WebPIterator) -> ::std::os::raw::c_int;
+    pub fn WebPDemuxPrevFrame(iter: *mut WebPIterator) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPDemuxReleaseIterator(iter: *mut WebPIterator);
@@ -1524,40 +1508,40 @@ unsafe extern "C" {
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct WebPChunkIterator {
-    pub chunk_num: ::std::os::raw::c_int,
-    pub num_chunks: ::std::os::raw::c_int,
+    pub chunk_num: ::core::ffi::c_int,
+    pub num_chunks: ::core::ffi::c_int,
     pub chunk: WebPData,
     pub pad: [u32; 6usize],
-    pub private_: *mut ::std::os::raw::c_void,
+    pub private_: *mut ::core::ffi::c_void,
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPChunkIterator"][::std::mem::size_of::<WebPChunkIterator>() - 56usize];
-    ["Alignment of WebPChunkIterator"][::std::mem::align_of::<WebPChunkIterator>() - 8usize];
+    ["Size of WebPChunkIterator"][::core::mem::size_of::<WebPChunkIterator>() - 56usize];
+    ["Alignment of WebPChunkIterator"][::core::mem::align_of::<WebPChunkIterator>() - 8usize];
     ["Offset of field: WebPChunkIterator::chunk_num"]
-        [::std::mem::offset_of!(WebPChunkIterator, chunk_num) - 0usize];
+        [::core::mem::offset_of!(WebPChunkIterator, chunk_num) - 0usize];
     ["Offset of field: WebPChunkIterator::num_chunks"]
-        [::std::mem::offset_of!(WebPChunkIterator, num_chunks) - 4usize];
+        [::core::mem::offset_of!(WebPChunkIterator, num_chunks) - 4usize];
     ["Offset of field: WebPChunkIterator::chunk"]
-        [::std::mem::offset_of!(WebPChunkIterator, chunk) - 8usize];
+        [::core::mem::offset_of!(WebPChunkIterator, chunk) - 8usize];
     ["Offset of field: WebPChunkIterator::pad"]
-        [::std::mem::offset_of!(WebPChunkIterator, pad) - 24usize];
+        [::core::mem::offset_of!(WebPChunkIterator, pad) - 24usize];
     ["Offset of field: WebPChunkIterator::private_"]
-        [::std::mem::offset_of!(WebPChunkIterator, private_) - 48usize];
+        [::core::mem::offset_of!(WebPChunkIterator, private_) - 48usize];
 };
 unsafe extern "C" {
     pub fn WebPDemuxGetChunk(
         dmux: *const WebPDemuxer,
-        fourcc: *const ::std::os::raw::c_char,
-        chunk_number: ::std::os::raw::c_int,
+        fourcc: *const ::core::ffi::c_char,
+        chunk_number: ::core::ffi::c_int,
         iter: *mut WebPChunkIterator,
-    ) -> ::std::os::raw::c_int;
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPDemuxNextChunk(iter: *mut WebPChunkIterator) -> ::std::os::raw::c_int;
+    pub fn WebPDemuxNextChunk(iter: *mut WebPChunkIterator) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPDemuxPrevChunk(iter: *mut WebPChunkIterator) -> ::std::os::raw::c_int;
+    pub fn WebPDemuxPrevChunk(iter: *mut WebPChunkIterator) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPDemuxReleaseChunkIterator(iter: *mut WebPChunkIterator);
@@ -1571,32 +1555,32 @@ pub struct WebPAnimDecoder {
 #[derive(Debug, Copy, Clone)]
 pub struct WebPAnimDecoderOptions {
     pub color_mode: WEBP_CSP_MODE,
-    pub use_threads: ::std::os::raw::c_int,
+    pub use_threads: ::core::ffi::c_int,
     pub padding: [u32; 7usize],
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPAnimDecoderOptions"][::std::mem::size_of::<WebPAnimDecoderOptions>() - 36usize];
+    ["Size of WebPAnimDecoderOptions"][::core::mem::size_of::<WebPAnimDecoderOptions>() - 36usize];
     ["Alignment of WebPAnimDecoderOptions"]
-        [::std::mem::align_of::<WebPAnimDecoderOptions>() - 4usize];
+        [::core::mem::align_of::<WebPAnimDecoderOptions>() - 4usize];
     ["Offset of field: WebPAnimDecoderOptions::color_mode"]
-        [::std::mem::offset_of!(WebPAnimDecoderOptions, color_mode) - 0usize];
+        [::core::mem::offset_of!(WebPAnimDecoderOptions, color_mode) - 0usize];
     ["Offset of field: WebPAnimDecoderOptions::use_threads"]
-        [::std::mem::offset_of!(WebPAnimDecoderOptions, use_threads) - 4usize];
+        [::core::mem::offset_of!(WebPAnimDecoderOptions, use_threads) - 4usize];
     ["Offset of field: WebPAnimDecoderOptions::padding"]
-        [::std::mem::offset_of!(WebPAnimDecoderOptions, padding) - 8usize];
+        [::core::mem::offset_of!(WebPAnimDecoderOptions, padding) - 8usize];
 };
 unsafe extern "C" {
     pub fn WebPAnimDecoderOptionsInitInternal(
         arg1: *mut WebPAnimDecoderOptions,
-        arg2: ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        arg2: ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPAnimDecoderNewInternal(
         arg1: *const WebPData,
         arg2: *const WebPAnimDecoderOptions,
-        arg3: ::std::os::raw::c_int,
+        arg3: ::core::ffi::c_int,
     ) -> *mut WebPAnimDecoder;
 }
 #[repr(C)]
@@ -1611,35 +1595,35 @@ pub struct WebPAnimInfo {
 }
 #[allow(clippy::unnecessary_operation, clippy::identity_op)]
 const _: () = {
-    ["Size of WebPAnimInfo"][::std::mem::size_of::<WebPAnimInfo>() - 36usize];
-    ["Alignment of WebPAnimInfo"][::std::mem::align_of::<WebPAnimInfo>() - 4usize];
+    ["Size of WebPAnimInfo"][::core::mem::size_of::<WebPAnimInfo>() - 36usize];
+    ["Alignment of WebPAnimInfo"][::core::mem::align_of::<WebPAnimInfo>() - 4usize];
     ["Offset of field: WebPAnimInfo::canvas_width"]
-        [::std::mem::offset_of!(WebPAnimInfo, canvas_width) - 0usize];
+        [::core::mem::offset_of!(WebPAnimInfo, canvas_width) - 0usize];
     ["Offset of field: WebPAnimInfo::canvas_height"]
-        [::std::mem::offset_of!(WebPAnimInfo, canvas_height) - 4usize];
+        [::core::mem::offset_of!(WebPAnimInfo, canvas_height) - 4usize];
     ["Offset of field: WebPAnimInfo::loop_count"]
-        [::std::mem::offset_of!(WebPAnimInfo, loop_count) - 8usize];
+        [::core::mem::offset_of!(WebPAnimInfo, loop_count) - 8usize];
     ["Offset of field: WebPAnimInfo::bgcolor"]
-        [::std::mem::offset_of!(WebPAnimInfo, bgcolor) - 12usize];
+        [::core::mem::offset_of!(WebPAnimInfo, bgcolor) - 12usize];
     ["Offset of field: WebPAnimInfo::frame_count"]
-        [::std::mem::offset_of!(WebPAnimInfo, frame_count) - 16usize];
-    ["Offset of field: WebPAnimInfo::pad"][::std::mem::offset_of!(WebPAnimInfo, pad) - 20usize];
+        [::core::mem::offset_of!(WebPAnimInfo, frame_count) - 16usize];
+    ["Offset of field: WebPAnimInfo::pad"][::core::mem::offset_of!(WebPAnimInfo, pad) - 20usize];
 };
 unsafe extern "C" {
     pub fn WebPAnimDecoderGetInfo(
         dec: *const WebPAnimDecoder,
         info: *mut WebPAnimInfo,
-    ) -> ::std::os::raw::c_int;
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPAnimDecoderGetNext(
         dec: *mut WebPAnimDecoder,
         buf: *mut *mut u8,
-        timestamp: *mut ::std::os::raw::c_int,
-    ) -> ::std::os::raw::c_int;
+        timestamp: *mut ::core::ffi::c_int,
+    ) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
-    pub fn WebPAnimDecoderHasMoreFrames(dec: *const WebPAnimDecoder) -> ::std::os::raw::c_int;
+    pub fn WebPAnimDecoderHasMoreFrames(dec: *const WebPAnimDecoder) -> ::core::ffi::c_int;
 }
 unsafe extern "C" {
     pub fn WebPAnimDecoderReset(dec: *mut WebPAnimDecoder);
