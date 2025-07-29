@@ -81,14 +81,14 @@ jobs:
             features: '--no-default-features --features parallel'
             target: x86_64-apple-darwin
           - name: windows / stable
-            os: windows-2019
+            os: windows-latest
             target: x86_64-pc-windows-msvc
           - name: windows / stable / sse41
-            os: windows-2019
+            os: windows-latest
             features: '--features sse41'
             target: x86_64-pc-windows-msvc
           - name: windows / stable / no_std
-            os: windows-2019
+            os: windows-latest
             features: '--no-default-features --features parallel'
             target: x86_64-pc-windows-msvc
           - name: wasm / stable
@@ -119,13 +119,13 @@ jobs:
           target: ${{ matrix.target }}
 
       - name: Test (Windows)
-        if: matrix.os == 'windows-2019'
+        if: matrix.os == 'windows-latest'
         shell: cmd
         run: |
           call "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
           cargo test ${{ matrix.features }} --target ${{ matrix.target }}
       - name: Test (Linux, macOS)
-        if: ${{ matrix.os != 'windows-2019' && matrix.target != 'wasm32-unknown-unknown' }}
+        if: ${{ matrix.os != 'windows-latest' && matrix.target != 'wasm32-unknown-unknown' }}
         run: |
           cargo test ${{ matrix.features }} --target ${{ matrix.target }}
       - name: Check wasm
