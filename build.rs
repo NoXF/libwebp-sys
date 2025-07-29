@@ -1,3 +1,4 @@
+use bindgen;
 use std::env;
 use std::path::PathBuf;
 
@@ -15,12 +16,14 @@ fn main() {
     let bindings = bindgen::Builder::default()
         .header("wrap.h")
         .default_enum_style(bindgen::EnumVariation::Rust {
-            non_exhaustive: true,
+            non_exhaustive: false,
         })
+        .trust_clang_mangling(false)
         .impl_debug(true)
         .allowlist_function("[wW][eE][bB].*")
         .allowlist_var("[wW][eE][bB].*")
         .allowlist_type("[wW][eE][bB].*")
+        .use_core()
         .generate()
         .expect("Unable to generate bindings");
 
