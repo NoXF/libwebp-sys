@@ -22,7 +22,7 @@ fn main() {
         .allowlist_var("[wW][eE][bB].*")
         .allowlist_type("[wW][eE][bB].*")
         .generate()
-        .expect("Unable to generate bindnigs");
+        .expect("Unable to generate bindings");
 
     bindings.write_to_file("src/ffi.rs").unwrap();
 

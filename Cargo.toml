@@ -1,6 +1,6 @@
 [package]
 name = "libwebp-sys"
-version = "0.12.2"
+version = "0.13.0"
 authors = [
     "XianYou <xianyou.cyq@alibaba-inc.com>",
     "Kornel Lesiński <kornel@geekhood.net>",
@@ -13,6 +13,7 @@ build = "build.rs"
 homepage = "https://github.com/NoXF/libwebp-sys"
 repository = "https://github.com/NoXF/libwebp-sys"
 include = [
+    "wrap.h",
     "src/*.rs",
     "README.md",
     "build.rs",
