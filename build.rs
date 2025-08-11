@@ -2,31 +2,11 @@ use std::env;
 use std::path::PathBuf;
 
 fn main() {
-    if cfg!(feature = "system-dylib") {
-        let lib_name = "libwebp";
-        let find_system_lib = pkg_config::Config::new().probe(lib_name).is_ok();
+    #[cfg(feature = "system-dylib")]
+    system_dylib();
 
-        if find_system_lib {
-            println!("cargo:rustc-link-lib={lib_name}");
-            return;
-        }
-    }
-
-    let bindings = bindgen::Builder::default()
-        .header("wrap.h")
-        .default_enum_style(bindgen::EnumVariation::Rust {
-            non_exhaustive: false,
-        })
-        .trust_clang_mangling(false)
-        .impl_debug(true)
-        .allowlist_function("[wW][eE][bB].*")
-        .allowlist_var("[wW][eE][bB].*")
-        .allowlist_type("[wW][eE][bB].*")
-        .use_core()
-        .generate()
-        .expect("Unable to generate bindings");
-
-    bindings.write_to_file("src/ffi.rs").unwrap();
+    #[cfg(feature = "generate-bindings")]
+    generate_bindings();
 
     let manifest_dir =
         PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR"));
@@ -54,6 +34,38 @@ fn main() {
         cc.file(manifest_dir.join(f));
     }
     cc.compile("webpsys");
+}
+
+#[cfg(feature = "system-dylib")]
+fn system_dylib() {
+    let lib_name = "libwebp";
+    let find_system_lib = pkg_config::Config::new().probe(lib_name).is_ok();
+
+    if find_system_lib {
+        println!("cargo:rustc-link-lib={lib_name}");
+        return;
+    }
+}
+
+#[cfg(feature = "generate-bindings")]
+fn generate_bindings() {
+    let bindings = bindgen::Builder::default()
+        .header("wrap.h")
+        .default_enum_style(bindgen::EnumVariation::Rust {
+            non_exhaustive: false,
+        })
+        .trust_clang_mangling(false)
+        .impl_debug(true)
+        .allowlist_function("[wW][eE][bB].*")
+        .allowlist_var("[wW][eE][bB].*")
+        .allowlist_type("[wW][eE][bB].*")
+        .use_core()
+        .generate()
+        .expect("Unable to generate bindings");
+
+    bindings
+        .write_to_file("src/ffi.rs")
+        .expect("Couldn't write bindings to ffi.rs");
 }
 
 fn setup_build(build: &mut cc::Build, include_dir: &PathBuf) {
