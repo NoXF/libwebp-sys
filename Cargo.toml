@@ -33,7 +33,7 @@ opt-level = 2
 cc = "1"
 glob = "0.3"
 pkg-config = "0.3"
-bindgen = "0.72"
+bindgen = { version = "0.72", optional = true }
 
 [features]
 default = ["std", "parallel"]
@@ -44,3 +44,4 @@ sse41 = [] # x64 SSE 4.1 (will crash on x86 CPUs without it)
 avx2 = [] # x64 AVX2 (will crash on x86 CPUs without it)
 system-dylib = [
 ] # Use the system-installed dylib instead of compiling a static library from the vendor
+generate-bindings = ["dep:bindgen"] # Generate ffi.rs based on the compile target
