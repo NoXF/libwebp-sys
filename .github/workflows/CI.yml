@@ -92,12 +92,12 @@ jobs:
             features: '--no-default-features --features parallel'
             target: x86_64-pc-windows-msvc
           - name: wasm / stable
-            os: macOS-latest
-            target: 'wasm32-unknown-unknown'
+            os: ubuntu-latest
+            target: 'wasm32-wasip1-threads'
           - name: wasm / stable / no_std
-            os: macOS-latest
+            os: ubuntu-latest
             features: '--no-default-features --features parallel'
-            target: 'wasm32-unknown-unknown'
+            target: 'wasm32-wasip1-threads'
 
     steps:
       - name: Checkout
@@ -105,18 +105,15 @@ jobs:
         with:
           submodules: true
 
-      - name: Install emcc
-        if: matrix.target == 'wasm32-unknown-unknown'
-        run: brew install emscripten
+      - name: Install wasi sdk
+        if: contains(matrix.target, 'wasm')
+        uses: konsumer/install-wasi-sdk@v1
 
       - name: Install rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: ${{ matrix.rust || 'stable' }}
-          profile: default
-          default: true
-          override: true
-          target: ${{ matrix.target }}
+          targets: ${{ matrix.target }}
 
       - name: Test (Windows)
         if: matrix.os == 'windows-latest'
@@ -125,13 +122,10 @@ jobs:
           call "C:/Program Files (x86)/Microsoft Visual Studio/2019/Enterprise/VC/Auxiliary/Build/vcvars64.bat"
           cargo test ${{ matrix.features }} --target ${{ matrix.target }}
       - name: Test (Linux, macOS)
-        if: ${{ matrix.os != 'windows-latest' && matrix.target != 'wasm32-unknown-unknown' }}
+        if: ${{ matrix.os != 'windows-latest' && !contains(matrix.target, 'wasm') }}
         run: |
           cargo test ${{ matrix.features }} --target ${{ matrix.target }}
       - name: Check wasm
-        if: matrix.target == 'wasm32-unknown-emscripten'
+        if: contains(matrix.target, 'wasm')
         run: |
           cargo check ${{ matrix.features }} --target ${{ matrix.target }}
-        env:
-          CC: 'emcc'
-          CXX: 'emcc'

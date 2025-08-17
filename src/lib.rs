@@ -5,7 +5,7 @@
     clippy::result_unit_err,
     clippy::derivable_impls
 )]
-// bindgen --default-enum-style=rust --distrust-clang-mangling --use-core --impl-debug --allowlist-function='[wW][eE][bB].*' --allowlist-var='[wW][eE][bB].*' --allowlist-type='[wW][eE][bB].*' wrap.h -- -I./vendor > src/ffi.rs
+// bindgen --default-enum-style=rust --distrust-clang-mangling --use-core --impl-debug --allowlist-function='[wW][eE][bB].*' --allowlist-var='[wW][eE][bB].*' --allowlist-type='[wW][eE][bB].*' --no-layout-tests wrap.h -- -I./vendor > src/ffi.rs
 
 #[cfg(feature = "std")]
 use std as core;
