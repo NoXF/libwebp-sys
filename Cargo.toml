@@ -1,6 +1,6 @@
 [package]
 name = "libwebp-sys"
-version = "0.14.0"
+version = "0.14.1"
 authors = [
     "XianYou <xianyou.cyq@alibaba-inc.com>",
     "Kornel Lesiński <kornel@geekhood.net>",
