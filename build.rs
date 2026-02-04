@@ -6,25 +6,16 @@ use std::path::PathBuf;
 const PACKAGE_CONFIG_NAME: &str = "libwebp";
 
 fn main() {
-    #[cfg(feature = "system-dylib")]
-    system_dylib();
-
     #[cfg(feature = "generate-bindings")]
     generate_bindings();
 
+    #[cfg(all(not(feature = "generate-bindings"), feature = "system-dylib"))]
+    pkg_config::Config::new()
+        .probe(PACKAGE_CONFIG_NAME)
+        .unwrap();
+
     #[cfg(not(feature = "system-dylib"))]
     do_build();
-}
-
-#[cfg(feature = "system-dylib")]
-fn system_dylib() {
-    let lib_name = "libwebp";
-    let find_system_lib = pkg_config::Config::new().probe(lib_name).is_ok();
-
-    if find_system_lib {
-        println!("cargo:rustc-link-lib={lib_name}");
-        return;
-    }
 }
 
 #[cfg(feature = "generate-bindings")]
