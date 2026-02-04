@@ -1,5 +1,9 @@
+#[cfg(not(feature = "system-dylib"))]
 use std::env;
 use std::path::PathBuf;
+
+#[cfg(feature = "system-dylib")]
+const PACKAGE_CONFIG_NAME: &str = "libwebp";
 
 fn main() {
     #[cfg(feature = "system-dylib")]
@@ -25,12 +29,18 @@ fn system_dylib() {
 
 #[cfg(feature = "generate-bindings")]
 fn generate_bindings() {
+    println!("cargo:rerun-if-changed=wrap.h");
     let bindings = bindgen::Builder::default()
         .header("wrap.h")
         .default_enum_style(bindgen::EnumVariation::Rust {
             non_exhaustive: false,
         })
         .trust_clang_mangling(false)
+        .clang_args(
+            include_paths()
+                .into_iter()
+                .map(|include_path| format!("-I{}", include_path.to_str().unwrap())),
+        )
         .impl_debug(true)
         .allowlist_function("[wW][eE][bB].*")
         .allowlist_var("[wW][eE][bB].*")
@@ -42,6 +52,19 @@ fn generate_bindings() {
     bindings
         .write_to_file("src/ffi.rs")
         .expect("Couldn't write bindings to ffi.rs");
+}
+
+#[cfg(all(feature = "system-dylib", feature = "generate-bindings"))]
+fn include_paths() -> Vec<PathBuf> {
+    let system_libwebp = pkg_config::Config::new()
+        .probe(PACKAGE_CONFIG_NAME)
+        .unwrap();
+    system_libwebp.include_paths
+}
+
+#[cfg(all(not(feature = "system-dylib"), feature = "generate-bindings"))]
+fn include_paths() -> Vec<PathBuf> {
+    vec![PathBuf::from("vendor/src")]
 }
 
 #[cfg(not(feature = "system-dylib"))]
