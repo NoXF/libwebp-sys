@@ -8,32 +8,8 @@ fn main() {
     #[cfg(feature = "generate-bindings")]
     generate_bindings();
 
-    let manifest_dir =
-        PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR"));
-    let vendor = manifest_dir.join("vendor");
-
-    if !vendor.join("src").exists() {
-        panic!(
-            "{} dir is missing files. Try running: `git submodule update --init --recursive`",
-            vendor.display()
-        );
-    }
-
-    let mut cc = cc::Build::new();
-    setup_build(&mut cc, &vendor);
-
-    for f in glob::glob("vendor/src/**/*.c")
-        .expect("glob vender/src failed")
-        .flatten()
-    {
-        cc.file(manifest_dir.join(f));
-    }
-
-    for f in glob::glob("vendor/sharpyuv/**/*.c").expect("glob vendor/src failed") {
-        let f = f.expect("glob iteration vendor/src failed");
-        cc.file(manifest_dir.join(f));
-    }
-    cc.compile("webpsys");
+    #[cfg(not(feature = "system-dylib"))]
+    do_build();
 }
 
 #[cfg(feature = "system-dylib")]
@@ -68,6 +44,37 @@ fn generate_bindings() {
         .expect("Couldn't write bindings to ffi.rs");
 }
 
+#[cfg(not(feature = "system-dylib"))]
+fn do_build() {
+    let manifest_dir =
+        PathBuf::from(env::var_os("CARGO_MANIFEST_DIR").expect("CARGO_MANIFEST_DIR"));
+    let vendor = manifest_dir.join("vendor");
+
+    if !vendor.join("src").exists() {
+        panic!(
+            "{} dir is missing files. Try running: `git submodule update --init --recursive`",
+            vendor.display()
+        );
+    }
+
+    let mut cc = cc::Build::new();
+    setup_build(&mut cc, &vendor);
+
+    for f in glob::glob("vendor/src/**/*.c")
+        .expect("glob vender/src failed")
+        .flatten()
+    {
+        cc.file(manifest_dir.join(f));
+    }
+
+    for f in glob::glob("vendor/sharpyuv/**/*.c").expect("glob vendor/src failed") {
+        let f = f.expect("glob iteration vendor/src failed");
+        cc.file(manifest_dir.join(f));
+    }
+    cc.compile("webpsys");
+}
+
+#[cfg(not(feature = "system-dylib"))]
 fn setup_build(build: &mut cc::Build, include_dir: &PathBuf) {
     build.include(include_dir);
     build.define("NDEBUG", Some("1"));
