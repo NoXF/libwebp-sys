@@ -196,6 +196,7 @@ mod tests {
 
             assert_eq!(b"RIFF", &out[0..4]);
             assert_eq!(b"WEBP", &out[8..12]);
+            WebPFree(out_buf as *mut _);
         }
     }
 
@@ -215,6 +216,7 @@ mod tests {
 
             assert_eq!(b"RIFF", &out[0..4]);
             assert_eq!(b"WEBP", &out[8..12]);
+            WebPFree(out_buf as *mut _);
         }
     }
 
@@ -259,6 +261,7 @@ mod tests {
 
             assert_eq!(b"RIFF", &out[0..4]);
             assert_eq!(b"WEBP", &out[8..12]);
+            WebPPictureFree(&mut picture);
         }
     }
 
@@ -285,6 +288,8 @@ mod tests {
 
             assert_eq!(b"RIFF", &out[0..4]);
             assert_eq!(b"WEBP", &out[8..12]);
+            WebPFree(decode_buf as *mut _);
+            WebPFree(out_buf as *mut _);
         }
     }
 
