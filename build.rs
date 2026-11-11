@@ -103,6 +103,7 @@ fn setup_build(build: &mut cc::Build, include_dir: &PathBuf) {
     }
 
     let target_arch = env::var("CARGO_CFG_TARGET_ARCH").expect("CARGO_CFG_TARGET_ARCH");
+    let target_os = env::var("CARGO_CFG_TARGET_OS").unwrap_or_default();
     let target_features = env::var("CARGO_CFG_TARGET_FEATURE").unwrap_or_default();
     let has_feature = |f: &str| target_features.split(',').any(|feature| feature == f);
 
@@ -150,6 +151,14 @@ fn setup_build(build: &mut cc::Build, include_dir: &PathBuf) {
                 || gccflags.contains("--opt-level=z")
             {
                 build.debug(false);
+            }
+        }
+        // Emscripten lowers the SSE intrinsics to wasm simd128; cpu.h derives
+        // WEBP_HAVE_SSE2/SSE41 from the compiler's __SSE2__/__SSE4_1__.
+        "wasm32" if target_os == "emscripten" && has_feature("simd128") => {
+            build.flag("-msimd128").flag("-msse2");
+            if cfg!(feature = "sse41") {
+                build.flag("-msse4.1");
             }
         }
         _ => {}
